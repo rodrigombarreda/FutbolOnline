@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156080854477",
+    "firebase_url": "https://futbolonline-f19f0.firebaseio.com",
+    "project_id": "futbolonline-f19f0",
+    "storage_bucket": "futbolonline-f19f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156080854477:android:e36a4d37d063639daaa084",
+        "android_client_info": {
+          "package_name": "com.example.futbolonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156080854477-jspludrivlh4fttp6f16aj0bed9n2i5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnJwO7vGerSZlXUxMXfqXv8w4XjPciZuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156080854477-jspludrivlh4fttp6f16aj0bed9n2i5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

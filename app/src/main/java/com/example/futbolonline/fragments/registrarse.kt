@@ -15,6 +15,7 @@ import com.example.futbolonline.entidades.Usuario
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.registrarse_fragment.view.*
 
 class registrarse : Fragment() {
 
@@ -59,23 +60,19 @@ class registrarse : Fragment() {
         super.onActivityCreated(savedInstanceState)
         registrarseViewModel = ViewModelProvider(this).get(RegistrarseViewModel::class.java)
         // TODO: Use the ViewModel
-        registrarseViewModel.registroValido.observe(viewLifecycleOwner, Observer { result ->
+        registrarseViewModel.emailEnUso.observe(viewLifecycleOwner, Observer { result ->
             if (result) {
                 Snackbar.make(
                     v,
-                    "Se puede crear",
+                    "EMAIL EN USO",
                     Snackbar.LENGTH_SHORT
                 ).show()
-                var usuarioNuevo: Usuario = Usuario(
-                    inputMailRegistrarse.text.toString(),
-                    inputNombreRegistrarse.text.toString(),
-                    radioGeneroRegistrarse.checkedRadioButtonId.toString(),
-                    inputEdadRegistrarse.text.toString().toInt(),
-                    inputContraseniaRegistrarse.text.toString()
-                )
-                db.collection("usuarios").document(usuarioNuevo.email).set(usuarioNuevo)
-                var accion = registrarseDirections.actionRegistrarseToPaginaPrincipalContainer()
-                v.findNavController().navigate(accion)
+            } else {
+                Snackbar.make(
+                    v,
+                    "EMAIL NO USADO",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -83,17 +80,47 @@ class registrarse : Fragment() {
     override fun onStart() {
         super.onStart()
         btnRegistrarse.setOnClickListener {
-            if (radioBtnMasculinoRegistrarse.isChecked || radioBtnFemeninoRegistrarse.isChecked) {
-                registrarseViewModel.determinarRegistroValido(
+            var registroEsValido = registrarseViewModel.registroEsValido(
+                inputMailRegistrarse.text.toString(),
+                inputNombreRegistrarse.text.toString(),
+                inputEdadRegistrarse.text.toString().toInt(),
+                inputContraseniaRegistrarse.text.toString(),
+                radioBtnMasculinoRegistrarse.isChecked,
+                radioBtnFemeninoRegistrarse.isChecked
+            )
+            if (registroEsValido) {
+                Snackbar.make(
+                    v,
+                    "Registrando...",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                var seRegistro: Boolean = registrarseViewModel.registrarUsuario(
                     inputMailRegistrarse.text.toString(),
                     inputNombreRegistrarse.text.toString(),
                     inputEdadRegistrarse.text.toString().toInt(),
-                    inputContraseniaRegistrarse.text.toString()
+                    inputContraseniaRegistrarse.text.toString(),
+                    radioBtnMasculinoRegistrarse.isChecked,
+                    radioBtnFemeninoRegistrarse.isChecked
                 )
+                if (seRegistro) {
+                    Snackbar.make(
+                        v,
+                        "Usuario registrado.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    var accion = registrarseDirections.actionRegistrarseToPaginaPrincipalContainer()
+                    v.findNavController().navigate(accion)
+                } else {
+                    Snackbar.make(
+                        v,
+                        "Error de red. Intentelo de nuevo mas tarde.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Snackbar.make(
                     v,
-                    "Debe elegir un genero",
+                    "Datos no validos.",
                     Snackbar.LENGTH_SHORT
                 ).show()
             }

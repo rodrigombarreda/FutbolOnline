@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.google.android.material.snackbar.Snackbar
 
 
 class login : Fragment() {
@@ -23,14 +24,14 @@ class login : Fragment() {
     }
 
     private lateinit var loginViewModel: LoginViewModel
-    lateinit var v : View
-    lateinit var inputMailLogin : EditText
-    lateinit var inputPasswordLogin : EditText
-    lateinit var btnIniciarSesionLogin : Button
-    lateinit var txtOlvidoSuContraseniaLogin : TextView
-    lateinit var btnOlvidoSuContraseniaLogin : Button
-    lateinit var txtNoTieneCuentaLogin : TextView
-    lateinit var btnRegistreseLogin : Button
+    lateinit var v: View
+    lateinit var inputMailLogin: EditText
+    lateinit var inputPasswordLogin: EditText
+    lateinit var btnIniciarSesionLogin: Button
+    lateinit var txtOlvidoSuContraseniaLogin: TextView
+    lateinit var btnOlvidoSuContraseniaLogin: Button
+    lateinit var txtNoTieneCuentaLogin: TextView
+    lateinit var btnRegistreseLogin: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,18 +52,25 @@ class login : Fragment() {
         super.onActivityCreated(savedInstanceState)
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         // TODO: Use the ViewModel
-        loginViewModel.mailYContraseniaSonCorrectas.observe(viewLifecycleOwner, Observer { result ->
-            if(result){
-                val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                v.findNavController().navigate(accion)
-            }
-        })
     }
 
     override fun onStart() {
         super.onStart()
         btnIniciarSesionLogin.setOnClickListener {
-            loginViewModel.autenticarUsuario(inputMailLogin.text.toString(), inputPasswordLogin.text.toString())
+            var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
+                inputMailLogin.text.toString(),
+                inputPasswordLogin.text.toString()
+            )
+            if(autenticacionExitosa){
+                val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
+                v.findNavController().navigate(accion)
+            }else{
+                Snackbar.make(
+                    v,
+                    "Mail o contraseña incorrectos",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
         btnRegistreseLogin.setOnClickListener {
             val accion = loginDirections.actionLoginToRegistrarse()

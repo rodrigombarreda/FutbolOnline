@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navegraph"
+    app:startDestination="@id/login">
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.futbolonline.fragments.login"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_login_to_paginaPrincipalContainer"
+            app:destination="@id/paginaPrincipalContainer" />
+        <action
+            android:id="@+id/action_login_to_registrarse"
+            app:destination="@id/registrarse" />
+    </fragment>
+    <fragment
+        android:id="@+id/paginaPrincipalContainer"
+        android:name="com.example.futbolonline.fragments.paginaPrincipalContainer"
+        android:label="pagina_principal_container_fragment"
+        tools:layout="@layout/pagina_principal_container_fragment" />
+    <fragment
+        android:id="@+id/tabBuscarPartidos"
+        android:name="com.example.futbolonline.fragments.tabBuscarPartidos"
+        android:label="tab_buscar_partidos_fragment"
+        tools:layout="@layout/tab_buscar_partidos_fragment" />
+    <fragment
+        android:id="@+id/tabProximosPartidos"
+        android:name="com.example.futbolonline.fragments.tabProximosPartidos"
+        android:label="tab_proximos_partidos_fragment"
+        tools:layout="@layout/tab_proximos_partidos_fragment" />
+    <fragment
+        android:id="@+id/tabHistorialPartidos"
+        android:name="com.example.futbolonline.fragments.tabHistorialPartidos"
+        android:label="tab_historial_partidos_fragment"
+        tools:layout="@layout/tab_historial_partidos_fragment" />
+    <fragment
+        android:id="@+id/registrarse"
+        android:name="com.example.futbolonline.fragments.registrarse"
+        android:label="registrarse_fragment"
+        tools:layout="@layout/registrarse_fragment" >
+        <action
+            android:id="@+id/action_registrarse_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_registrarse_to_paginaPrincipalContainer"
+            app:destination="@id/paginaPrincipalContainer" />
+    </fragment>
+</navigation>

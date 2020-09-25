@@ -1,7 +1,8 @@
-package com.example.futbolonline
+package com.example.futbolonline.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.futbolonline.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

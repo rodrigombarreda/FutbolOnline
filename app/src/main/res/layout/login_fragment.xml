@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.login">
+
+    <EditText
+        android:id="@+id/inputMailLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingrese su mail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputMailLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineSuperiorInputMailLogin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSuperiorInputMailLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="100dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorInputMailLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="200dp" />
+
+    <EditText
+        android:id="@+id/inputPasswordLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingrese su contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputPasswordLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputMailLogin"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorInputPasswordLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="300dp" />
+
+    <Button
+        android:id="@+id/btnIniciarSesionLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Sesión"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputPasswordLogin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorBtnIniciarSesionLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="400dp" />
+
+    <Button
+        android:id="@+id/btnOlvidoSuContraseniaLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click aqui !"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="500dp" />
+
+    <TextView
+        android:id="@+id/txtOlvidoSuContraseniaLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olvidó su contraseña ?"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
+
+    <TextView
+        android:id="@+id/txtNoTieneCuentaLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No tiene cuenta ?"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistreseLogin"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin" />
+
+    <Button
+        android:id="@+id/btnRegistreseLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regístrese !"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistreseLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorBtnRegistreseLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="600dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

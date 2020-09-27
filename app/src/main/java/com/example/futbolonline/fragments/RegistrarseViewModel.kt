@@ -4,11 +4,8 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
 import com.example.futbolonline.entidades.Usuario
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class RegistrarseViewModel : ViewModel() {
@@ -24,7 +21,7 @@ class RegistrarseViewModel : ViewModel() {
     val VALOR_GENERO_MASCULINO: String = "masculino"
     val VALOR_GENERO_FEMENINO: String = "femenino"
 
-    //val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
+    val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
 
     val db = Firebase.firestore
 
@@ -83,7 +80,7 @@ class RegistrarseViewModel : ViewModel() {
         var genero: String = obtenerGenero(radioBtnMasculinoIsChecked, radioBtnFemeninoIsChecked)
         var usuarioNuevo: Usuario = Usuario(email, nombre, genero, edad, contrasenia)
         try {
-            db.collection("usuarios").document(usuarioNuevo.email).set(usuarioNuevo)
+            db.collection(NOMBRE_COLECCION_USUARIOS).document(usuarioNuevo.email).set(usuarioNuevo)
         } catch (ex: Exception) {
             seRegistro = false
         }
@@ -108,7 +105,6 @@ class RegistrarseViewModel : ViewModel() {
         if (tieneFormatoEmailValido(email) && !emailTieneCuentaAsociada(email)) {
             emailEsValido = true
         }
-        Log.w("email", emailEsValido.toString())
         return emailEsValido
     }
 
@@ -122,7 +118,6 @@ class RegistrarseViewModel : ViewModel() {
         ) {
             nombreEsValido = true
         }
-        Log.w("nombre", nombreEsValido.toString())
         return nombreEsValido
     }
 
@@ -131,7 +126,6 @@ class RegistrarseViewModel : ViewModel() {
         if (edad >= EDAD_MINIMA_USUARIO && edad <= EDAD_MAXIMA_USUARIO) {
             edadEsValida = true
         }
-        Log.w("edad", edadEsValida.toString())
         return edadEsValida
     }
 
@@ -145,7 +139,6 @@ class RegistrarseViewModel : ViewModel() {
         ) {
             contraseniaEsValida = true
         }
-        Log.w("contra", contrasenia.toString())
         return contraseniaEsValida
     }
 
@@ -153,23 +146,15 @@ class RegistrarseViewModel : ViewModel() {
         return EmailValidator.isEmailValid(email)
     }
 
+    // TODO: Corregir funcion:
     fun emailTieneCuentaAsociada(email: String): Boolean {
         var tieneCuentaAsociada: Boolean = false
-        db.collection("usuarios")
-            .whereEqualTo("email", email)
+        db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot != null) {
-                    var objectUsuario: Usuario
-                    for (usuario in snapshot) {
-                        objectUsuario = usuario.toObject()
-                        if (objectUsuario.email == email) {
-                            tieneCuentaAsociada = true
-                            emailEnUso.value = true
-                        } else {
-                            emailEnUso.value = true
-                        }
-                    }
+                    Log.w("cant.usersConEmail", snapshot.data.toString())
+                    tieneCuentaAsociada = true
                 }
             }
             .addOnFailureListener { exception ->
@@ -191,19 +176,16 @@ class RegistrarseViewModel : ViewModel() {
         return tieneNroCaracteresEnRango
     }
 
+    // TODO: Corregir funcion:
     fun nombreEstaUsado(nombre: String): Boolean {
         var nombreEstaUsado: Boolean = false
-        db.collection("usuarios")
+        db.collection(NOMBRE_COLECCION_USUARIOS)
             .whereEqualTo("nombre", nombre)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot != null) {
-                    var objectUsuario: Usuario
-                    for (usuario in snapshot) {
-                        objectUsuario = usuario.toObject()
-                        if (objectUsuario.nombre == nombre) {
-                            nombreEstaUsado = true
-                        }
+                    if (snapshot.size() > 0) {
+                        nombreEstaUsado = true
                     }
                 }
             }
@@ -230,7 +212,6 @@ class RegistrarseViewModel : ViewModel() {
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var seSeleccionoGenero: Boolean = radioBtnMasculinoIsCkecked || radioBtnFemeninoIsChecked
-        Log.w("genero", seSeleccionoGenero.toString())
         return seSeleccionoGenero
     }
 

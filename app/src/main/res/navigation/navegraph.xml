@@ -48,4 +48,9 @@
             android:id="@+id/action_registrarse_to_paginaPrincipalContainer"
             app:destination="@id/paginaPrincipalContainer" />
     </fragment>
+    <fragment
+        android:id="@+id/tabMiPerfil"
+        android:name="com.example.futbolonline.fragments.tabMiPerfil"
+        android:label="tab_mi_perfil_fragment"
+        tools:layout="@layout/tab_mi_perfil_fragment" />
 </navigation>

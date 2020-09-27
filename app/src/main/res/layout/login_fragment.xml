@@ -24,14 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="100dp" />
+        app:layout_constraintGuide_begin="75dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputMailLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="200dp" />
+        app:layout_constraintGuide_begin="150dp" />
 
     <EditText
         android:id="@+id/inputPasswordLogin"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="300dp" />
+        app:layout_constraintGuide_begin="225dp" />
 
     <Button
         android:id="@+id/btnIniciarSesionLogin"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="400dp" />
+        app:layout_constraintGuide_begin="300dp" />
 
     <Button
         android:id="@+id/btnOlvidoSuContraseniaLogin"
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="500dp" />
+        app:layout_constraintGuide_begin="375dp" />
 
     <TextView
         android:id="@+id/txtOlvidoSuContraseniaLogin"
@@ -129,6 +129,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="600dp" />
+        app:layout_constraintGuide_begin="450dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

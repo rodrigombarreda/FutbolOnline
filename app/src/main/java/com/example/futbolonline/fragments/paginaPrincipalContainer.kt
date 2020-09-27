@@ -51,6 +51,7 @@ class paginaPrincipalContainer : Fragment() {
                 0 -> tab.text = "Buscar partidos"
                 1 -> tab.text = "Proximos partidos"
                 2 -> tab.text = "Historial partidos"
+                3 -> tab.text = "Mi perfil"
                 else -> tab.text = "undefined"
             }
         }.attach()
@@ -67,6 +68,7 @@ class paginaPrincipalContainer : Fragment() {
                 0 -> tabBuscarPartidos()
                 1 -> tabProximosPartidos()
                 2 -> tabHistorialPartidos()
+                3 -> tabMiPerfil()
                 else -> login()
             }
         }
@@ -76,7 +78,7 @@ class paginaPrincipalContainer : Fragment() {
         }
 
         companion object {
-            private const val TAB_COUNT = 3
+            private const val TAB_COUNT = 4
         }
     }
 

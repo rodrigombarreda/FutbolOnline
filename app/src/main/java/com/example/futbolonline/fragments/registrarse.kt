@@ -85,10 +85,10 @@ class registrarse : Fragment() {
         super.onStart()
         btnRegistrarse.setOnClickListener {
             var registroEsValido = registrarseViewModel.registroEsValido(
-                inputMailRegistrarse.text.toString(),
-                inputNombreRegistrarse.text.toString(),
-                inputEdadRegistrarse.text.toString().toInt(),
-                inputContraseniaRegistrarse.text.toString(),
+                inputMailRegistrarse,
+                inputNombreRegistrarse,
+                inputEdadRegistrarse,
+                inputContraseniaRegistrarse,
                 radioBtnMasculinoRegistrarse.isChecked,
                 radioBtnFemeninoRegistrarse.isChecked
             )

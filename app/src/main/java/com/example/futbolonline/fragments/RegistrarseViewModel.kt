@@ -60,6 +60,10 @@ class RegistrarseViewModel : ViewModel() {
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var registroEsValido: Boolean = false
+        emailEsValido(inputEmail)
+        nombreEsValido(inputNombre)
+        edadEsValida(inputEdad)
+        contraseniaEsValida(inputContrasenia)
         if (emailEsValido(inputEmail) && nombreEsValido(inputNombre) && edadEsValida(inputEdad) && contraseniaEsValida(
                 inputContrasenia
             ) && seSeleccionoGenero(radioBtnMasculinoIsChecked, radioBtnFemeninoIsChecked)

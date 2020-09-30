@@ -2,13 +2,25 @@ package com.example.futbolonline.fragments
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class LoginViewModel : ViewModel() {
+    val db = Firebase.firestore
     // TODO: Implement the ViewModel
     //val mailYContraseniaSonCorrectas = MutableLiveData<Boolean>()
 
-    fun mailYContraseniaCorrectas (email: String, contrasenia: String): Boolean{
-        // TODO: Implementar la funcion
-        return true
+    fun mailYContraseniaCorrectas(email: String, contrasenia: String): Boolean {
+        var mailYContraseniaCorrectas: Boolean = false
+        db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
+
+            if (document != null) {
+                val contra = document.getString("contrasenia")
+                if (contrasenia == contra) {
+                    mailYContraseniaCorrectas == true
+                }
+            }
+        }
+        return mailYContraseniaCorrectas
     }
 }

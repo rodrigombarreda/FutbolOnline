@@ -60,11 +60,13 @@ class login : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         btnIniciarSesionLogin.setOnClickListener {
             var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
                 inputMailLogin.text.toString(),
                 inputPasswordLogin.text.toString()
             )
+
             if(autenticacionExitosa){
                 val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
                     USUARIO_PREFERENCES,

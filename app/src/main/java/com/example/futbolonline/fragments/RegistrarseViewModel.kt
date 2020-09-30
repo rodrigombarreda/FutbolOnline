@@ -2,6 +2,7 @@ package com.example.futbolonline.fragments
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.futbolonline.entidades.Usuario
@@ -51,16 +52,16 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun registroEsValido(
-        email: String,
-        nombre: String,
-        edad: Int,
-        contrasenia: String,
+        inputEmail: EditText,
+        inputNombre: EditText,
+        inputEdad: EditText,
+        inputContrasenia: EditText,
         radioBtnMasculinoIsChecked: Boolean,
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var registroEsValido: Boolean = false
-        if (emailEsValido(email) && nombreEsValido(nombre) && edadEsValida(edad) && contraseniaEsValida(
-                contrasenia
+        if (emailEsValido(inputEmail) && nombreEsValido(inputNombre) && edadEsValida(inputEdad) && contraseniaEsValida(
+                inputContrasenia
             ) && seSeleccionoGenero(radioBtnMasculinoIsChecked, radioBtnFemeninoIsChecked)
         ) {
             registroEsValido = true
@@ -100,39 +101,43 @@ class RegistrarseViewModel : ViewModel() {
         return genero
     }
 
-    fun emailEsValido(email: String): Boolean {
+    fun emailEsValido(inputEmail: EditText): Boolean {
         var emailEsValido: Boolean = false
-        if (tieneFormatoEmailValido(email) && !emailTieneCuentaAsociada(email)) {
+        if (tieneFormatoEmailValido(inputEmail) && !emailTieneCuentaAsociada(inputEmail.text.toString())) {
             emailEsValido = true
         }
         return emailEsValido
     }
 
-    fun nombreEsValido(nombre: String): Boolean {
+    fun nombreEsValido(inputNombre: EditText): Boolean {
         var nombreEsValido = false
         if (nombreTieneNroCaracteresEnRango(
-                nombre,
+                inputNombre,
                 NRO_MINIMO_CARACTERES_NOMBRE_USUARIO,
                 NRO_MAXIMO_CARACTERES_NOMBRE_USUARIO
-            ) && !nombreEstaUsado(nombre)
+            ) && !nombreEstaUsado(inputNombre.text.toString())
         ) {
             nombreEsValido = true
         }
         return nombreEsValido
     }
 
-    fun edadEsValida(edad: Int): Boolean {
+    fun edadEsValida(inputEdad: EditText): Boolean {
         var edadEsValida = false
-        if (edad >= EDAD_MINIMA_USUARIO && edad <= EDAD_MAXIMA_USUARIO) {
+        if (inputEdad.text.toString().toInt() >= EDAD_MINIMA_USUARIO && inputEdad.text.toString()
+                .toInt() <= EDAD_MAXIMA_USUARIO
+        ) {
             edadEsValida = true
+        } else {
+            inputEdad.setError("La edad debe estar entre " + EDAD_MINIMA_USUARIO + " Y " + EDAD_MAXIMA_USUARIO)
         }
         return edadEsValida
     }
 
-    fun contraseniaEsValida(contrasenia: String): Boolean {
+    fun contraseniaEsValida(inputContrasenia: EditText): Boolean {
         var contraseniaEsValida = false
         if (contraseniaTieneNroCaracteresEnRango(
-                contrasenia,
+                inputContrasenia,
                 NRO_MINIMO_CARACTERES_CONTRASENIA,
                 NRO_MAXIMO_CARACTERES_CONTRASENIA
             )
@@ -142,8 +147,14 @@ class RegistrarseViewModel : ViewModel() {
         return contraseniaEsValida
     }
 
-    fun tieneFormatoEmailValido(email: String): Boolean {
-        return EmailValidator.isEmailValid(email)
+    fun tieneFormatoEmailValido(inputMail: EditText): Boolean {
+        var tieneFormatoValido: Boolean = false
+        if (EmailValidator.isEmailValid(inputMail.text.toString())) {
+            tieneFormatoValido = true
+        } else {
+            inputMail.setError("El formato del mail es inválido")
+        }
+        return tieneFormatoValido
     }
 
     // TODO: Corregir funcion:
@@ -165,13 +176,15 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun nombreTieneNroCaracteresEnRango(
-        nombre: String,
+        inputNombre: EditText,
         nroMinimoCaracteres: Int,
         nroMaximoCaracteres: Int
     ): Boolean {
         var tieneNroCaracteresEnRango: Boolean = false
-        if (nombre.length >= nroMinimoCaracteres && nombre.length <= nroMaximoCaracteres) {
+        if (inputNombre.text.toString().length >= nroMinimoCaracteres && inputNombre.text.toString().length <= nroMaximoCaracteres) {
             tieneNroCaracteresEnRango = true
+        } else {
+            inputNombre.setError("El nombre debe tener entre " + nroMinimoCaracteres + " y " + nroMaximoCaracteres + " caracteres")
         }
         return tieneNroCaracteresEnRango
     }
@@ -196,13 +209,15 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun contraseniaTieneNroCaracteresEnRango(
-        contrasenia: String,
+        inputContrasenia: EditText,
         nroMinimoCaracteres: Int,
         nroMaximoCaracteres: Int
     ): Boolean {
         var tieneNroCaracteresEnRango: Boolean = false
-        if (contrasenia.length >= nroMinimoCaracteres && contrasenia.length <= nroMaximoCaracteres) {
+        if (inputContrasenia.text.toString().length >= nroMinimoCaracteres && inputContrasenia.text.toString().length <= nroMaximoCaracteres) {
             tieneNroCaracteresEnRango = true
+        } else {
+            inputContrasenia.setError("La contraseña debe tener entre " + nroMinimoCaracteres + " y " + nroMaximoCaracteres + " caracteres")
         }
         return tieneNroCaracteresEnRango
     }

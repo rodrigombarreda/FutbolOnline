@@ -29,8 +29,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputNombreRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputMailRegistrarse" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputMailRegistrarse"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/inputContraseniaRegistrarse"
@@ -85,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="225dp" />
+        app:layout_constraintGuide_begin="290dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRadioGeneroRegistrarse"

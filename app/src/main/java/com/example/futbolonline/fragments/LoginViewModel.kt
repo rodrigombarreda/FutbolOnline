@@ -13,6 +13,7 @@ class LoginViewModel : ViewModel() {
     //val mailYContraseniaSonCorrectas = MutableLiveData<Boolean>()
 
     fun mailYContraseniaCorrectas(email: String, contrasenia: String): Boolean {
+
         var mailYContraseniaCorrectas: Boolean = false
 
         val parentJob = Job()
@@ -20,17 +21,21 @@ class LoginViewModel : ViewModel() {
             Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
         }
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
-
         scope.launch {
-            db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
+            fun consultarBaseDeDatos() {
+                db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
 
-                if (document != null) {
-                    val contra = document.getString("contrasenia")
-                    if (contrasenia == contra) {
-                        mailYContraseniaCorrectas == true
+                    if (document != null) {
+                        val contra = document.getString("contrasenia")
+                        if (contrasenia == contra) {
+                            mailYContraseniaCorrectas == true
+                        }
                     }
                 }
             }
+
+            val consultarBase = async { consultarBaseDeDatos() }
+            consultarBase.await()
         }
         return mailYContraseniaCorrectas
     }

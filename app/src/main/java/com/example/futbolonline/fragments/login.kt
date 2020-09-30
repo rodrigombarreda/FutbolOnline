@@ -1,5 +1,7 @@
 package com.example.futbolonline.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,6 +24,8 @@ class login : Fragment() {
     companion object {
         fun newInstance() = login()
     }
+
+    val USUARIO_PREFERENCES: String = "usuarioPreferences"
 
     private lateinit var loginViewModel: LoginViewModel
     lateinit var v: View
@@ -62,6 +66,13 @@ class login : Fragment() {
                 inputPasswordLogin.text.toString()
             )
             if(autenticacionExitosa){
+                val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                    USUARIO_PREFERENCES,
+                    Context.MODE_PRIVATE
+                )
+                val editor = sharedPref.edit()
+                editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
+                editor.apply()
                 val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
                 v.findNavController().navigate(accion)
             }else{

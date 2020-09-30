@@ -53,4 +53,9 @@ dependencies {
 
     // Implementacion para usar viewPager2 para Navegacion con tabs
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    //Implementacion para usar corrutinas
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.3.2"
 }

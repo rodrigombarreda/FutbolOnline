@@ -65,11 +65,13 @@ class tabMiPerfil : Fragment() {
             Context.MODE_PRIVATE
         )
         txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
-        val usuario: Usuario =
+        val usuario: Usuario? =
             miPefilViewModel.getUsuarioPorMail(txtEmailTabMiPerfil.text.toString())
-        txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
-        txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
-        txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-        //txtCalificacionTabMiPerfil
+        if (usuario != null) {
+            txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
+            txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
+            txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
+            //txtCalificacionTabMiPerfil
+        }
     }
 }

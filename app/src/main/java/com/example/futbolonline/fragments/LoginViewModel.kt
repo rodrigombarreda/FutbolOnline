@@ -16,27 +16,16 @@ class LoginViewModel : ViewModel() {
 
         var mailYContraseniaCorrectas: Boolean = false
 
-        val parentJob = Job()
-        val handler = CoroutineExceptionHandler { _, throwable ->
-            Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
-        }
-        val scope = CoroutineScope(Dispatchers.Default + parentJob)
-        scope.launch {
-            fun consultarBaseDeDatos() {
-                db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
+        db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
 
-                    if (document != null) {
-                        val contra = document.getString("contrasenia")
-                        if (contrasenia == contra) {
-                            mailYContraseniaCorrectas == true
-                        }
-                    }
+            if (document != null) {
+                val contra = document.getString("contrasenia")
+                if (contrasenia == contra) {
+                    mailYContraseniaCorrectas == true
                 }
             }
-
-            val consultarBase = async { consultarBaseDeDatos() }
-            consultarBase.await()
         }
+
         return mailYContraseniaCorrectas
     }
 }

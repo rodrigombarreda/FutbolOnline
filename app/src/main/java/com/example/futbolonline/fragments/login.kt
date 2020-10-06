@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.*
 
 
 class login : Fragment() {
@@ -60,27 +62,40 @@ class login : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        val parentJob = Job()
+        val handler = CoroutineExceptionHandler { _, throwable ->
+            Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
+        }
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
         btnIniciarSesionLogin.setOnClickListener {
-            var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
-                inputMailLogin.text.toString(),
-                inputPasswordLogin.text.toString()
-            )
-            if(autenticacionExitosa){
-                val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-                    USUARIO_PREFERENCES,
-                    Context.MODE_PRIVATE
-                )
-                val editor = sharedPref.edit()
-                editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
-                editor.apply()
-                val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                v.findNavController().navigate(accion)
-            }else{
-                Snackbar.make(
-                    v,
-                    "Mail o contraseña incorrectos",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+            scope.launch {
+                var autenticacionExitosa = async {
+                    loginViewModel.mailYContraseniaCorrectas(
+                        inputMailLogin.text.toString(),
+                        inputPasswordLogin.text.toString()
+                    )
+                }
+
+                if (autenticacionExitosa.await()) {
+                    val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                        USUARIO_PREFERENCES,
+                        Context.MODE_PRIVATE
+                    )
+                    val editor = sharedPref.edit()
+                    editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
+                    editor.apply()
+
+                    val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
+                    v.findNavController().navigate(accion)
+                } else {
+                    Snackbar.make(
+                        v,
+                        "Mail o contraseña incorrectos",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
         btnRegistreseLogin.setOnClickListener {

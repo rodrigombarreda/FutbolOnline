@@ -12,9 +12,16 @@ class LoginViewModel : ViewModel() {
     // TODO: Implement the ViewModel
     //val mailYContraseniaSonCorrectas = MutableLiveData<Boolean>()
 
-    fun mailYContraseniaCorrectas(email: String, contrasenia: String): Boolean {
+    val parentJob = Job()
+    val handler = CoroutineExceptionHandler { _, throwable ->
+        Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
+    }
+    val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+    suspend fun mailYContraseniaCorrectas(email: String, contrasenia: String): Boolean {
 
         var mailYContraseniaCorrectas: Boolean = false
+
 
         val parentJob = Job()
         val handler = CoroutineExceptionHandler { _, throwable ->
@@ -45,6 +52,28 @@ class LoginViewModel : ViewModel() {
         }
 
         return mailYContraseniaCorrectas
+
+        scope.launch {
+            setMailYContraseniaSonCorrectas(email, contrasenia, mailYContraseniaCorrectas)
+        }
+        return mailYContraseniaCorrectas
+    }
+
+    suspend fun setMailYContraseniaSonCorrectas(
+        email: String,
+        contrasenia: String,
+        mailYContraseniaCorrectas: Boolean
+    ) {
+        db.collection("usuarios").document(email).get().addOnSuccessListener { document ->
+
+            if (document != null) {
+                val contra = document.getString("contrasenia")
+                if (contrasenia == contra) {
+                    mailYContraseniaCorrectas == true
+                }
+            }
+        }
+
     }
 
 }

@@ -14,13 +14,13 @@ class TabMiPerfilViewModel : ViewModel() {
 
     val db = Firebase.firestore
 
-    fun getUsuarioPorMail(email: String): Usuario{
-        var usuario : Usuario = Usuario()
+    fun getUsuarioPorMail(email: String): Usuario?{
+        var usuario : Usuario? = null
         db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot != null) {
-                    usuario = snapshot.toObject<Usuario>()!!
+                    usuario = snapshot.toObject<Usuario>()
                 }
             }
             .addOnFailureListener { exception ->

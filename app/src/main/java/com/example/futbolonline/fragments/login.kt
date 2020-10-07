@@ -52,9 +52,6 @@ class login : Fragment() {
         btnOlvidoSuContraseniaLogin = v.findViewById(R.id.btnOlvidoSuContraseniaLogin)
         txtNoTieneCuentaLogin = v.findViewById(R.id.txtNoTieneCuentaLogin)
         btnRegistreseLogin = v.findViewById(R.id.btnRegistreseLogin)
-
-
-
         return v
     }
 
@@ -63,78 +60,81 @@ class login : Fragment() {
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
 
-
         // TODO: Use the ViewModel
     }
-}
-    //override fun onStart() {
-      //  super.onStart()
+
+    override fun onStart() {
+        super.onStart()
 
 
-     //   btnIniciarSesionLogin.setOnClickListener {
-       //     var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
-         //       inputMailLogin.text.toString(),
-           //     inputPasswordLogin.text.toString()
-    //}
+        btnIniciarSesionLogin.setOnClickListener {
+            var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
+                inputMailLogin.text.toString(),
+                inputPasswordLogin.text.toString()
+            )
 
-        //    if(autenticacionExitosa){
-          //      val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-            //        USUARIO_PREFERENCES,
-              //      Context.MODE_PRIVATE
-                //)
-                //val editor = sharedPref.edit()
-                //editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
-                //editor.apply()
-                //val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                //v.findNavController().navigate(accion)
-            //}else{
-              //  Snackbar.make(
-                //    v,
-                  //  "Mail o contraseña incorrectos",
-                   // Snackbar.LENGTH_SHORT
-                //).show()
+            if (autenticacionExitosa) {
+                val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                    USUARIO_PREFERENCES,
+                    Context.MODE_PRIVATE
+                )
+                val editor = sharedPref.edit()
+                editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
+                editor.apply()
+                val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
+                v.findNavController().navigate(accion)
+            } else {
+                Snackbar.make(
+                    v,
+                    "Mail o contraseña incorrectos",
+                    Snackbar.LENGTH_SHORT
+                ).show()
 
-        //val parentJob = Job()
-        //val handler = CoroutineExceptionHandler { _, throwable ->
-          //  Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
-        //}
-        //val scope = CoroutineScope(Dispatchers.Default + parentJob)
+                val parentJob = Job()
+                val handler = CoroutineExceptionHandler { _, throwable ->
+                    Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
+                }
+                val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
-        //btnIniciarSesionLogin.setOnClickListener {
-          //  scope.launch {
-            //    var autenticacionExitosa = async {
-              //      loginViewModel.mailYContraseniaCorrectas(
-                //        inputMailLogin.text.toString(),
-                  //      inputPasswordLogin.text.toString()
-                    //)
-                //}
+                btnIniciarSesionLogin.setOnClickListener {
+                    scope.launch {
+                        var autenticacionExitosa = async {
+                            loginViewModel.mailYContraseniaCorrectas(
+                                inputMailLogin.text.toString(),
+                                inputPasswordLogin.text.toString()
+                            )
+                        }
 
-                //if (autenticacionExitosa.await()) {
-                  //  val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-                    //    USUARIO_PREFERENCES,
-                      //  Context.MODE_PRIVATE
-                    //)
-                    //val editor = sharedPref.edit()
-                    //editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
-                    //editor.apply()
+                        if (autenticacionExitosa.await()) {
+                            val sharedPref: SharedPreferences =
+                                requireContext().getSharedPreferences(
+                                    USUARIO_PREFERENCES,
+                                    Context.MODE_PRIVATE
+                                )
+                            val editor = sharedPref.edit()
+                            editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
+                            editor.apply()
 
-                    //val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                    //v.findNavController().navigate(accion)
-                //} else {
-                  //  Snackbar.make(
-                    //    v,
-                      //  "Mail o contraseña incorrectos",
-                        //Snackbar.LENGTH_SHORT
-                    //).show()
-                //}
+                            val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
+                            v.findNavController().navigate(accion)
+                        } else {
+                            Snackbar.make(
+                                v,
+                                "Mail o contraseña incorrectos",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
 
-            //}
-        //}
-        //btnRegistreseLogin.setOnClickListener {
-          //  val accion = loginDirections.actionLoginToRegistrarse()
-           // v.findNavController().navigate(accion)
-        //}
-   // }
-     //   }
-    //}
+                    }
+                }
+                btnRegistreseLogin.setOnClickListener {
+                    val accion = loginDirections.actionLoginToRegistrarse()
+                    v.findNavController().navigate(accion)
+                }
+            }
+        }
+
+    }
+
+
 

@@ -1,5 +1,6 @@
 package com.example.futbolonline.fragments
 
+import android.app.ActionBar
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
@@ -51,12 +52,18 @@ class login : Fragment() {
         btnOlvidoSuContraseniaLogin = v.findViewById(R.id.btnOlvidoSuContraseniaLogin)
         txtNoTieneCuentaLogin = v.findViewById(R.id.txtNoTieneCuentaLogin)
         btnRegistreseLogin = v.findViewById(R.id.btnRegistreseLogin)
+
+
+
         return v
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+
+
+
         // TODO: Use the ViewModel
     }
 }

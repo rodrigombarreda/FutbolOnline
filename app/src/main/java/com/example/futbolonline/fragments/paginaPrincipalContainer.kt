@@ -1,11 +1,11 @@
 package com.example.futbolonline.fragments
 
-import androidx.lifecycle.ViewModelProviders
+import android.app.ActionBar
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -34,6 +34,7 @@ class paginaPrincipalContainer : Fragment() {
         tableLayoutPaginaPrincipalContainer = v.findViewById(R.id.tableLayoutPaginaPrincipalContainer)
         return v
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -81,5 +82,6 @@ class paginaPrincipalContainer : Fragment() {
             private const val TAB_COUNT = 4
         }
     }
+
 
 }

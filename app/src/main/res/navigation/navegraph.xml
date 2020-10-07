@@ -53,4 +53,9 @@
         android:name="com.example.futbolonline.fragments.tabMiPerfil"
         android:label="tab_mi_perfil_fragment"
         tools:layout="@layout/tab_mi_perfil_fragment" />
+    <fragment
+        android:id="@+id/crear_evento"
+        android:name="com.example.futbolonline.crear_evento"
+        android:label="crear_evento_fragment"
+        tools:layout="@layout/crear_evento_fragment" />
 </navigation>

@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.futbolonline.entidades.Usuario
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
 class RegistrarseViewModel : ViewModel() {
     val NRO_MINIMO_CARACTERES_NOMBRE_USUARIO: Int = 4
@@ -51,7 +53,7 @@ class RegistrarseViewModel : ViewModel() {
         return seRegistro
     }
 
-    fun registroEsValido(
+    suspend fun registroEsValido(
         inputEmail: EditText,
         inputNombre: EditText,
         inputEdad: EditText,
@@ -105,7 +107,7 @@ class RegistrarseViewModel : ViewModel() {
         return genero
     }
 
-    fun emailEsValido(inputEmail: EditText): Boolean {
+    suspend fun emailEsValido(inputEmail: EditText): Boolean {
         var emailEsValido: Boolean = false
         if (tieneFormatoEmailValido(inputEmail) && !emailTieneCuentaAsociada(inputEmail.text.toString())) {
             emailEsValido = true
@@ -113,7 +115,7 @@ class RegistrarseViewModel : ViewModel() {
         return emailEsValido
     }
 
-    fun nombreEsValido(inputNombre: EditText): Boolean {
+    suspend fun nombreEsValido(inputNombre: EditText): Boolean {
         var nombreEsValido = false
         if (nombreTieneNroCaracteresEnRango(
                 inputNombre,
@@ -161,21 +163,24 @@ class RegistrarseViewModel : ViewModel() {
         return tieneFormatoValido
     }
 
-    // TODO: Corregir funcion:
-    fun emailTieneCuentaAsociada(email: String): Boolean {
-        var tieneCuentaAsociada: Boolean = false
-        db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
-            .get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot != null) {
-                    Log.w("cant.usersConEmail", snapshot.data.toString())
-                    tieneCuentaAsociada = true
+    suspend fun emailTieneCuentaAsociada(email: String): Boolean {
+        var tieneCuentaAsociada: Boolean = true
+        val questionRef = db.collection("usuarios").document(email)
+        val query = questionRef
+
+        try {
+            val data = query
+                .get()
+                .await()
+            if (data != null) {
+                val usuario = data.toObject<Usuario>()
+                if (usuario == null) {
+                    tieneCuentaAsociada = false
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-        Log.w("emailCuentaAsociada", tieneCuentaAsociada.toString())
+        } catch (e: Exception) {
+
+        }
         return tieneCuentaAsociada
     }
 
@@ -193,22 +198,27 @@ class RegistrarseViewModel : ViewModel() {
         return tieneNroCaracteresEnRango
     }
 
-    // TODO: Corregir funcion:
-    fun nombreEstaUsado(nombre: String): Boolean {
-        var nombreEstaUsado: Boolean = false
-        db.collection(NOMBRE_COLECCION_USUARIOS)
-            .whereEqualTo("nombre", nombre)
-            .get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot != null) {
-                    if (snapshot.size() > 0) {
-                        nombreEstaUsado = true
-                    }
+    suspend fun nombreEstaUsado(nombre: String): Boolean {
+        var nombreEstaUsado: Boolean = true
+
+        val questionRef = db.collection("usuarios")
+        val query = questionRef
+
+        try {
+            val data = query
+                .whereEqualTo("nombre", nombre)
+                .get()
+                .await()
+            if (data != null) {
+                Log.d("ES NULL", data.toString())
+                if (data.size() == 0) {
+                    Log.d("ESTA VACIO", data.size().toString())
+                    nombreEstaUsado = false
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+        } catch (e: Exception) {
+
+        }
         return nombreEstaUsado
     }
 

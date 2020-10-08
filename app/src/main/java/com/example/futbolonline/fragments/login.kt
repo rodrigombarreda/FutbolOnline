@@ -66,75 +66,89 @@ class login : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
 
         btnIniciarSesionLogin.setOnClickListener {
-            var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
-                inputMailLogin.text.toString(),
-                inputPasswordLogin.text.toString()
-            )
-
-            if (autenticacionExitosa) {
-                val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-                    USUARIO_PREFERENCES,
-                    Context.MODE_PRIVATE
+            scope.launch {
+                var autenticacionExitosa = loginViewModel.mailYContraseniaCorrectas(
+                    inputMailLogin.text.toString(),
+                    inputPasswordLogin.text.toString()
                 )
-                val editor = sharedPref.edit()
-                editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
-                editor.apply()
-                val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                v.findNavController().navigate(accion)
-            } else {
-                Snackbar.make(
-                    v,
-                    "Mail o contraseña incorrectos",
-                    Snackbar.LENGTH_SHORT
-                ).show()
 
-                val parentJob = Job()
-                val handler = CoroutineExceptionHandler { _, throwable ->
-                    Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
-                }
-                val scope = CoroutineScope(Dispatchers.Default + parentJob)
-
-                btnIniciarSesionLogin.setOnClickListener {
-                    scope.launch {
-                        var autenticacionExitosa = async {
-                            loginViewModel.mailYContraseniaCorrectas(
-                                inputMailLogin.text.toString(),
-                                inputPasswordLogin.text.toString()
-                            )
-                        }
-
-                        if (autenticacionExitosa.await()) {
-                            val sharedPref: SharedPreferences =
-                                requireContext().getSharedPreferences(
-                                    USUARIO_PREFERENCES,
-                                    Context.MODE_PRIVATE
-                                )
-                            val editor = sharedPref.edit()
-                            editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
-                            editor.apply()
-
-                            val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                            v.findNavController().navigate(accion)
-                        } else {
-                            Snackbar.make(
-                                v,
-                                "Mail o contraseña incorrectos",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    }
-                }
-                btnRegistreseLogin.setOnClickListener {
-                    val accion = loginDirections.actionLoginToRegistrarse()
+                if (autenticacionExitosa) {
+                    val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                        USUARIO_PREFERENCES,
+                        Context.MODE_PRIVATE
+                    )
+                    val editor = sharedPref.edit()
+                    editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
+                    editor.apply()
+                    val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
                     v.findNavController().navigate(accion)
+                } else {
+                    Snackbar.make(
+                        v,
+                        "Mail o contraseña incorrectos",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+
+                    val parentJob = Job()
+                    val handler = CoroutineExceptionHandler { _, throwable ->
+                        Log.d(
+                            "demo",
+                            "handler: $throwable"
+                        ) // Prints "handler: java.io.IOException"
+                    }
+                    val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+                    btnIniciarSesionLogin.setOnClickListener {
+                        scope.launch {
+                            var autenticacionExitosa = async {
+                                loginViewModel.mailYContraseniaCorrectas(
+                                    inputMailLogin.text.toString(),
+                                    inputPasswordLogin.text.toString()
+                                )
+                            }
+
+                            if (autenticacionExitosa.await()) {
+                                val sharedPref: SharedPreferences =
+                                    requireContext().getSharedPreferences(
+                                        USUARIO_PREFERENCES,
+                                        Context.MODE_PRIVATE
+                                    )
+                                val editor = sharedPref.edit()
+                                editor.putString(
+                                    "EMAIL_USUARIO",
+                                    inputMailLogin.text.toString()
+                                )
+                                editor.apply()
+
+                                val accion =
+                                    loginDirections.actionLoginToPaginaPrincipalContainer()
+                                v.findNavController().navigate(accion)
+                            } else {
+                                Snackbar.make(
+                                    v,
+                                    "Mail o contraseña incorrectos",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        }
+                    }
                 }
             }
         }
 
+        btnRegistreseLogin.setOnClickListener {
+            val accion = loginDirections.actionLoginToRegistrarse()
+            v.findNavController().navigate(accion)
+        }
+
     }
+}
 
 
 

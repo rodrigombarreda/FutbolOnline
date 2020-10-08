@@ -18,6 +18,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.registrarse_fragment.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class registrarse : Fragment() {
 
@@ -83,57 +87,64 @@ class registrarse : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
         btnRegistrarse.setOnClickListener {
-            var registroEsValido = registrarseViewModel.registroEsValido(
-                inputMailRegistrarse,
-                inputNombreRegistrarse,
-                inputEdadRegistrarse,
-                inputContraseniaRegistrarse,
-                radioBtnMasculinoRegistrarse.isChecked,
-                radioBtnFemeninoRegistrarse.isChecked
-            )
-            if (registroEsValido) {
-                Snackbar.make(
-                    v,
-                    "Registrando...",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                var seRegistro: Boolean = registrarseViewModel.registrarUsuario(
-                    inputMailRegistrarse.text.toString(),
-                    inputNombreRegistrarse.text.toString(),
-                    inputEdadRegistrarse.text.toString().toInt(),
-                    inputContraseniaRegistrarse.text.toString(),
+            scope.launch {
+                var registroEsValido = registrarseViewModel.registroEsValido(
+                    inputMailRegistrarse,
+                    inputNombreRegistrarse,
+                    inputEdadRegistrarse,
+                    inputContraseniaRegistrarse,
                     radioBtnMasculinoRegistrarse.isChecked,
                     radioBtnFemeninoRegistrarse.isChecked
                 )
-                if (seRegistro) {
+                if (registroEsValido) {
                     Snackbar.make(
                         v,
-                        "Usuario registrado.",
+                        "Registrando...",
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-                        USUARIO_PREFERENCES,
-                        Context.MODE_PRIVATE
+                    var seRegistro: Boolean = registrarseViewModel.registrarUsuario(
+                        inputMailRegistrarse.text.toString(),
+                        inputNombreRegistrarse.text.toString(),
+                        inputEdadRegistrarse.text.toString().toInt(),
+                        inputContraseniaRegistrarse.text.toString(),
+                        radioBtnMasculinoRegistrarse.isChecked,
+                        radioBtnFemeninoRegistrarse.isChecked
                     )
-                    val editor = sharedPref.edit()
-                    editor.putString("EMAIL_USUARIO", inputMailRegistrarse.text.toString())
-                    editor.apply()
-                    var accion = registrarseDirections.actionRegistrarseToPaginaPrincipalContainer()
-                    v.findNavController().navigate(accion)
+                    if (seRegistro) {
+                        Snackbar.make(
+                            v,
+                            "Usuario registrado.",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                            USUARIO_PREFERENCES,
+                            Context.MODE_PRIVATE
+                        )
+                        val editor = sharedPref.edit()
+                        editor.putString("EMAIL_USUARIO", inputMailRegistrarse.text.toString())
+                        editor.apply()
+                        var accion =
+                            registrarseDirections.actionRegistrarseToPaginaPrincipalContainer()
+                        v.findNavController().navigate(accion)
+                    } else {
+                        Snackbar.make(
+                            v,
+                            "Error de red. Intentelo de nuevo mas tarde.",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
                 } else {
                     Snackbar.make(
                         v,
-                        "Error de red. Intentelo de nuevo mas tarde.",
+                        "Datos no validos.",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
-            } else {
-                Snackbar.make(
-                    v,
-                    "Datos no validos.",
-                    Snackbar.LENGTH_SHORT
-                ).show()
             }
         }
 

@@ -24,6 +24,8 @@ class RegistrarseViewModel : ViewModel() {
     val VALOR_GENERO_MASCULINO: String = "masculino"
     val VALOR_GENERO_FEMENINO: String = "femenino"
 
+    val CALIFICACION_INICIAL_USUARIO: Int = 100
+
     val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
 
     val db = Firebase.firestore
@@ -32,26 +34,6 @@ class RegistrarseViewModel : ViewModel() {
 
     // TODO: Completar valores para mensajes en el front
     val emailEnUso = MutableLiveData<Boolean>()
-
-    fun registrarUsuario(
-        email: String,
-        nombre: String,
-        edad: Int,
-        contrasenia: String,
-        radioBtnMasculinoIsChecked: Boolean,
-        radioBtnFemeninoIsChecked: Boolean
-    ): Boolean {
-        var seRegistro: Boolean = false
-        seRegistro = registrarUsuarioEnBaseDeDatos(
-            email,
-            nombre,
-            edad,
-            contrasenia,
-            radioBtnMasculinoIsChecked,
-            radioBtnFemeninoIsChecked
-        )
-        return seRegistro
-    }
 
     suspend fun registroEsValido(
         inputEmail: EditText,
@@ -75,19 +57,20 @@ class RegistrarseViewModel : ViewModel() {
         return registroEsValido
     }
 
-    fun registrarUsuarioEnBaseDeDatos(
+    suspend fun registrarUsuario(
         email: String,
         nombre: String,
         edad: Int,
         contrasenia: String,
-        radioBtnMasculinoIsChecked: Boolean,
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var seRegistro: Boolean = true
-        var genero: String = obtenerGenero(radioBtnMasculinoIsChecked, radioBtnFemeninoIsChecked)
-        var usuarioNuevo: Usuario = Usuario(email, nombre, genero, edad, contrasenia)
+        var genero: String = obtenerGenero(radioBtnFemeninoIsChecked)
+        var usuarioNuevo: Usuario =
+            Usuario(email, nombre, genero, edad, contrasenia, CALIFICACION_INICIAL_USUARIO)
         try {
             db.collection(NOMBRE_COLECCION_USUARIOS).document(usuarioNuevo.email).set(usuarioNuevo)
+                .await()
         } catch (ex: Exception) {
             seRegistro = false
         }
@@ -95,7 +78,6 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun obtenerGenero(
-        radioBtnMasculinoIsChecked: Boolean,
         radioBtnFemeninoIsChecked: Boolean
     ): String {
         lateinit var genero: String
@@ -109,7 +91,7 @@ class RegistrarseViewModel : ViewModel() {
 
     suspend fun emailEsValido(inputEmail: EditText): Boolean {
         var emailEsValido: Boolean = false
-        if (tieneFormatoEmailValido(inputEmail) && !emailTieneCuentaAsociada(inputEmail.text.toString())) {
+        if (tieneFormatoEmailValido(inputEmail) && !emailTieneCuentaAsociada(inputEmail)) {
             emailEsValido = true
         }
         return emailEsValido
@@ -121,7 +103,7 @@ class RegistrarseViewModel : ViewModel() {
                 inputNombre,
                 NRO_MINIMO_CARACTERES_NOMBRE_USUARIO,
                 NRO_MAXIMO_CARACTERES_NOMBRE_USUARIO
-            ) && !nombreEstaUsado(inputNombre.text.toString())
+            ) && !nombreEstaUsado(inputNombre)
         ) {
             nombreEsValido = true
         }
@@ -163,9 +145,10 @@ class RegistrarseViewModel : ViewModel() {
         return tieneFormatoValido
     }
 
-    suspend fun emailTieneCuentaAsociada(email: String): Boolean {
+    suspend fun emailTieneCuentaAsociada(inputEmail: EditText): Boolean {
         var tieneCuentaAsociada: Boolean = true
-        val questionRef = db.collection("usuarios").document(email)
+        var email: String = inputEmail.text.toString()
+        val questionRef = db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
         val query = questionRef
 
         try {
@@ -198,8 +181,9 @@ class RegistrarseViewModel : ViewModel() {
         return tieneNroCaracteresEnRango
     }
 
-    suspend fun nombreEstaUsado(nombre: String): Boolean {
+    suspend fun nombreEstaUsado(inputNombre: EditText): Boolean {
         var nombreEstaUsado: Boolean = true
+        var nombre = inputNombre.text.toString()
 
         val questionRef = db.collection("usuarios")
         val query = questionRef
@@ -237,10 +221,10 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun seSeleccionoGenero(
-        radioBtnMasculinoIsCkecked: Boolean,
+        radioBtnMasculinoIsChecked: Boolean,
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
-        var seSeleccionoGenero: Boolean = radioBtnMasculinoIsCkecked || radioBtnFemeninoIsChecked
+        var seSeleccionoGenero: Boolean = radioBtnMasculinoIsChecked || radioBtnFemeninoIsChecked
         return seSeleccionoGenero
     }
 

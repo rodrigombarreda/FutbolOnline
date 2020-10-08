@@ -2,7 +2,6 @@ package com.example.futbolonline.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,11 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
-import com.example.futbolonline.entidades.Usuario
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.registrarse_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,9 +51,9 @@ class registrarse : Fragment() {
         inputMailRegistrarse = v.findViewById(R.id.inputMailRegistrarse)
         inputNombreRegistrarse = v.findViewById(R.id.inputNombreRegistrarse)
         inputEdadRegistrarse = v.findViewById(R.id.inputEdadRegistrarse)
-        radioGeneroRegistrarse = v.findViewById(R.id.radioGeneroRegistrarse)
-        radioBtnMasculinoRegistrarse = v.findViewById(R.id.radioBtnMasculinoRegistrarse)
-        radioBtnFemeninoRegistrarse = v.findViewById(R.id.radioBtnFemeninoRegistrarse)
+        radioGeneroRegistrarse = v.findViewById(R.id.radioGeneroCrearEvento)
+        radioBtnMasculinoRegistrarse = v.findViewById(R.id.radioBtnMasculinoCrearEvento)
+        radioBtnFemeninoRegistrarse = v.findViewById(R.id.radioBtnFemeninoCrearEvento)
         inputContraseniaRegistrarse = v.findViewById(R.id.inputContraseniaRegistrarse)
         btnRegistrarse = v.findViewById(R.id.btnRegistrarse)
         txtYaTienesUnaCuentaRegistrarse = v.findViewById(R.id.txtYaTienesUnaCuentaRegistrarse)
@@ -112,7 +109,6 @@ class registrarse : Fragment() {
                         inputNombreRegistrarse.text.toString(),
                         inputEdadRegistrarse.text.toString().toInt(),
                         inputContraseniaRegistrarse.text.toString(),
-                        radioBtnMasculinoRegistrarse.isChecked,
                         radioBtnFemeninoRegistrarse.isChecked
                     )
                     if (seRegistro) {

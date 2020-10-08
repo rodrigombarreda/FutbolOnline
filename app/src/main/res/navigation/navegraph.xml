@@ -20,12 +20,20 @@
         android:id="@+id/paginaPrincipalContainer"
         android:name="com.example.futbolonline.fragments.paginaPrincipalContainer"
         android:label="pagina_principal_container_fragment"
-        tools:layout="@layout/pagina_principal_container_fragment" />
+        tools:layout="@layout/pagina_principal_container_fragment" >
+        <action
+            android:id="@+id/action_paginaPrincipalContainer_to_crear_evento"
+            app:destination="@id/crear_evento" />
+    </fragment>
     <fragment
         android:id="@+id/tabBuscarPartidos"
         android:name="com.example.futbolonline.fragments.tabBuscarPartidos"
         android:label="tab_buscar_partidos_fragment"
-        tools:layout="@layout/tab_buscar_partidos_fragment" />
+        tools:layout="@layout/tab_buscar_partidos_fragment" >
+        <action
+            android:id="@+id/action_tabBuscarPartidos_to_crear_evento"
+            app:destination="@id/crear_evento" />
+    </fragment>
     <fragment
         android:id="@+id/tabProximosPartidos"
         android:name="com.example.futbolonline.fragments.tabProximosPartidos"
@@ -55,7 +63,7 @@
         tools:layout="@layout/tab_mi_perfil_fragment" />
     <fragment
         android:id="@+id/crear_evento"
-        android:name="com.example.futbolonline.fragments.crear_evento"
+        android:name="com.example.futbolonline.fragments.crearEvento"
         android:label="crear_evento_fragment"
         tools:layout="@layout/crear_evento_fragment" />
 </navigation>

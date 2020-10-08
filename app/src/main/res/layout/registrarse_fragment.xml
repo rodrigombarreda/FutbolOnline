@@ -111,7 +111,7 @@
         app:layout_constraintGuide_begin="450dp" />
 
     <RadioGroup
-        android:id="@+id/radioGeneroRegistrarse"
+        android:id="@+id/radioGeneroCrearEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guidelineRadioGeneroRegistrarse"
@@ -122,7 +122,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <RadioButton
-            android:id="@+id/radioBtnMasculinoRegistrarse"
+            android:id="@+id/radioBtnMasculinoCrearEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -132,10 +132,10 @@
             android:text="masculino" />
 
         <RadioButton
-            android:id="@+id/radioBtnFemeninoRegistrarse"
+            android:id="@+id/radioBtnFemeninoCrearEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radioBtnMasculinoRegistrarse"
+            android:layout_below="@+id/radioBtnMasculinoCrearEvento"
             android:layout_centerHorizontal="true"
             android:checked="false"
             android:text="femenino" />

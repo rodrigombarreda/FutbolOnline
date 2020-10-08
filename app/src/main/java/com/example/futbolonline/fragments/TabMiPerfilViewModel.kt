@@ -7,6 +7,11 @@ import com.example.futbolonline.entidades.Usuario
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class TabMiPerfilViewModel : ViewModel() {
     // TODO: Implement the ViewModel
@@ -14,18 +19,29 @@ class TabMiPerfilViewModel : ViewModel() {
 
     val db = Firebase.firestore
 
-    fun getUsuarioPorMail(email: String): Usuario?{
-        var usuario : Usuario? = null
-        db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
-            .get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot != null) {
-                    usuario = snapshot.toObject<Usuario>()
+    val parentJob = Job()
+    val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+    fun getUsuarioPorMail(email: String): Usuario? {
+        var usuario: Usuario? = null
+        scope.launch {
+            val questionRef = db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
+            val query = questionRef
+
+            try {
+                val data = query
+                    .get()
+                    .await()
+                if (data != null) {
+                    val usuarioDeBaseDeDatos = data.toObject<Usuario>()
+                    if (usuario == null) {
+                        usuario = usuarioDeBaseDeDatos
+                    }
                 }
+            } catch (e: Exception) {
+
             }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-            }
+        }
         return usuario
     }
 }

@@ -71,7 +71,7 @@ class tabMiPerfil : Fragment() {
             txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
             txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
             txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-            //txtCalificacionTabMiPerfil
+            txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
         }
     }
 }

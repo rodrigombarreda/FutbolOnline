@@ -1,9 +1,7 @@
 package com.example.futbolonline.fragments
 
-import android.app.ActionBar
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.material.snackbar.Snackbar
@@ -45,7 +41,7 @@ class login : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.login_fragment, container, false)
-        inputMailLogin = v.findViewById(R.id.inputMailLogin)
+        inputMailLogin = v.findViewById(R.id.inputNombreEventoCrearEvento)
         inputPasswordLogin = v.findViewById(R.id.inputPasswordLogin)
         btnIniciarSesionLogin = v.findViewById(R.id.btnIniciarSesionLogin)
         txtOlvidoSuContraseniaLogin = v.findViewById(R.id.txtOlvidoSuContraseniaLogin)

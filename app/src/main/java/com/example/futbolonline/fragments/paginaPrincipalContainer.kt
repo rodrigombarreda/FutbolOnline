@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.futbolonline.R
@@ -31,7 +33,8 @@ class paginaPrincipalContainer : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.pagina_principal_container_fragment, container, false)
         viewPagerPaginaPrincipalContainer = v.findViewById(R.id.viewPagerPaginaPrincipalContainer)
-        tableLayoutPaginaPrincipalContainer = v.findViewById(R.id.tableLayoutPaginaPrincipalContainer)
+        tableLayoutPaginaPrincipalContainer =
+            v.findViewById(R.id.tableLayoutPaginaPrincipalContainer)
         return v
     }
 
@@ -47,7 +50,10 @@ class paginaPrincipalContainer : Fragment() {
 
         viewPagerPaginaPrincipalContainer.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false
-        TabLayoutMediator(tableLayoutPaginaPrincipalContainer, viewPagerPaginaPrincipalContainer) { tab, position ->
+        TabLayoutMediator(
+            tableLayoutPaginaPrincipalContainer,
+            viewPagerPaginaPrincipalContainer
+        ) { tab, position ->
             when (position) {
                 0 -> tab.text = "Buscar partidos"
                 1 -> tab.text = "Proximos partidos"
@@ -62,10 +68,11 @@ class paginaPrincipalContainer : Fragment() {
         return ViewPagerAdapter(requireActivity())
     }
 
-    class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+    class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
+        FragmentStateAdapter(fragmentActivity) {
         override fun createFragment(position: Int): Fragment {
 
-            return when(position){
+            return when (position) {
                 0 -> tabBuscarPartidos()
                 1 -> tabProximosPartidos()
                 2 -> tabHistorialPartidos()

@@ -26,6 +26,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayoutPaginaPrincipalContainer"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <Button
+        android:id="@+id/btnIrACrearEventoDePaginaPrincipal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear evento"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineSuperiorBtnIrACrearEventoDePaginaPrincipal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSuperiorBtnIrACrearEventoDePaginaPrincipal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="470dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

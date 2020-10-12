@@ -10,7 +10,8 @@ class Partido(
     generoAdmitido: String,
     edadMinima: Int,
     edadMaxima: Int,
-    calificacionMinima: Int
+    calificacionMinima: Int,
+    emailCreador: String
 ) : Parcelable {
 
     var nombreEvento: String
@@ -27,7 +28,9 @@ class Partido(
 
     var calificacionMinima: Int = 0
 
-    constructor() : this("", 0, 0, "", 0, 0, 0)
+    var emailCreador: String
+
+    constructor() : this("", 0, 0, "", 0, 0, 0, "")
 
     init {
         this.nombreEvento = nombreEvento!!
@@ -37,6 +40,7 @@ class Partido(
         this.edadMinima = edadMinima!!
         this.edadMaxima = edadMaxima!!
         this.calificacionMinima = calificacionMinima!!
+        this.emailCreador = emailCreador!!
     }
 
     constructor(source: Parcel) : this(
@@ -46,7 +50,8 @@ class Partido(
         source.readString()!!,
         source.readInt()!!,
         source.readInt()!!,
-        source.readInt()!!
+        source.readInt()!!,
+        source.readString()!!
     )
 
     override fun describeContents() = 0
@@ -59,12 +64,13 @@ class Partido(
         writeInt(edadMinima)
         writeInt(edadMaxima)
         writeInt(calificacionMinima)
+        writeString(emailCreador)
     }
 
     override fun toString(): String {
         return "Usuario(nombreEvento='$nombreEvento', cantidadJugadoresTotales=$cantidadJugadoresTotales ," +
                 " cantidadJugadoreFaltantes=$cantidadJugadoresFaltantes , generoAdmitido='$generoAdmitido', edadMinima=$edadMinima ," +
-                " edadMaxima=$edadMaxima , calificacionMinima=$calificacionMinima)"
+                " edadMaxima=$edadMaxima , calificacionMinima=$calificacionMinima , emailCreador='$emailCreador')"
     }
 
     companion object {

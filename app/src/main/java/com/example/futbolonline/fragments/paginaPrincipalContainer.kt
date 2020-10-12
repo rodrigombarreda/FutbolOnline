@@ -26,6 +26,7 @@ class paginaPrincipalContainer : Fragment() {
     lateinit var v: View
     lateinit var viewPagerPaginaPrincipalContainer: ViewPager2
     lateinit var tableLayoutPaginaPrincipalContainer: TabLayout
+    lateinit var btnIrACrearEventoDePaginaPrincipal: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,7 @@ class paginaPrincipalContainer : Fragment() {
         viewPagerPaginaPrincipalContainer = v.findViewById(R.id.viewPagerPaginaPrincipalContainer)
         tableLayoutPaginaPrincipalContainer =
             v.findViewById(R.id.tableLayoutPaginaPrincipalContainer)
+        btnIrACrearEventoDePaginaPrincipal = v.findViewById(R.id.btnIrACrearEventoDePaginaPrincipal)
         return v
     }
 
@@ -62,6 +64,12 @@ class paginaPrincipalContainer : Fragment() {
                 else -> tab.text = "undefined"
             }
         }.attach()
+
+        btnIrACrearEventoDePaginaPrincipal.setOnClickListener {
+            val accion =
+                paginaPrincipalContainerDirections.actionPaginaPrincipalContainerToCrearEvento()
+            v.findNavController().navigate(accion)
+        }
     }
 
     private fun createCardAdapter(): ViewPagerAdapter? {
@@ -73,7 +81,7 @@ class paginaPrincipalContainer : Fragment() {
         override fun createFragment(position: Int): Fragment {
 
             return when (position) {
-                0 -> tabBuscarPartidos()
+                0 -> partidosList()
                 1 -> tabProximosPartidos()
                 2 -> tabHistorialPartidos()
                 3 -> tabMiPerfil()

@@ -3,6 +3,7 @@ package com.example.futbolonline.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,8 +45,6 @@ class CrearEventoViewModel : ViewModel() {
     val MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO: String =
         "Cantidad de jugadores totales debe ser entre $NRO_MINIMO_JUGADORES_TOTALES y $NRO_MAXIMO_JUGADORES_TOTALES"
 
-    val MENSAJE_ERROR_JUGADORES_FALTANTES_FUERA_DE_RANGO: String =
-        "Cantidad de jugadores faltantes debe ser entre $NRO_MINIMO_JUGADORES_TOTALES y $NRO_MAXIMO_JUGADORES_TOTALES"
     val MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES: String =
         "Jugadores faltantes debe ser menor a la cantidad de jugadores totales"
 
@@ -61,9 +60,6 @@ class CrearEventoViewModel : ViewModel() {
     val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
 
     val db = Firebase.firestore
-
-    val parentJob = Job()
-    val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
     val USUARIO_PREFERENCES: String = "usuarioPreferences"
 
@@ -106,6 +102,7 @@ class CrearEventoViewModel : ViewModel() {
         ) {
             eventoEsValido = true
         }
+        Log.d("Evento es valido: ", eventoEsValido.toString())
         return eventoEsValido
     }
 
@@ -116,9 +113,10 @@ class CrearEventoViewModel : ViewModel() {
         radioBtnFemeninoIsChecked: Boolean,
         edadMinima: Int,
         edadMaxima: Int,
-        calificacionMinima: Int
+        calificacionMinima: Int,
+        emailUsuarioLogeado: String
     ): Boolean {
-        var seRegistro: Boolean = false
+        var seRegistro: Boolean = true
         var generoAdmitido: String = obtenerGenero(radioBtnFemeninoIsChecked)
         var partidoNuevo: Partido = Partido(
             nombreEvento,
@@ -127,8 +125,10 @@ class CrearEventoViewModel : ViewModel() {
             generoAdmitido,
             edadMinima,
             edadMaxima,
-            calificacionMinima
+            calificacionMinima,
+            emailUsuarioLogeado
         )
+
         try {
             db.collection(NOMBRE_COLECCION_PARTIDOS).document(partidoNuevo.nombreEvento)
                 .set(partidoNuevo)
@@ -136,6 +136,7 @@ class CrearEventoViewModel : ViewModel() {
         } catch (ex: Exception) {
             seRegistro = false
         }
+
         return seRegistro
     }
 
@@ -201,6 +202,7 @@ class CrearEventoViewModel : ViewModel() {
         } catch (e: Exception) {
 
         }
+
         return nombreEventoEstaUsado
     }
 
@@ -221,15 +223,13 @@ class CrearEventoViewModel : ViewModel() {
     ): Boolean {
         var jugadoresFaltantesEsValido: Boolean = false
         val jugadoresFaltantes: Int = inputJugadoresFaltantes.text.toString().toInt()
-        if (jugadoresTotalesEsValido(inputJugadoresFaltantes)) {
-            if (jugadoresFaltantes < cantidadJugadoresTotales) {
-                jugadoresFaltantesEsValido = true
-            } else {
-                inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES)
-            }
+
+        if (jugadoresFaltantes < cantidadJugadoresTotales) {
+            jugadoresFaltantesEsValido = true
         } else {
-            inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_FUERA_DE_RANGO)
+            inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES)
         }
+
         return jugadoresFaltantesEsValido
     }
 
@@ -267,7 +267,7 @@ class CrearEventoViewModel : ViewModel() {
         return edadMaximaEsValida
     }
 
-    fun calificacionMinimaEsValida(
+    suspend fun calificacionMinimaEsValida(
         inputCalificacionMinima: EditText,
         emailUsuarioLogeado: String
     ): Boolean {
@@ -277,10 +277,11 @@ class CrearEventoViewModel : ViewModel() {
         if (calificacionUsuario >= calificacionMinima) {
             calificacionMinimaEsValida = true
         }
+        Log.d("CALIFICACION VALIDA: ", calificacionMinimaEsValida.toString())
         return calificacionMinimaEsValida
     }
 
-    fun obtenerCalificacionUsuario(emailUsuarioLogeado: String): Int {
+    suspend fun obtenerCalificacionUsuario(emailUsuarioLogeado: String): Int {
         var calificacionUsuario: Int = 0
         val usuarioLogeado: Usuario? = getUsuarioPorMail(emailUsuarioLogeado)
         if (usuarioLogeado != null) {
@@ -289,26 +290,26 @@ class CrearEventoViewModel : ViewModel() {
         return calificacionUsuario
     }
 
-    fun getUsuarioPorMail(email: String): Usuario? {
+    suspend fun getUsuarioPorMail(email: String): Usuario? {
         var usuario: Usuario? = null
-        scope.launch {
-            val questionRef = db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
-            val query = questionRef
 
-            try {
-                val data = query
-                    .get()
-                    .await()
-                if (data != null) {
-                    val usuarioDeBaseDeDatos = data.toObject<Usuario>()
-                    if (usuario == null) {
-                        usuario = usuarioDeBaseDeDatos
-                    }
+        val questionRef = db.collection(NOMBRE_COLECCION_USUARIOS).document(email)
+        val query = questionRef
+
+        try {
+            val data = query
+                .get()
+                .await()
+            if (data != null) {
+                val usuarioDeBaseDeDatos = data.toObject<Usuario>()
+                if (usuario == null) {
+                    usuario = usuarioDeBaseDeDatos
                 }
-            } catch (e: Exception) {
-
             }
+        } catch (e: Exception) {
+
         }
+
         return usuario
     }
 }

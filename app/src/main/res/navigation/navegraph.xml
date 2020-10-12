@@ -65,5 +65,14 @@
         android:id="@+id/crear_evento"
         android:name="com.example.futbolonline.fragments.crearEvento"
         android:label="crear_evento_fragment"
-        tools:layout="@layout/crear_evento_fragment" />
+        tools:layout="@layout/crear_evento_fragment" >
+        <action
+            android:id="@+id/action_crear_evento_to_paginaPrincipalContainer"
+            app:destination="@id/paginaPrincipalContainer" />
+    </fragment>
+    <fragment
+        android:id="@+id/partidosList"
+        android:name="com.example.futbolonline.fragments.partidosList"
+        android:label="partidos_list_fragment"
+        tools:layout="@layout/partidos_list_fragment" />
 </navigation>

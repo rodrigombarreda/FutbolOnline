@@ -19,15 +19,12 @@ class tabBuscarPartidos : Fragment() {
 
     private lateinit var viewModel: TabBuscarPartidosViewModel
     lateinit var v: View
-    lateinit var btnIrACrearEventoDesdeBuscarPartidos: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.tab_buscar_partidos_fragment, container, false)
-        btnIrACrearEventoDesdeBuscarPartidos =
-            v.findViewById(R.id.btnIrACrearEventoDesdeBuscarPartidos)
         return v
     }
 
@@ -39,11 +36,6 @@ class tabBuscarPartidos : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        btnIrACrearEventoDesdeBuscarPartidos.setOnClickListener {
-            val accion = tabBuscarPartidosDirections.actionTabBuscarPartidosToCrearEvento()
-            v.findNavController().navigate(accion)
-        }
     }
 
 }

@@ -12,6 +12,10 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Usuario
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class tabMiPerfil : Fragment() {
 
@@ -60,18 +64,24 @@ class tabMiPerfil : Fragment() {
     }
 
     fun setDatosDePerfil() {
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
         val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
             USUARIO_PREFERENCES,
             Context.MODE_PRIVATE
         )
         txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
-        val usuario: Usuario? =
-            miPefilViewModel.getUsuarioPorMail(txtEmailTabMiPerfil.text.toString())
-        if (usuario != null) {
-            txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
-            txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
-            txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-            txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
+        scope.launch {
+            val usuario: Usuario? =
+                miPefilViewModel.getUsuarioPorMail(txtEmailTabMiPerfil.text.toString())
+            if (usuario != null) {
+                txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
+                txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
+                txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
+                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
+            }
         }
+
     }
 }

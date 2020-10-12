@@ -14,6 +14,10 @@ class PartidosListAdapter(
     val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<PartidosListAdapter.PartidoHolder>() {
 
+    companion object {
+        private val TAG = "PartidosListAdapter"
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartidoHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_partido, parent, false)
@@ -21,7 +25,6 @@ class PartidosListAdapter(
     }
 
     override fun getItemCount(): Int {
-
         return partidosList.size
     }
 

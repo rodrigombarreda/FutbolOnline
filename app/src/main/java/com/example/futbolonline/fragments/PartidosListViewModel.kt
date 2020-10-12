@@ -8,13 +8,11 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-val NOMBRE_COLECCION_PARTIDOS = "partidos"
-
-val db = Firebase.firestore
-
 class PartidosListViewModel : ViewModel() {
     // TODO: Implement the ViewModel
+    val NOMBRE_COLECCION_PARTIDOS = "partidos"
 
+    val db = Firebase.firestore
 
     suspend fun getTodosLosPartidos(): MutableList<Partido> {
         var partidos: MutableList<Partido> = ArrayList<Partido>()
@@ -28,10 +26,12 @@ class PartidosListViewModel : ViewModel() {
                 .await()
             if (data != null) {
                 partidos = data.toObjects<Partido>() as MutableList<Partido>
+                Log.d("Partidos: ", partidos.toString())
             }
         } catch (e: Exception) {
 
         }
         return partidos
     }
+
 }

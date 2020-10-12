@@ -2,6 +2,7 @@ package com.example.futbolonline.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -55,22 +56,30 @@ class partidosList : Fragment() {
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
-        scope.launch {
+        listaPartidos.setHasFixedSize(true)
+        linearLayoutManager = LinearLayoutManager(context)
+        Log.d("linearLayoutManager: ", linearLayoutManager.toString())
+        listaPartidos.layoutManager = linearLayoutManager
+        Log.d("linearDeLista: ", listaPartidos.layoutManager.toString())
+
+        partidosListAdapter = PartidosListAdapter(partidos,
+            { position -> alClickearCardPartido(position) })
+
+        listaPartidos.adapter = partidosListAdapter
+
+       /* scope.launch {
             // TODO: Setear partidos
             partidos = partidosListViewModel.getTodosLosPartidos()
-
-            listaPartidos.setHasFixedSize(true)
-            linearLayoutManager = LinearLayoutManager(context)
-            listaPartidos.layoutManager = linearLayoutManager
-
             partidosListAdapter = PartidosListAdapter(partidos,
-                { position -> onItemClick(position) })
-
+                { position -> alClickearCardPartido(position) })
+            // this@partidosList.run {
             listaPartidos.adapter = partidosListAdapter
-        }
+            //}
+        }*/
+
     }
 
-    fun onItemClick(position: Int) {
+    fun alClickearCardPartido(position: Int) {
         // TODO: Implementar funcion
     }
 

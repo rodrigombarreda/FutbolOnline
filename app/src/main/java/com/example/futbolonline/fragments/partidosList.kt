@@ -67,14 +67,14 @@ class partidosList : Fragment() {
 
         listaPartidos.adapter = partidosListAdapter
 
-       /* scope.launch {
-            // TODO: Setear partidos
+        // TODO : Resolver Only the original thread that created a view hierarchy can touch its views.
+        /*scope.launch {
             partidos = partidosListViewModel.getTodosLosPartidos()
             partidosListAdapter = PartidosListAdapter(partidos,
                 { position -> alClickearCardPartido(position) })
-            // this@partidosList.run {
+
             listaPartidos.adapter = partidosListAdapter
-            //}
+
         }*/
 
     }

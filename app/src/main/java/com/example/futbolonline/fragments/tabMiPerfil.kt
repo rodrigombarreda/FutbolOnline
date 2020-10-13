@@ -74,12 +74,18 @@ class tabMiPerfil : Fragment() {
         txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
         scope.launch {
             val usuario: Usuario? =
-                miPefilViewModel.getUsuarioPorMail(txtEmailTabMiPerfil.text.toString())
+                miPefilViewModel.getUsuarioPorMail(
+                    sharedPref.getString(
+                        "EMAIL_USUARIO",
+                        "default"
+                    )!!
+                )
             if (usuario != null) {
-                txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
+                // TODO : Resolver Only the original thread that created a view hierarchy can touch its views.
+                /*txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
                 txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
                 txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
+                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion*/
             }
         }
 

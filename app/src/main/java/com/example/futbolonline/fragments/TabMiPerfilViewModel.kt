@@ -30,13 +30,16 @@ class TabMiPerfilViewModel : ViewModel() {
                 .await()
             if (data != null) {
                 val usuarioDeBaseDeDatos = data.toObject<Usuario>()
-                if (usuario != null) {
+                Log.d("usuario base de datos: ", usuarioDeBaseDeDatos.toString())
+                if (usuarioDeBaseDeDatos != null) {
                     usuario = usuarioDeBaseDeDatos
+                    Log.d("usuario bd: ", usuario.toString())
                 }
             }
         } catch (e: Exception) {
 
         }
+        Log.d("user: ", usuario.toString())
         return usuario
     }
 }

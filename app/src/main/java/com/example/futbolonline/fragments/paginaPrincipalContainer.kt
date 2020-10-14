@@ -37,6 +37,7 @@ class paginaPrincipalContainer : Fragment() {
         tableLayoutPaginaPrincipalContainer =
             v.findViewById(R.id.tableLayoutPaginaPrincipalContainer)
         btnIrACrearEventoDePaginaPrincipal = v.findViewById(R.id.btnIrACrearEventoDePaginaPrincipal)
+
         return v
     }
 

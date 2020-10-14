@@ -1,14 +1,12 @@
 package com.example.futbolonline.activities
 
-import android.content.Intent
-import android.content.ServiceConnection
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.UserHandle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.futbolonline.R
+
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,5 +23,22 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.Cerrarsesion -> {
+            val accion =
+            true
+        }
+        R.id.action_nuevo -> {
+            Log.i("ActionBar", "Nuevo!")
+            true
+        }
+        R.id.action_buscar -> {
+            Log.i("ActionBar", "Buscar!")
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
 
 }

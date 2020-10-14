@@ -4,9 +4,8 @@
 
     <item
         android:id="@+id/perf"
-        android:title="Mi perfil"
-        app:showAsAction="never"
-        />
+        android:title="Cambiar contraseña"
+        app:showAsAction="never" />
     <item
         android:id="@+id/Cerrarsesion"
         android:title="Cerrar sesion"

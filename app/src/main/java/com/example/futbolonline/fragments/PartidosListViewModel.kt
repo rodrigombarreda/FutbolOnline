@@ -1,6 +1,8 @@
 package com.example.futbolonline.fragments
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.futbolonline.entidades.Partido
 import com.google.firebase.firestore.ktx.firestore
@@ -10,13 +12,14 @@ import kotlinx.coroutines.tasks.await
 
 class PartidosListViewModel : ViewModel() {
     // TODO: Implement the ViewModel
+
+    val listaPartidos = MutableLiveData<MutableList<Partido>>()
+
     val NOMBRE_COLECCION_PARTIDOS = "partidos"
 
     val db = Firebase.firestore
 
-    suspend fun getTodosLosPartidos(): MutableList<Partido> {
-        var partidos: MutableList<Partido> = ArrayList<Partido>()
-
+    suspend fun getTodosLosPartidos() {
         val questionRef = db.collection(NOMBRE_COLECCION_PARTIDOS)
         val query = questionRef
 
@@ -25,13 +28,13 @@ class PartidosListViewModel : ViewModel() {
                 .get()
                 .await()
             if (data != null) {
-                partidos = data.toObjects<Partido>() as MutableList<Partido>
-                Log.d("Partidos: ", partidos.toString())
+
+                listaPartidos.value = data.toObjects<Partido>() as MutableList<Partido>
+                Log.d("Partidos: ", listaPartidos.value.toString())
             }
         } catch (e: Exception) {
 
         }
-        return partidos
     }
 
 }

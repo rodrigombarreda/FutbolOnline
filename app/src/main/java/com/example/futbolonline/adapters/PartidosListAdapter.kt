@@ -8,11 +8,14 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
+import kotlin.properties.Delegates
 
 class PartidosListAdapter(
     private var partidosList: MutableList<Partido>,
     val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<PartidosListAdapter.PartidoHolder>() {
+
+    var items: List<Partido> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
 
     companion object {
         private val TAG = "PartidosListAdapter"
@@ -41,6 +44,10 @@ class PartidosListAdapter(
             onItemClick(position)
         }
 
+    }
+
+    fun setData(data: MutableList<Partido>) {
+        this.items = data
     }
 
     class PartidoHolder(v: View) : RecyclerView.ViewHolder(v) {

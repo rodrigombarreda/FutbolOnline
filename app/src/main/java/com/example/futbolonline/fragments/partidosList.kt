@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +49,17 @@ class partidosList : Fragment() {
         super.onActivityCreated(savedInstanceState)
         partidosListViewModel = ViewModelProvider(this).get(PartidosListViewModel::class.java)
         // TODO: Use the ViewModel
+
+        partidosListViewModel.listaPartidos.observe(viewLifecycleOwner, Observer { lista ->
+            //partidosListAdapter.setData(lista)
+            partidos = lista
+            Log.d("partidos", partidos.toString())
+            partidosListAdapter = PartidosListAdapter(partidos,
+                { position -> alClickearCardPartido(position) })
+
+            listaPartidos.adapter = partidosListAdapter
+
+        })
     }
 
     override fun onStart() {
@@ -68,14 +80,10 @@ class partidosList : Fragment() {
         listaPartidos.adapter = partidosListAdapter
 
         // TODO : Resolver Only the original thread that created a view hierarchy can touch its views.
-        /*scope.launch {
-            partidos = partidosListViewModel.getTodosLosPartidos()
-            partidosListAdapter = PartidosListAdapter(partidos,
-                { position -> alClickearCardPartido(position) })
+        scope.launch {
+            partidosListViewModel.getTodosLosPartidos()
 
-            listaPartidos.adapter = partidosListAdapter
-
-        }*/
+        }
 
     }
 

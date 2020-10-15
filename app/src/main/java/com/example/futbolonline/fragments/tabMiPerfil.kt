@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -60,10 +61,52 @@ class tabMiPerfil : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        setDatosDePerfil()
-    }
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+        scope.launch {
 
-    fun setDatosDePerfil() {
+            val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                USUARIO_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+            txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
+            val usuario: Usuario? =miPefilViewModel.refrescarPerfil(sharedPref.getString(
+            "EMAIL_USUARIO",
+            "default"
+
+        )!!)
+
+        scope.launch {
+            Log.d("hola","asgaioshngioasngioansiognasiongioasngioansiognaiosngioasngioansgiosnaoignasiognioas")
+            if (usuario != null) {
+                setearDatos(usuario)
+            }
+        }
+        }
+            Log.d("hola","2____________________________________________________________________")
+
+           /* if (usuario != null) {
+               Log.d("hola","1____________________________________________________________________")
+                txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
+                txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
+                txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
+                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
+            }*/
+
+
+        }
+
+
+ suspend  fun setearDatos(us:Usuario){
+       if (us != null) {
+           Log.d("hola","1____________________________________________________________________")
+           txtNombreTabMiPerfil.text = "Nombre: " + us.nombre
+           txtEdadTabMiPerfil.text = "Edad: " + us.edad.toString()
+           txtGeneroTabMiPerfil.text = "Genero: " + us.genero
+           txtCalificacionTabMiPerfil.text = "Calificacion: " + us.calificacion
+       }
+   }
+    /*fun setDatosDePerfil() {
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
@@ -89,5 +132,5 @@ class tabMiPerfil : Fragment() {
             }
         }
 
-    }
+    }*/
 }

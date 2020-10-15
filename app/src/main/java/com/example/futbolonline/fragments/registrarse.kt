@@ -65,20 +65,21 @@ class registrarse : Fragment() {
         super.onActivityCreated(savedInstanceState)
         registrarseViewModel = ViewModelProvider(this).get(RegistrarseViewModel::class.java)
         // TODO: Use the ViewModel
-        registrarseViewModel.emailEnUso.observe(viewLifecycleOwner, Observer { result ->
-            if (result) {
-                Snackbar.make(
-                    v,
-                    "EMAIL EN USO",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            } else {
-                Snackbar.make(
-                    v,
-                    "EMAIL NO USADO",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+        registrarseViewModel.errorEmailUsuario.observe(viewLifecycleOwner, Observer { error ->
+            inputMailRegistrarse.setError(error)
+        })
+        registrarseViewModel.errorNombreUsuario.observe(viewLifecycleOwner, Observer { error ->
+            inputNombreRegistrarse.setError(error)
+        })
+        registrarseViewModel.errorEdadUsuario.observe(viewLifecycleOwner, Observer { error ->
+            inputEdadRegistrarse.setError(error)
+        })
+        registrarseViewModel.errorGeneroUsuario.observe(viewLifecycleOwner, Observer { error ->
+            radioBtnMasculinoRegistrarse.setError(error)
+            radioBtnFemeninoRegistrarse.setError(error)
+        })
+        registrarseViewModel.errorContraseniaUsuario.observe(viewLifecycleOwner, Observer { error ->
+            inputContraseniaRegistrarse.setError(error)
         })
     }
 

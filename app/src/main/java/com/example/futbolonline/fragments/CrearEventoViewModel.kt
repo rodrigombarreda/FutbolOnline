@@ -26,7 +26,7 @@ import kotlinx.coroutines.tasks.await
 import kotlin.contracts.Returns
 
 class CrearEventoViewModel : ViewModel() {
-    // TODO: Implementar view model
+    // valores
     val NRO_MINIMO_CARACTERES_NOMBRE_EVENTO: Int = 4
     val NRO_MAXIMO_CARACTERES_NOMBRE_EVENTO: Int = 25
 
@@ -36,42 +36,64 @@ class CrearEventoViewModel : ViewModel() {
     val EDAD_MINIMA_USUARIO: Int = 12
     val EDAD_MAXIMA_USUARIO: Int = 60
 
-    val VALOR_GENERO_MASCULINO: String = "masculino"
-    val VALOR_GENERO_FEMENINO: String = "femenino"
-
+    // mensajes de error
     val MENSAJE_ERROR_CARACTERES_NOMBRE_EVENTO_FUERA_DE_RANGO: String =
-        "El nombre debe tener entre $NRO_MINIMO_CARACTERES_NOMBRE_EVENTO y $NRO_MAXIMO_CARACTERES_NOMBRE_EVENTO"
+        "El nombre debe tener entre $NRO_MINIMO_CARACTERES_NOMBRE_EVENTO y $NRO_MAXIMO_CARACTERES_NOMBRE_EVENTO caracteres"
     val MENSAJE_ERROR_NOMBRE_EVENTO_USADO: String = "Nombre de evento usado"
 
     val MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO: String =
         "Cantidad de jugadores totales debe ser entre $NRO_MINIMO_JUGADORES_TOTALES y $NRO_MAXIMO_JUGADORES_TOTALES"
+    val MENSAJE_ERROR_JUGADORES_TOTALES_VACIO: String =
+        "Se debe especificar la cantidad de jugadores totales"
 
-    val MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES: String =
+    val MENSAJE_ERROR_JUGADORES_FALTANTES_NO_MENOR_A_TOTALES: String =
         "Jugadores faltantes debe ser menor a la cantidad de jugadores totales"
+    val MENSAJE_ERROR_ESPECIFICACION_FALTANTES_SIN_ESPECIFICAR_TOTALES: String =
+        "Se debe especificar la cantidad faltante con la total"
+    val MENSAJE_ERROR_JUGADORES_FALTANTES_VACIO: String =
+        "Se debe especificar la cantidad de jugadores faltantes"
 
     val MENSAJE_ERROR_EDAD_MINIMA_FUERA_DE_RANGO: String =
         "Edad minima debe ser entre $EDAD_MINIMA_USUARIO y $EDAD_MAXIMA_USUARIO"
+    val MENSAJE_ERROR_EDAD_MINIMA_MAYOR_A_EDAD_USUARIO: String =
+        "La edad minima debe ser menor o igual a su edad"
+    val MENSAJE_ERROR_EDAD_MINIMA_VACIA: String = "Se debe especificar la edad minima"
 
-    val MENSAJE_ERROR_EDAD_MAXIMA_FUERA_DE_RANGO: String =
-        "Edad máxima debe ser entre $EDAD_MINIMA_USUARIO y $EDAD_MAXIMA_USUARIO"
     val MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_MINIMA: String =
         "Edad máxima debe ser mayor o igual a edad mínima"
+    val MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_USUARIO: String =
+        "La edad maxima debe ser mayor o igual a su edad"
+    val MENSAJE_ERROR_ESPECIFICACION_EDAD_MAXIMA_SIN_EDAD_MINIMA: String =
+        "Se debe especificar edad maxima con la minima"
+    val MENSAJE_ERROR_EDAD_MAXIMA_VACIA: String = "Se debe especificar la edad maxima"
 
+    val MENSAJE_ERROR_CALIFICACION_MINIMA_MAYOR_A_LA_DEL_USUARIO: String =
+        "La calificacion minima debe ser igual o mayor a su calificacion"
+    val MENSAJE_ERROR_CALIFICACION_MINIMA_VACIA: String =
+        "Se debe especificar la calificacion minima"
+
+    // colecciones
     val NOMBRE_COLECCION_PARTIDOS: String = "partidos"
     val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
 
+    // firestore
     val db = Firebase.firestore
 
+    // preferences
     val USUARIO_PREFERENCES: String = "usuarioPreferences"
 
-    var errorCaracteresNombreEventoFueraDeRango = MutableLiveData<String>()
+    // live data
+    var errorNombreEvento = MutableLiveData<String>()
+    var errorJugadoresTotalesEvento = MutableLiveData<String>()
+    var errorJugadoresFaltantesEvento = MutableLiveData<String>()
+    var errorEdadMinimaEvento = MutableLiveData<String>()
+    var errorEdadMaximaEvento = MutableLiveData<String>()
+    var errorCalificacionMinimaEvento = MutableLiveData<String>()
 
     suspend fun eventoEsValido(
         inputNombreEvento: EditText,
         inputJugadoresTotales: EditText,
         inputJugadoresFaltantes: EditText,
-        radioBtnMasculinoIsChecked: Boolean,
-        radioBtnFemeninoIsChecked: Boolean,
         inputEdadMinima: EditText,
         inputEdadMaxima: EditText,
         inputCalificacionMinima: EditText,
@@ -82,23 +104,19 @@ class CrearEventoViewModel : ViewModel() {
         jugadoresTotalesEsValido(inputJugadoresTotales)
         jugadoresFaltantesEsValido(
             inputJugadoresFaltantes,
-            inputJugadoresTotales.text.toString().toInt()
+            inputJugadoresTotales
         )
-        seSeleccionoGenero(radioBtnMasculinoIsChecked, radioBtnFemeninoIsChecked)
-        edadMinimaEsValida(inputEdadMinima)
-        edadMaximaEsValida(inputEdadMaxima, inputEdadMinima.text.toString().toInt())
+        edadMinimaEsValida(inputEdadMinima, emailUsuarioLogeado)
+        edadMaximaEsValida(inputEdadMaxima, inputEdadMinima, emailUsuarioLogeado)
         calificacionMinimaEsValida(inputCalificacionMinima, emailUsuarioLogeado)
         if (nombreEventoEsValido(inputNombreEvento) && jugadoresTotalesEsValido(
                 inputJugadoresTotales
             ) && jugadoresFaltantesEsValido(
                 inputJugadoresFaltantes,
-                inputJugadoresTotales.text.toString().toInt()
-            ) && seSeleccionoGenero(
-                radioBtnMasculinoIsChecked,
-                radioBtnFemeninoIsChecked
-            ) && edadMinimaEsValida(inputEdadMinima) && edadMaximaEsValida(
+                inputJugadoresTotales
+            ) && edadMinimaEsValida(inputEdadMinima, emailUsuarioLogeado) && edadMaximaEsValida(
                 inputEdadMaxima,
-                inputEdadMinima.text.toString().toInt()
+                inputEdadMinima, emailUsuarioLogeado
             ) && calificacionMinimaEsValida(
                 inputCalificacionMinima, emailUsuarioLogeado
             )
@@ -113,14 +131,13 @@ class CrearEventoViewModel : ViewModel() {
         nombreEvento: String,
         jugadoresTotales: Int,
         jugadoresFaltantes: Int,
-        radioBtnFemeninoIsChecked: Boolean,
         edadMinima: Int,
         edadMaxima: Int,
         calificacionMinima: Int,
         emailUsuarioLogeado: String
     ): Boolean {
         var seRegistro: Boolean = true
-        var generoAdmitido: String = obtenerGenero(radioBtnFemeninoIsChecked)
+        var generoAdmitido: String = obtenerGenero(emailUsuarioLogeado)
         var partidoNuevo: Partido = Partido(
             nombreEvento,
             jugadoresTotales,
@@ -143,14 +160,11 @@ class CrearEventoViewModel : ViewModel() {
         return seRegistro
     }
 
-    fun obtenerGenero(
-        radioBtnFemeninoIsChecked: Boolean
-    ): String {
-        lateinit var genero: String
-        if (radioBtnFemeninoIsChecked) {
-            genero = VALOR_GENERO_FEMENINO
-        } else {
-            genero = VALOR_GENERO_MASCULINO
+    suspend fun obtenerGenero(emailUsuarioLogeado: String): String {
+        var genero: String = ""
+        val usuarioLogeado: Usuario? = getUsuarioPorMail(emailUsuarioLogeado)
+        if (usuarioLogeado != null) {
+            genero = usuarioLogeado.genero
         }
         return genero
     }
@@ -178,7 +192,7 @@ class CrearEventoViewModel : ViewModel() {
         if (nombreEvento.length >= nroMinimoCaracteresNombreEvento && nombreEvento.length <= nroMaximoCaracteresNombreEvento) {
             nombreEventoTieneCaracteresEnRango = true
         } else {
-            errorCaracteresNombreEventoFueraDeRango.postValue(
+            errorNombreEvento.postValue(
                 MENSAJE_ERROR_CARACTERES_NOMBRE_EVENTO_FUERA_DE_RANGO
             )
 
@@ -202,88 +216,122 @@ class CrearEventoViewModel : ViewModel() {
                 if (partido == null) {
                     nombreEventoEstaUsado = false
                 } else {
-                    // TODO: Reemplazar con live data
-                    //inputNombreEvento.setError(MENSAJE_ERROR_NOMBRE_EVENTO_USADO)
+                    errorNombreEvento.postValue(
+                        MENSAJE_ERROR_NOMBRE_EVENTO_USADO
+                    )
                 }
             }
         } catch (e: Exception) {
 
         }
-
         return nombreEventoEstaUsado
     }
 
     fun jugadoresTotalesEsValido(inputJugadoresTotales: EditText): Boolean {
         var jugadoresTotalesEsValido: Boolean = false
-
-        val jugadoresTotales: Int = inputJugadoresTotales.text.toString().toInt()
-        if (jugadoresTotales in NRO_MINIMO_JUGADORES_TOTALES..NRO_MAXIMO_JUGADORES_TOTALES) {
-            jugadoresTotalesEsValido = true
+        if (inputJugadoresTotales.text.toString() != "") {
+            val jugadoresTotales: Int = inputJugadoresTotales.text.toString().toInt()
+            if (jugadoresTotales in NRO_MINIMO_JUGADORES_TOTALES..NRO_MAXIMO_JUGADORES_TOTALES) {
+                jugadoresTotalesEsValido = true
+            } else {
+                errorJugadoresTotalesEvento.postValue(MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO)
+            }
         } else {
-            // TODO: Reemplazar con live data
-            // inputJugadoresTotales.setError(MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO)
+            errorJugadoresTotalesEvento.postValue(MENSAJE_ERROR_JUGADORES_TOTALES_VACIO)
         }
-
         return jugadoresTotalesEsValido
     }
 
     fun jugadoresFaltantesEsValido(
         inputJugadoresFaltantes: EditText,
-        cantidadJugadoresTotales: Int
+        inputJugadoresTotales: EditText
     ): Boolean {
         var jugadoresFaltantesEsValido: Boolean = false
+        if (inputJugadoresFaltantes.text.toString() != "" && inputJugadoresTotales.text.toString() != "") {
+            val jugadoresFaltantes: Int = inputJugadoresFaltantes.text.toString().toInt()
+            val jugadoresTotales: Int = inputJugadoresTotales.text.toString().toInt()
 
-        val jugadoresFaltantes: Int = inputJugadoresFaltantes.text.toString().toInt()
-
-        if (jugadoresFaltantes < cantidadJugadoresTotales) {
-            jugadoresFaltantesEsValido = true
+            if (jugadoresFaltantes < jugadoresTotales) {
+                jugadoresFaltantesEsValido = true
+            } else {
+                errorJugadoresFaltantesEvento.postValue(
+                    MENSAJE_ERROR_JUGADORES_FALTANTES_NO_MENOR_A_TOTALES
+                )
+            }
         } else {
-            // TODO: Reemplazar con live data
-            // inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES)
+            if (inputJugadoresFaltantes.text.toString() != "") {
+                errorJugadoresFaltantesEvento.postValue(
+                    MENSAJE_ERROR_ESPECIFICACION_FALTANTES_SIN_ESPECIFICAR_TOTALES
+                )
+            } else {
+                errorJugadoresFaltantesEvento.postValue(MENSAJE_ERROR_JUGADORES_FALTANTES_VACIO)
+            }
         }
-
         return jugadoresFaltantesEsValido
     }
 
-    fun seSeleccionoGenero(
-        radioBtnMasculinoIsChecked: Boolean,
-        radioBtnFemeninoIsChecked: Boolean
+    suspend fun edadMinimaEsValida(
+        inputEdadMinima: EditText,
+        emailUsuarioLogeado: String
     ): Boolean {
-        var seSeleccionoGenero: Boolean = radioBtnMasculinoIsChecked || radioBtnFemeninoIsChecked
-        return seSeleccionoGenero
-    }
-
-    fun edadMinimaEsValida(inputEdadMinima: EditText): Boolean {
         var edadMinimaEsValida: Boolean = false
-
-        val edadMinima: Int = inputEdadMinima.text.toString().toInt()
-        if (edadMinima >= EDAD_MINIMA_USUARIO && edadMinima <= EDAD_MAXIMA_USUARIO) {
-            edadMinimaEsValida = true
+        if (inputEdadMinima.text.toString() != "") {
+            val edadMinima: Int = inputEdadMinima.text.toString().toInt()
+            if (edadMinima in EDAD_MINIMA_USUARIO..EDAD_MAXIMA_USUARIO) {
+                val edadUsuario = obtenerEdadUsuario(emailUsuarioLogeado)
+                if (edadUsuario >= edadMinima) {
+                    edadMinimaEsValida = true
+                } else {
+                    errorEdadMinimaEvento.postValue(MENSAJE_ERROR_EDAD_MINIMA_MAYOR_A_EDAD_USUARIO)
+                }
+            } else {
+                errorEdadMinimaEvento.postValue(MENSAJE_ERROR_EDAD_MINIMA_FUERA_DE_RANGO)
+            }
         } else {
-            // TODO: Reemplazar con live data
-            // inputEdadMinima.setError(MENSAJE_ERROR_EDAD_MINIMA_FUERA_DE_RANGO)
+            errorEdadMinimaEvento.postValue(MENSAJE_ERROR_EDAD_MINIMA_VACIA)
         }
-
         return edadMinimaEsValida
     }
 
-    fun edadMaximaEsValida(inputEdadMaxima: EditText, edadMinima: Int): Boolean {
+    suspend fun edadMaximaEsValida(
+        inputEdadMaxima: EditText,
+        inputEdadMinima: EditText,
+        emailUsuarioLogeado: String
+    ): Boolean {
         var edadMaximaEsValida: Boolean = false
+        if (inputEdadMaxima.text.toString() != "" && inputEdadMinima.text.toString() != "") {
+            val edadMaxima: Int = inputEdadMaxima.text.toString().toInt()
+            val edadMinima: Int = inputEdadMinima.text.toString().toInt()
 
-        val edadMaxima: Int = inputEdadMaxima.text.toString().toInt()
-        if (edadMinimaEsValida(inputEdadMaxima)) {
             if (edadMaxima >= edadMinima) {
-                edadMaximaEsValida = true
+                val edadUsuario = obtenerEdadUsuario(emailUsuarioLogeado)
+                if (edadUsuario <= edadMaxima) {
+                    edadMaximaEsValida = true
+                } else {
+                    errorEdadMaximaEvento.postValue(MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_USUARIO)
+                }
             } else {
-                // TODO: Reemplazar con live data
-                // inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_MINIMA)
+                errorEdadMaximaEvento.postValue(MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_MINIMA)
             }
         } else {
-            // TODO: Reemplazar con live data
-            // inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_FUERA_DE_RANGO)
+            if (inputEdadMaxima.text.toString() != "") {
+                errorEdadMaximaEvento.postValue(
+                    MENSAJE_ERROR_ESPECIFICACION_EDAD_MAXIMA_SIN_EDAD_MINIMA
+                )
+            } else {
+                errorEdadMaximaEvento.postValue(MENSAJE_ERROR_EDAD_MAXIMA_VACIA)
+            }
         }
-
         return edadMaximaEsValida
+    }
+
+    suspend fun obtenerEdadUsuario(emailUsuarioLogeado: String): Int {
+        var edadUsuario: Int = 0
+        val usuarioLogeado: Usuario? = getUsuarioPorMail(emailUsuarioLogeado)
+        if (usuarioLogeado != null) {
+            edadUsuario = usuarioLogeado.edad
+        }
+        return edadUsuario
     }
 
     suspend fun calificacionMinimaEsValida(
@@ -291,14 +339,19 @@ class CrearEventoViewModel : ViewModel() {
         emailUsuarioLogeado: String
     ): Boolean {
         var calificacionMinimaEsValida: Boolean = false
-
-        val calificacionMinima = inputCalificacionMinima.text.toString().toInt()
-        val calificacionUsuario: Int = obtenerCalificacionUsuario(emailUsuarioLogeado)
-        if (calificacionUsuario >= calificacionMinima) {
-            calificacionMinimaEsValida = true
+        if (inputCalificacionMinima.text.toString() != "") {
+            val calificacionMinima = inputCalificacionMinima.text.toString().toInt()
+            val calificacionUsuario: Int = obtenerCalificacionUsuario(emailUsuarioLogeado)
+            if (calificacionUsuario >= calificacionMinima) {
+                calificacionMinimaEsValida = true
+            } else {
+                errorCalificacionMinimaEvento.postValue(
+                    MENSAJE_ERROR_CALIFICACION_MINIMA_MAYOR_A_LA_DEL_USUARIO
+                )
+            }
+        } else {
+            errorCalificacionMinimaEvento.postValue(MENSAJE_ERROR_CALIFICACION_MINIMA_VACIA)
         }
-        Log.d("CALIFICACION VALIDA: ", calificacionMinimaEsValida.toString())
-
         return calificacionMinimaEsValida
     }
 
@@ -330,7 +383,6 @@ class CrearEventoViewModel : ViewModel() {
         } catch (e: Exception) {
 
         }
-
         return usuario
     }
 }

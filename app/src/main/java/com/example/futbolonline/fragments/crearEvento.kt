@@ -36,9 +36,6 @@ class crearEvento : Fragment() {
     lateinit var inputNombreEventoCrearEvento: EditText
     lateinit var inputJugadoresTotalesCrearEvento: EditText
     lateinit var inputJugadoresFaltantesCrearEvento: EditText
-    lateinit var radioGeneroCrearEvento: RadioGroup
-    lateinit var radioBtnMasculinoCrearEvento: RadioButton
-    lateinit var radioBtnFemeninoCrearEvento: RadioButton
     lateinit var inputEdadMinimaCrearEvento: EditText
     lateinit var inputEdadMaximaCrearEvento: EditText
     lateinit var inputCalificacionMinimaCrearEvento: EditText
@@ -52,9 +49,6 @@ class crearEvento : Fragment() {
         inputNombreEventoCrearEvento = v.findViewById(R.id.inputNombreEventoCrearEvento)
         inputJugadoresTotalesCrearEvento = v.findViewById(R.id.inputJugadoresTotalesCrearEvento)
         inputJugadoresFaltantesCrearEvento = v.findViewById(R.id.inputJugadoresFaltantesCrearEvento)
-        radioGeneroCrearEvento = v.findViewById(R.id.radioGeneroCrearEvento)
-        radioBtnMasculinoCrearEvento = v.findViewById(R.id.radioBtnMasculinoCrearEvento)
-        radioBtnFemeninoCrearEvento = v.findViewById(R.id.radioBtnFemeninoCrearEvento)
         inputEdadMinimaCrearEvento = v.findViewById(R.id.inputEdadMinimaCrearEvento)
         inputEdadMaximaCrearEvento = v.findViewById(R.id.inputEdadMaximaCrearEvento)
         inputCalificacionMinimaCrearEvento = v.findViewById(R.id.inputCalificacionMinimaCrearEvento)
@@ -67,22 +61,31 @@ class crearEvento : Fragment() {
         crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
 
         // TODO: Use the ViewModel
-        crearEventoViewModel.errorCaracteresNombreEventoFueraDeRango.observe(
+        crearEventoViewModel.errorNombreEvento.observe(
             viewLifecycleOwner,
             Observer { error ->
                 inputNombreEventoCrearEvento.setError(error)
             })
+        crearEventoViewModel.errorJugadoresTotalesEvento.observe(
+            viewLifecycleOwner,
+            Observer { error -> inputJugadoresTotalesCrearEvento.setError(error) })
+        crearEventoViewModel.errorJugadoresFaltantesEvento.observe(
+            viewLifecycleOwner,
+            Observer { error -> inputJugadoresFaltantesCrearEvento.setError(error) })
+        crearEventoViewModel.errorEdadMinimaEvento.observe(
+            viewLifecycleOwner,
+            Observer { error -> inputEdadMinimaCrearEvento.setError(error) })
+        crearEventoViewModel.errorEdadMaximaEvento.observe(
+            viewLifecycleOwner,
+            Observer { error -> inputEdadMaximaCrearEvento.setError(error) })
+        crearEventoViewModel.errorCalificacionMinimaEvento.observe(
+            viewLifecycleOwner,
+            Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
     }
 
 
     override fun onStart() {
         super.onStart()
-
-        inputJugadoresTotalesCrearEvento.setText("10")
-        inputJugadoresFaltantesCrearEvento.setText("9")
-        inputEdadMinimaCrearEvento.setText("12")
-        inputEdadMaximaCrearEvento.setText("60")
-        inputCalificacionMinimaCrearEvento.setText("100")
 
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
@@ -98,8 +101,6 @@ class crearEvento : Fragment() {
                     inputNombreEventoCrearEvento,
                     inputJugadoresTotalesCrearEvento,
                     inputJugadoresFaltantesCrearEvento,
-                    radioBtnMasculinoCrearEvento.isChecked,
-                    radioBtnFemeninoCrearEvento.isChecked,
                     inputEdadMinimaCrearEvento,
                     inputEdadMaximaCrearEvento,
                     inputCalificacionMinimaCrearEvento,
@@ -115,7 +116,6 @@ class crearEvento : Fragment() {
                         inputNombreEventoCrearEvento.text.toString(),
                         inputJugadoresTotalesCrearEvento.text.toString().toInt(),
                         inputJugadoresFaltantesCrearEvento.text.toString().toInt(),
-                        radioBtnFemeninoCrearEvento.isChecked,
                         inputEdadMinimaCrearEvento.text.toString().toInt(),
                         inputEdadMaximaCrearEvento.text.toString().toInt(),
                         inputCalificacionMinimaCrearEvento.text.toString().toInt(),

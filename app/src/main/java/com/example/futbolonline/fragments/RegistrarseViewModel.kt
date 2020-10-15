@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class RegistrarseViewModel : ViewModel() {
+    // valores
     val NRO_MINIMO_CARACTERES_NOMBRE_USUARIO: Int = 4
     val NRO_MAXIMO_CARACTERES_NOMBRE_USUARIO: Int = 20
 
@@ -26,14 +27,35 @@ class RegistrarseViewModel : ViewModel() {
 
     val CALIFICACION_INICIAL_USUARIO: Int = 100
 
+    // mensajes de error
+    val MENSAJE_ERROR_EMAIL_FORMATO_INVALIDO: String = "Formato mail invalido"
+    val MENSAJE_ERROR_EMAIL_EN_USO: String = "Email en uso"
+
+    val MENSAJE_ERROR_NOMBRE_USUARIO_FUERA_DE_RANGO: String =
+        "El nombre debe tener entre $NRO_MINIMO_CARACTERES_NOMBRE_USUARIO Y $NRO_MAXIMO_CARACTERES_NOMBRE_USUARIO caracteres"
+    val MENSAJE_ERROR_NOMBRE_USUARIO_EN_USO: String = "Nombre en uso"
+
+    val MENSAJE_ERROR_EDAD_USUARIO_FUERA_DE_RANGO: String =
+        "La edad debe estar entre $EDAD_MINIMA_USUARIO y $EDAD_MAXIMA_USUARIO"
+    val MENSAJE_ERROR_EDAD_USUARIO_VACIA: String = "Se debe especificar la edad"
+
+    val MENSAJE_ERROR_GENERO_NO_SELECCIONADO: String = "Se debe seleccionar un genero"
+
+    val MENSAJE_ERROR_CONTRASENIA_USUARIO_FUERA_DE_RANGO: String =
+        "La contraseña debe tener entre $NRO_MINIMO_CARACTERES_CONTRASENIA Y $NRO_MAXIMO_CARACTERES_CONTRASENIA caracteres"
+
+    // colecciones
     val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
 
+    // firestore
     val db = Firebase.firestore
 
-    //val registroValido = MutableLiveData<Boolean>()
-
-    // TODO: Completar valores para mensajes en el front
-    val emailEnUso = MutableLiveData<Boolean>()
+    // live data
+    var errorEmailUsuario = MutableLiveData<String>()
+    var errorNombreUsuario = MutableLiveData<String>()
+    var errorEdadUsuario = MutableLiveData<String>()
+    var errorGeneroUsuario = MutableLiveData<String>()
+    var errorContraseniaUsuario = MutableLiveData<String>()
 
     suspend fun registroEsValido(
         inputEmail: EditText,
@@ -112,12 +134,16 @@ class RegistrarseViewModel : ViewModel() {
 
     fun edadEsValida(inputEdad: EditText): Boolean {
         var edadEsValida = false
-        if (inputEdad.text.toString().toInt() >= EDAD_MINIMA_USUARIO && inputEdad.text.toString()
-                .toInt() <= EDAD_MAXIMA_USUARIO
-        ) {
-            edadEsValida = true
+        if (inputEdad.text.toString() != "") {
+            if (inputEdad.text.toString()
+                    .toInt() in EDAD_MINIMA_USUARIO..EDAD_MAXIMA_USUARIO
+            ) {
+                edadEsValida = true
+            } else {
+                errorEdadUsuario.postValue(MENSAJE_ERROR_EDAD_USUARIO_FUERA_DE_RANGO)
+            }
         } else {
-            inputEdad.setError("La edad debe estar entre " + EDAD_MINIMA_USUARIO + " Y " + EDAD_MAXIMA_USUARIO)
+            errorEdadUsuario.postValue(MENSAJE_ERROR_EDAD_USUARIO_VACIA)
         }
         return edadEsValida
     }
@@ -125,9 +151,7 @@ class RegistrarseViewModel : ViewModel() {
     fun contraseniaEsValida(inputContrasenia: EditText): Boolean {
         var contraseniaEsValida = false
         if (contraseniaTieneNroCaracteresEnRango(
-                inputContrasenia,
-                NRO_MINIMO_CARACTERES_CONTRASENIA,
-                NRO_MAXIMO_CARACTERES_CONTRASENIA
+                inputContrasenia
             )
         ) {
             contraseniaEsValida = true
@@ -140,7 +164,7 @@ class RegistrarseViewModel : ViewModel() {
         if (EmailValidator.isEmailValid(inputMail.text.toString())) {
             tieneFormatoValido = true
         } else {
-            inputMail.setError("El formato del mail es inválido")
+            errorEmailUsuario.postValue(MENSAJE_ERROR_EMAIL_FORMATO_INVALIDO)
         }
         return tieneFormatoValido
     }
@@ -159,6 +183,8 @@ class RegistrarseViewModel : ViewModel() {
                 val usuario = data.toObject<Usuario>()
                 if (usuario == null) {
                     tieneCuentaAsociada = false
+                } else {
+                    errorEmailUsuario.postValue(MENSAJE_ERROR_EMAIL_EN_USO)
                 }
             }
         } catch (e: Exception) {
@@ -173,10 +199,10 @@ class RegistrarseViewModel : ViewModel() {
         nroMaximoCaracteres: Int
     ): Boolean {
         var tieneNroCaracteresEnRango: Boolean = false
-        if (inputNombre.text.toString().length >= nroMinimoCaracteres && inputNombre.text.toString().length <= nroMaximoCaracteres) {
+        if (inputNombre.text.toString().length in nroMinimoCaracteres..nroMaximoCaracteres) {
             tieneNroCaracteresEnRango = true
         } else {
-            inputNombre.setError("El nombre debe tener entre " + nroMinimoCaracteres + " y " + nroMaximoCaracteres + " caracteres")
+            errorNombreUsuario.postValue(MENSAJE_ERROR_NOMBRE_USUARIO_FUERA_DE_RANGO)
         }
         return tieneNroCaracteresEnRango
     }
@@ -194,10 +220,10 @@ class RegistrarseViewModel : ViewModel() {
                 .get()
                 .await()
             if (data != null) {
-                Log.d("ES NULL", data.toString())
                 if (data.size() == 0) {
-                    Log.d("ESTA VACIO", data.size().toString())
                     nombreEstaUsado = false
+                } else {
+                    errorNombreUsuario.postValue(MENSAJE_ERROR_NOMBRE_USUARIO_EN_USO)
                 }
             }
         } catch (e: Exception) {
@@ -207,15 +233,13 @@ class RegistrarseViewModel : ViewModel() {
     }
 
     fun contraseniaTieneNroCaracteresEnRango(
-        inputContrasenia: EditText,
-        nroMinimoCaracteres: Int,
-        nroMaximoCaracteres: Int
+        inputContrasenia: EditText
     ): Boolean {
         var tieneNroCaracteresEnRango: Boolean = false
-        if (inputContrasenia.text.toString().length >= nroMinimoCaracteres && inputContrasenia.text.toString().length <= nroMaximoCaracteres) {
+        if (inputContrasenia.text.toString().length >= NRO_MINIMO_CARACTERES_CONTRASENIA && inputContrasenia.text.toString().length <= NRO_MAXIMO_CARACTERES_CONTRASENIA) {
             tieneNroCaracteresEnRango = true
         } else {
-            inputContrasenia.setError("La contraseña debe tener entre " + nroMinimoCaracteres + " y " + nroMaximoCaracteres + " caracteres")
+            errorContraseniaUsuario.postValue(MENSAJE_ERROR_CONTRASENIA_USUARIO_FUERA_DE_RANGO)
         }
         return tieneNroCaracteresEnRango
     }
@@ -225,6 +249,9 @@ class RegistrarseViewModel : ViewModel() {
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var seSeleccionoGenero: Boolean = radioBtnMasculinoIsChecked || radioBtnFemeninoIsChecked
+        if (!seSeleccionoGenero) {
+            errorGeneroUsuario.postValue(MENSAJE_ERROR_GENERO_NO_SELECCIONADO)
+        }
         return seSeleccionoGenero
     }
 

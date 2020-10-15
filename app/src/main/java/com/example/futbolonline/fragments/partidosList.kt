@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
 import com.example.futbolonline.adapters.PartidosListAdapter
 import com.example.futbolonline.entidades.Partido
+import kotlinx.android.synthetic.main.partidos_list_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -44,26 +46,31 @@ class partidosList : Fragment() {
         listaPartidos = v.findViewById(R.id.listaPartidos)
         return v
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         partidosListViewModel = ViewModelProvider(this).get(PartidosListViewModel::class.java)
         // TODO: Use the ViewModel
+        val button: Button = refrescar
+        refrescar.setOnClickListener(){
+            partidosListViewModel.refreshInstrumentList()
+        }
 
-        partidosListViewModel.listaPartidos.observe(viewLifecycleOwner, Observer { lista ->
-            //partidosListAdapter.setData(lista)
-            partidos = lista
-            Log.d("partidos", partidos.toString())
+        partidosListViewModel.partidosList.observe(viewLifecycleOwner, Observer { lista ->
+            partidosListAdapter.setData(lista)
+            Log.d("hola", lista.toString())
+            Log.d("hola","aksjgaiojsgiajsiogjasiojgiaosjigasjaiogsjaiosjgioasjgia")
+            partidos=lista
             partidosListAdapter = PartidosListAdapter(partidos,
                 { position -> alClickearCardPartido(position) })
 
             listaPartidos.adapter = partidosListAdapter
-
         })
+
     }
 
     override fun onStart() {
         super.onStart()
+
 
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
@@ -91,4 +98,10 @@ class partidosList : Fragment() {
         // TODO: Implementar funcion
     }
 
+    fun laconchadetumadre(){
+        val button: Button = refrescar
+        button.setOnClickListener {
+
+        }
+    }
 }

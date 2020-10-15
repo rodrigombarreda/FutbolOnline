@@ -1,5 +1,6 @@
 package com.example.futbolonline.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,9 +12,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.example.futbolonline.adapters.PartidosListAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,10 +67,22 @@ class crearEvento : Fragment() {
         crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
 
         // TODO: Use the ViewModel
+        crearEventoViewModel.errorCaracteresNombreEventoFueraDeRango.observe(
+            viewLifecycleOwner,
+            Observer { error ->
+                inputNombreEventoCrearEvento.setError(error)
+            })
     }
+
 
     override fun onStart() {
         super.onStart()
+
+        inputJugadoresTotalesCrearEvento.setText("10")
+        inputJugadoresFaltantesCrearEvento.setText("9")
+        inputEdadMinimaCrearEvento.setText("12")
+        inputEdadMaximaCrearEvento.setText("60")
+        inputCalificacionMinimaCrearEvento.setText("100")
 
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)

@@ -16,8 +16,8 @@ import kotlinx.coroutines.tasks.await
 class PartidosListViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 
-    private var _partidosList :MutableLiveData<MutableList<Partido>> = MutableLiveData()
-    val partidosList : LiveData<MutableList<Partido>> get() = _partidosList
+    private var _partidosList: MutableLiveData<MutableList<Partido>> = MutableLiveData()
+    val partidosList: LiveData<MutableList<Partido>> get() = _partidosList
 
     val NOMBRE_COLECCION_PARTIDOS = "partidos"
 
@@ -32,18 +32,17 @@ class PartidosListViewModel : ViewModel() {
                 .get()
                 .await()
             if (data != null) {
-
                 _partidosList.value = data.toObjects<Partido>() as MutableList<Partido>
-                Log.d("Partidos: ", _partidosList.value.toString())
             }
         } catch (e: Exception) {
 
         }
         return _partidosList
     }
-fun refreshInstrumentList(){
-    viewModelScope.launch (Dispatchers.Main){
-        _partidosList=getTodosLosPartidos()
+
+    fun refrescarListaPartidos() {
+        viewModelScope.launch(Dispatchers.Main) {
+            _partidosList = getTodosLosPartidos()
+        }
     }
-}
 }

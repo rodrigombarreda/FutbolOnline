@@ -15,7 +15,7 @@ class PartidosListAdapter(
     val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<PartidosListAdapter.PartidoHolder>() {
 
-    var items: List<Partido> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
+    // var items: List<Partido> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
 
     companion object {
         private val TAG = "PartidosListAdapter"
@@ -46,9 +46,9 @@ class PartidosListAdapter(
 
     }
 
-    fun setData(data: MutableList<Partido>) {
+    /*fun setData(data: MutableList<Partido>) {
         this.items = data
-    }
+    }*/
 
     class PartidoHolder(v: View) : RecyclerView.ViewHolder(v) {
 

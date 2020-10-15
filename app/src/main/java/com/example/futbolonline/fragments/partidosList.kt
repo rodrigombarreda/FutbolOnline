@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,20 +47,15 @@ class partidosList : Fragment() {
         listaPartidos = v.findViewById(R.id.listaPartidos)
         return v
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         partidosListViewModel = ViewModelProvider(this).get(PartidosListViewModel::class.java)
         // TODO: Use the ViewModel
-        val button: Button = refrescar
-        refrescar.setOnClickListener(){
-            partidosListViewModel.refreshInstrumentList()
-        }
 
         partidosListViewModel.partidosList.observe(viewLifecycleOwner, Observer { lista ->
-            partidosListAdapter.setData(lista)
-            Log.d("hola", lista.toString())
-            Log.d("hola","aksjgaiojsgiajsiogjasiojgiaosjigasjaiogsjaiosjgioasjgia")
-            partidos=lista
+            //partidosListAdapter.setData(lista)
+            partidos = lista
             partidosListAdapter = PartidosListAdapter(partidos,
                 { position -> alClickearCardPartido(position) })
 
@@ -86,22 +82,13 @@ class partidosList : Fragment() {
 
         listaPartidos.adapter = partidosListAdapter
 
-        // TODO : Resolver Only the original thread that created a view hierarchy can touch its views.
         scope.launch {
-            partidosListViewModel.getTodosLosPartidos()
-
+            partidosListViewModel.refrescarListaPartidos()
         }
-
     }
 
     fun alClickearCardPartido(position: Int) {
         // TODO: Implementar funcion
     }
 
-    fun laconchadetumadre(){
-        val button: Button = refrescar
-        button.setOnClickListener {
-
-        }
-    }
 }

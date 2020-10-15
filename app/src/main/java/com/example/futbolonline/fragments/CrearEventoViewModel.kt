@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
@@ -62,6 +63,8 @@ class CrearEventoViewModel : ViewModel() {
     val db = Firebase.firestore
 
     val USUARIO_PREFERENCES: String = "usuarioPreferences"
+
+    var errorCaracteresNombreEventoFueraDeRango = MutableLiveData<String>()
 
     suspend fun eventoEsValido(
         inputNombreEvento: EditText,
@@ -175,7 +178,10 @@ class CrearEventoViewModel : ViewModel() {
         if (nombreEvento.length >= nroMinimoCaracteresNombreEvento && nombreEvento.length <= nroMaximoCaracteresNombreEvento) {
             nombreEventoTieneCaracteresEnRango = true
         } else {
-            inputNombreEvento.setError(MENSAJE_ERROR_CARACTERES_NOMBRE_EVENTO_FUERA_DE_RANGO)
+            errorCaracteresNombreEventoFueraDeRango.postValue(
+                MENSAJE_ERROR_CARACTERES_NOMBRE_EVENTO_FUERA_DE_RANGO
+            )
+
         }
         return nombreEventoTieneCaracteresEnRango
     }
@@ -196,7 +202,8 @@ class CrearEventoViewModel : ViewModel() {
                 if (partido == null) {
                     nombreEventoEstaUsado = false
                 } else {
-                    inputNombreEvento.setError(MENSAJE_ERROR_NOMBRE_EVENTO_USADO)
+                    // TODO: Reemplazar con live data
+                    //inputNombreEvento.setError(MENSAJE_ERROR_NOMBRE_EVENTO_USADO)
                 }
             }
         } catch (e: Exception) {
@@ -208,12 +215,15 @@ class CrearEventoViewModel : ViewModel() {
 
     fun jugadoresTotalesEsValido(inputJugadoresTotales: EditText): Boolean {
         var jugadoresTotalesEsValido: Boolean = false
-        val jugadoresTotales = inputJugadoresTotales.text.toString().toInt()
-        if (jugadoresTotales >= NRO_MINIMO_JUGADORES_TOTALES && jugadoresTotales <= NRO_MAXIMO_JUGADORES_TOTALES) {
+
+        val jugadoresTotales: Int = inputJugadoresTotales.text.toString().toInt()
+        if (jugadoresTotales in NRO_MINIMO_JUGADORES_TOTALES..NRO_MAXIMO_JUGADORES_TOTALES) {
             jugadoresTotalesEsValido = true
         } else {
-            inputJugadoresTotales.setError(MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO)
+            // TODO: Reemplazar con live data
+            // inputJugadoresTotales.setError(MENSAJE_ERROR_JUGADORES_TOTALES_FUERA_DE_RANGO)
         }
+
         return jugadoresTotalesEsValido
     }
 
@@ -222,12 +232,14 @@ class CrearEventoViewModel : ViewModel() {
         cantidadJugadoresTotales: Int
     ): Boolean {
         var jugadoresFaltantesEsValido: Boolean = false
+
         val jugadoresFaltantes: Int = inputJugadoresFaltantes.text.toString().toInt()
 
         if (jugadoresFaltantes < cantidadJugadoresTotales) {
             jugadoresFaltantesEsValido = true
         } else {
-            inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES)
+            // TODO: Reemplazar con live data
+            // inputJugadoresFaltantes.setError(MENSAJE_ERROR_JUGADORES_FALTANTES_MAYOR_A_TOTALES)
         }
 
         return jugadoresFaltantesEsValido
@@ -243,27 +255,34 @@ class CrearEventoViewModel : ViewModel() {
 
     fun edadMinimaEsValida(inputEdadMinima: EditText): Boolean {
         var edadMinimaEsValida: Boolean = false
+
         val edadMinima: Int = inputEdadMinima.text.toString().toInt()
         if (edadMinima >= EDAD_MINIMA_USUARIO && edadMinima <= EDAD_MAXIMA_USUARIO) {
             edadMinimaEsValida = true
         } else {
-            inputEdadMinima.setError(MENSAJE_ERROR_EDAD_MINIMA_FUERA_DE_RANGO)
+            // TODO: Reemplazar con live data
+            // inputEdadMinima.setError(MENSAJE_ERROR_EDAD_MINIMA_FUERA_DE_RANGO)
         }
+
         return edadMinimaEsValida
     }
 
     fun edadMaximaEsValida(inputEdadMaxima: EditText, edadMinima: Int): Boolean {
         var edadMaximaEsValida: Boolean = false
+
         val edadMaxima: Int = inputEdadMaxima.text.toString().toInt()
         if (edadMinimaEsValida(inputEdadMaxima)) {
             if (edadMaxima >= edadMinima) {
                 edadMaximaEsValida = true
             } else {
-                inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_MINIMA)
+                // TODO: Reemplazar con live data
+                // inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_MENOR_A_EDAD_MINIMA)
             }
         } else {
-            inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_FUERA_DE_RANGO)
+            // TODO: Reemplazar con live data
+            // inputEdadMaxima.setError(MENSAJE_ERROR_EDAD_MAXIMA_FUERA_DE_RANGO)
         }
+
         return edadMaximaEsValida
     }
 
@@ -272,12 +291,14 @@ class CrearEventoViewModel : ViewModel() {
         emailUsuarioLogeado: String
     ): Boolean {
         var calificacionMinimaEsValida: Boolean = false
+
         val calificacionMinima = inputCalificacionMinima.text.toString().toInt()
         val calificacionUsuario: Int = obtenerCalificacionUsuario(emailUsuarioLogeado)
         if (calificacionUsuario >= calificacionMinima) {
             calificacionMinimaEsValida = true
         }
         Log.d("CALIFICACION VALIDA: ", calificacionMinimaEsValida.toString())
+
         return calificacionMinimaEsValida
     }
 

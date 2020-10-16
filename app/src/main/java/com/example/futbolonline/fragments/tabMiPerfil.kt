@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Usuario
@@ -57,80 +58,42 @@ class tabMiPerfil : Fragment() {
         super.onActivityCreated(savedInstanceState)
         miPefilViewModel = ViewModelProvider(this).get(TabMiPerfilViewModel::class.java)
         // TODO: Use the ViewModel
+
+        miPefilViewModel.usuario.observe(viewLifecycleOwner,
+            Observer { usuario -> setearDatos(usuario) })
     }
 
     override fun onStart() {
         super.onStart()
+
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
-        scope.launch {
 
+        scope.launch {
             val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
                 USUARIO_PREFERENCES,
                 Context.MODE_PRIVATE
             )
-            txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
-            val usuario: Usuario? =miPefilViewModel.refrescarPerfil(sharedPref.getString(
-            "EMAIL_USUARIO",
-            "default"
 
-        )!!)
+            txtEmailTabMiPerfil.text =
+                "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
 
-        scope.launch {
-            Log.d("hola","asgaioshngioasngioansiognasiongioasngioansiognaiosngioasngioansgiosnaoignasiognioas")
-            if (usuario != null) {
-                setearDatos(usuario)
-            }
+            miPefilViewModel.refrescarPerfil(
+                sharedPref.getString(
+                    "EMAIL_USUARIO",
+                    "default"
+                )!!
+            )
         }
+    }
+
+
+    fun setearDatos(us: Usuario) {
+        if (us != null) {
+            txtNombreTabMiPerfil.text = "Nombre: " + us.nombre
+            txtEdadTabMiPerfil.text = "Edad: " + us.edad.toString()
+            txtGeneroTabMiPerfil.text = "Genero: " + us.genero
+            txtCalificacionTabMiPerfil.text = "Calificacion: " + us.calificacion
         }
-            Log.d("hola","2____________________________________________________________________")
-
-           /* if (usuario != null) {
-               Log.d("hola","1____________________________________________________________________")
-                txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
-                txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
-                txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion
-            }*/
-
-
-        }
-
-
- suspend  fun setearDatos(us:Usuario){
-       if (us != null) {
-           Log.d("hola","1____________________________________________________________________")
-           txtNombreTabMiPerfil.text = "Nombre: " + us.nombre
-           txtEdadTabMiPerfil.text = "Edad: " + us.edad.toString()
-           txtGeneroTabMiPerfil.text = "Genero: " + us.genero
-           txtCalificacionTabMiPerfil.text = "Calificacion: " + us.calificacion
-       }
-   }
-    /*fun setDatosDePerfil() {
-        val parentJob = Job()
-        val scope = CoroutineScope(Dispatchers.Default + parentJob)
-
-        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-            USUARIO_PREFERENCES,
-            Context.MODE_PRIVATE
-        )
-        txtEmailTabMiPerfil.text = "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
-        scope.launch {
-            val usuario: Usuario? =
-                miPefilViewModel.getUsuarioPorMail(
-                    sharedPref.getString(
-                        "EMAIL_USUARIO",
-                        "default"
-                    )!!
-                )
-            if (usuario != null) {
-                // TODO : Resolver Only the original thread that created a view hierarchy can touch its views.
-                /*txtNombreTabMiPerfil.text = "Nombre: " + usuario.nombre
-                txtEdadTabMiPerfil.text = "Edad: " + usuario.edad.toString()
-                txtGeneroTabMiPerfil.text = "Genero: " + usuario.genero
-                txtCalificacionTabMiPerfil.text = "Calificacion: " + usuario.calificacion*/
-            }
-        }
-
-    }*/
+    }
 }

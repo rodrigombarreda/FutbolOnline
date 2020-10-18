@@ -1,6 +1,7 @@
 package com.example.futbolonline.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.example.futbolonline.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -125,9 +127,15 @@ class registrarse : Fragment() {
                         val editor = sharedPref.edit()
                         editor.putString("EMAIL_USUARIO", inputMailRegistrarse.text.toString())
                         editor.apply()
-                        var accion =
+
+                        // TODO: Ir a main activity
+
+                        val mainActivity = Intent(getActivity(), MainActivity::class.java)
+                        startActivity(mainActivity)
+
+                        /*var accion =
                             registrarseDirections.actionRegistrarseToPaginaPrincipalContainer()
-                        v.findNavController().navigate(accion)
+                        v.findNavController().navigate(accion)*/
                     } else {
                         Snackbar.make(
                             v,

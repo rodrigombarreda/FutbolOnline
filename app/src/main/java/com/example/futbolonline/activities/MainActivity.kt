@@ -1,11 +1,10 @@
 package com.example.futbolonline.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.futbolonline.R
 
 
@@ -20,16 +19,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.Cerrarsesion -> {
-                val fm: FragmentManager = supportFragmentManager
-                val ft: FragmentTransaction = fm.beginTransaction()
-                ft.add(R.id.login, ClothingsSetsFragment())
-                ft.commit()
+                val loginActivity = Intent(this, LoginActivity::class.java)
+                startActivity(loginActivity)
             }
         }
         return super.onOptionsItemSelected(item)
-    }*/
-
+    }
 }

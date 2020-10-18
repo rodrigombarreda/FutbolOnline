@@ -1,6 +1,7 @@
 package com.example.futbolonline.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.example.futbolonline.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 
@@ -82,59 +84,20 @@ class login : Fragment() {
                     val editor = sharedPref.edit()
                     editor.putString("EMAIL_USUARIO", inputMailLogin.text.toString())
                     editor.apply()
-                    val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
-                    v.findNavController().navigate(accion)
+
+                    // TODO: Ir a main activity
+
+                    val mainActivity = Intent(getActivity(), MainActivity::class.java)
+                    startActivity(mainActivity)
+
+                    //val accion = loginDirections.actionLoginToPaginaPrincipalContainer()
+                    //v.findNavController().navigate(accion)
                 } else {
                     Snackbar.make(
                         v,
                         "Mail o contraseña incorrectos",
                         Snackbar.LENGTH_SHORT
                     ).show()
-
-                    val parentJob = Job()
-                    val handler = CoroutineExceptionHandler { _, throwable ->
-                        Log.d(
-                            "demo",
-                            "handler: $throwable"
-                        ) // Prints "handler: java.io.IOException"
-                    }
-                    val scope = CoroutineScope(Dispatchers.Default + parentJob)
-
-                    btnIniciarSesionLogin.setOnClickListener {
-                        scope.launch {
-                            var autenticacionExitosa = async {
-                                loginViewModel.mailYContraseniaCorrectas(
-                                    inputMailLogin.text.toString(),
-                                    inputPasswordLogin.text.toString()
-                                )
-                            }
-
-                            if (autenticacionExitosa.await()) {
-                                val sharedPref: SharedPreferences =
-                                    requireContext().getSharedPreferences(
-                                        USUARIO_PREFERENCES,
-                                        Context.MODE_PRIVATE
-                                    )
-                                val editor = sharedPref.edit()
-                                editor.putString(
-                                    "EMAIL_USUARIO",
-                                    inputMailLogin.text.toString()
-                                )
-                                editor.apply()
-
-                                val accion =
-                                    loginDirections.actionLoginToPaginaPrincipalContainer()
-                                v.findNavController().navigate(accion)
-                            } else {
-                                Snackbar.make(
-                                    v,
-                                    "Mail o contraseña incorrectos",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-
-                        }
-                    }
                 }
             }
         }
@@ -145,6 +108,7 @@ class login : Fragment() {
         }
 
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()

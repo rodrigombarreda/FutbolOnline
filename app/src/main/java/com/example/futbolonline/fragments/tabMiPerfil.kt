@@ -75,21 +75,24 @@ class tabMiPerfil : Fragment() {
                 Context.MODE_PRIVATE
             )
 
-            txtEmailTabMiPerfil.text =
-                "Email: " + sharedPref.getString("EMAIL_USUARIO", "default")!!
-
-            miPefilViewModel.refrescarPerfil(
-                sharedPref.getString(
+            if (sharedPref.getString(
                     "EMAIL_USUARIO",
                     "default"
-                )!!
-            )
+                ) != ""
+            ) {
+                miPefilViewModel.refrescarPerfil(
+                    sharedPref.getString(
+                        "EMAIL_USUARIO",
+                        "default"
+                    )!!
+                )
+            }
         }
     }
 
-
     fun setearDatos(us: Usuario) {
         if (us != null) {
+            txtEmailTabMiPerfil.text = "Email: " + us.email
             txtNombreTabMiPerfil.text = "Nombre: " + us.nombre
             txtEdadTabMiPerfil.text = "Edad: " + us.edad.toString()
             txtGeneroTabMiPerfil.text = "Genero: " + us.genero

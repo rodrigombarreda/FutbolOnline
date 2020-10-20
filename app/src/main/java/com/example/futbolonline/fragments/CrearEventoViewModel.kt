@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import kotlin.contracts.Returns
 
 class CrearEventoViewModel : ViewModel() {
@@ -35,6 +36,8 @@ class CrearEventoViewModel : ViewModel() {
 
     val EDAD_MINIMA_USUARIO: Int = 12
     val EDAD_MAXIMA_USUARIO: Int = 60
+
+    val NRO_DIAS_MINIMO_PARA_ARMAR_PARTIDO: Int = 1
 
     // mensajes de error
     val MENSAJE_ERROR_CARACTERES_NOMBRE_EVENTO_FUERA_DE_RANGO: String =
@@ -97,7 +100,8 @@ class CrearEventoViewModel : ViewModel() {
         inputEdadMinima: EditText,
         inputEdadMaxima: EditText,
         inputCalificacionMinima: EditText,
-        emailUsuarioLogeado: String
+        emailUsuarioLogeado: String,
+        fecha: Date
     ): Boolean {
         var eventoEsValido: Boolean = false
         nombreEventoEsValido(inputNombreEvento)
@@ -119,7 +123,7 @@ class CrearEventoViewModel : ViewModel() {
                 inputEdadMinima, emailUsuarioLogeado
             ) && calificacionMinimaEsValida(
                 inputCalificacionMinima, emailUsuarioLogeado
-            )
+            ) && fechaEsValida(fecha)
         ) {
             eventoEsValido = true
         }
@@ -134,7 +138,8 @@ class CrearEventoViewModel : ViewModel() {
         edadMinima: Int,
         edadMaxima: Int,
         calificacionMinima: Int,
-        emailUsuarioLogeado: String
+        emailUsuarioLogeado: String,
+        cadenaFecha: String
     ): Boolean {
         var seRegistro: Boolean = true
         var generoAdmitido: String = obtenerGenero(emailUsuarioLogeado)
@@ -146,7 +151,7 @@ class CrearEventoViewModel : ViewModel() {
             edadMinima,
             edadMaxima,
             calificacionMinima,
-            emailUsuarioLogeado
+            emailUsuarioLogeado, cadenaFecha
         )
 
         try {
@@ -384,5 +389,16 @@ class CrearEventoViewModel : ViewModel() {
 
         }
         return usuario
+    }
+
+    fun fechaEsValida(fecha: Date): Boolean {
+        var fechaEsValida = false
+        var diaDespuesFechaActual = Date()
+        diaDespuesFechaActual.date += NRO_DIAS_MINIMO_PARA_ARMAR_PARTIDO
+
+        if (fecha > diaDespuesFechaActual) {
+            fechaEsValida = true
+        }
+        return fechaEsValida
     }
 }

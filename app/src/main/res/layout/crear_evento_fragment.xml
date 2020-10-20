@@ -24,14 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="100dp" />
+        app:layout_constraintGuide_begin="75dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputCantJugadoresCrearEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="200dp" />
+        app:layout_constraintGuide_begin="150dp" />
 
     <EditText
         android:id="@+id/inputNombreEventoCrearEvento"
@@ -107,14 +107,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="300dp" />
+        app:layout_constraintGuide_begin="225dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="400dp" />
+        app:layout_constraintGuide_begin="300dp" />
 
     <Button
         android:id="@+id/btnCrearEvento"
@@ -125,5 +125,66 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorFechaCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="375dp" />
+
+    <Button
+        android:id="@+id/btnElegirFechaCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elegir fecha"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalCrearEvento"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
+
+    <TextView
+        android:id="@+id/txtFechaCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha: "
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalCrearEvento"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
+
+    <Button
+        android:id="@+id/btnElegirHoraCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elegir hora"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorHoraCrearEvento"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalCrearEvento"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento" />
+
+    <TextView
+        android:id="@+id/txtHoraCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hora:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorHoraCrearEvento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalCrearEvento"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorHoraCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="450dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

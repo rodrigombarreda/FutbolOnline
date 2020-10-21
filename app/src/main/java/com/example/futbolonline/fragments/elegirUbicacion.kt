@@ -26,7 +26,7 @@ class elegirUbicacion : Fragment() {
     lateinit var v: View
     lateinit var mapaElegirUbicacion: MapView
 
-    private lateinit var mMap: GoogleMap
+    //private lateinit var mMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +45,14 @@ class elegirUbicacion : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mapaElegirUbicacion.getMapAsync(OnMapReadyCallback { googleMap: GoogleMap ->
+       /* mapaElegirUbicacion.getMapAsync { googleMap: GoogleMap ->
             mMap = googleMap
 
             // Add a marker in Sydney and move the camera
             val sydney = LatLng(-34.0, 151.0)
             mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        })
+        }*/
     }
 
 }

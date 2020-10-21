@@ -1,5 +1,7 @@
 package com.example.futbolonline.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
 import com.example.futbolonline.adapters.PartidosListAdapter
 import com.example.futbolonline.entidades.Partido
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.partidos_list_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +31,8 @@ class partidosList : Fragment() {
     companion object {
         fun newInstance() = partidosList()
     }
+
+    val USUARIO_PREFERENCES: String = "usuarioPreferences"
 
     var partidos: MutableList<Partido> = ArrayList<Partido>()
 
@@ -57,7 +62,9 @@ class partidosList : Fragment() {
             //partidosListAdapter.setData(lista)
             partidos = lista
             partidosListAdapter = PartidosListAdapter(partidos,
-                { position -> alClickearCardPartido(position) })
+                { position -> alClickearCardPartido(position) },
+                { position -> onBotonUnirse(position) }
+            )
 
             listaPartidos.adapter = partidosListAdapter
         })
@@ -78,7 +85,9 @@ class partidosList : Fragment() {
         Log.d("linearDeLista: ", listaPartidos.layoutManager.toString())
 
         partidosListAdapter = PartidosListAdapter(partidos,
-            { position -> alClickearCardPartido(position) })
+            { position -> alClickearCardPartido(position) },
+            { position -> onBotonUnirse(position) }
+        )
 
         listaPartidos.adapter = partidosListAdapter
 
@@ -89,6 +98,53 @@ class partidosList : Fragment() {
 
     fun alClickearCardPartido(position: Int) {
         // TODO: Implementar funcion
+    }
+
+    fun onBotonUnirse(position: Int) {
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+            USUARIO_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+        val emailUsuario: String = sharedPref.getString("EMAIL_USUARIO", "default")!!
+        val nombreEvento: String = partidos[position].nombreEvento
+
+        scope.launch {
+            val partido: Partido? = partidosListViewModel.getPartidoPorNombre(nombreEvento)
+            if (partido != null) {
+                var sePuedeUnir = partidosListViewModel.sePuedeUnir(emailUsuario, partido)
+                if (sePuedeUnir) {
+                    Snackbar.make(
+                        v,
+                        "Uniendose a partido...",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    var seUnio: Boolean =
+                        partidosListViewModel.unirUsuarioAPartido(emailUsuario, nombreEvento)
+                    if (seUnio) {
+                        Snackbar.make(
+                            v,
+                            "Te uniste al partido$nombreEvento",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Snackbar.make(
+                            v,
+                            "Error en la red. Intentelo mas tarde",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                Snackbar.make(
+                    v,
+                    "Error en la red. Intentelo mas tarde",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
 }

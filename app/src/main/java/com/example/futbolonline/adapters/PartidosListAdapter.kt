@@ -3,6 +3,7 @@ package com.example.futbolonline.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,8 @@ import kotlin.properties.Delegates
 
 class PartidosListAdapter(
     private var partidosList: MutableList<Partido>,
-    val onItemClick: (Int) -> Unit
+    val onItemClick: (Int) -> Unit,
+    val onBotonUnirse: (Int) -> Unit
 ) : RecyclerView.Adapter<PartidosListAdapter.PartidoHolder>() {
 
     // var items: List<Partido> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
@@ -44,6 +46,10 @@ class PartidosListAdapter(
             onItemClick(position)
         }
 
+        holder.getBtnUnirseAPartido().setOnClickListener {
+            onBotonUnirse(position)
+        }
+
     }
 
     /*fun setData(data: MutableList<Partido>) {
@@ -65,6 +71,10 @@ class PartidosListAdapter(
 
         fun getCardLayout(): CardView {
             return view.findViewById(R.id.card)
+        }
+
+        fun getBtnUnirseAPartido(): Button {
+            return view.findViewById(R.id.btnUnirseAPartidoItemPartido)
         }
     }
 

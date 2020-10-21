@@ -74,7 +74,7 @@ class Partido(
     }
 
     override fun toString(): String {
-        return "Usuario(nombreEvento='$nombreEvento', cantidadJugadoresTotales=$cantidadJugadoresTotales ," +
+        return "Partido(nombreEvento='$nombreEvento', cantidadJugadoresTotales=$cantidadJugadoresTotales ," +
                 " cantidadJugadoreFaltantes=$cantidadJugadoresFaltantes , generoAdmitido='$generoAdmitido', edadMinima=$edadMinima ," +
                 " edadMaxima=$edadMaxima , calificacionMinima=$calificacionMinima , emailCreador='$emailCreador' , fechaYHora='$fechaYHora')"
     }

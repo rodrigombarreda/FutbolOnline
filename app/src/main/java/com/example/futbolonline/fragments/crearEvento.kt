@@ -17,8 +17,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.google.type.Date
+import kotlinx.android.synthetic.main.elegir_ubicacion_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -45,6 +47,7 @@ class crearEvento : Fragment() {
     lateinit var txtFechaCrearEvento: TextView
     lateinit var btnElegirHoraCrearEvento: Button
     lateinit var txtHoraCrearEvento: TextView
+    lateinit var btnElegirUbicacionCrearEvento: Button
     lateinit var btnCrearEvento: Button
 
     var fechaEvento = Date()
@@ -65,6 +68,7 @@ class crearEvento : Fragment() {
         txtFechaCrearEvento = v.findViewById(R.id.txtFechaCrearEvento)
         btnElegirHoraCrearEvento = v.findViewById(R.id.btnElegirHoraCrearEvento)
         txtHoraCrearEvento = v.findViewById(R.id.txtHoraCrearEvento)
+        btnElegirUbicacionCrearEvento = v.findViewById(R.id.btnElegirUbicacionCrearEvento)
         btnCrearEvento = v.findViewById(R.id.btnCrearEvento)
         return v
     }
@@ -95,7 +99,6 @@ class crearEvento : Fragment() {
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
     }
-
 
     //@RequiresApi(Build.VERSION_CODES.N)
     override fun onStart() {
@@ -157,6 +160,11 @@ class crearEvento : Fragment() {
                 }, 12, 0, true
             )
             selectorHorario.show()
+        }
+
+        btnElegirUbicacionCrearEvento.setOnClickListener {
+            val accion = crearEventoDirections.actionCrearEventoToElegirUbicacion()
+            v.findNavController().navigate(accion)
         }
 
         btnCrearEvento.setOnClickListener {

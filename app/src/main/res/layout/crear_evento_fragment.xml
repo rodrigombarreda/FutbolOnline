@@ -121,10 +121,11 @@
         android:layout_width="150dp"
         android:layout_height="56dp"
         android:text="Crear evento"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInfriorCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorElegirUbicacionCrearEvento" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorFechaCrearEvento"
@@ -186,5 +187,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="450dp" />
+
+    <Button
+        android:id="@+id/btnElegirUbicacionCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elegir ubicacion"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorElegirUbicacionCrearEvento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorHoraCrearEvento" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorElegirUbicacionCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="525dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInfriorCrearEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="600dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

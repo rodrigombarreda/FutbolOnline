@@ -36,10 +36,18 @@
         <action
             android:id="@+id/action_crear_evento_to_paginaPrincipalContainer"
             app:destination="@id/paginaPrincipalContainer" />
+        <action
+            android:id="@+id/action_crear_evento_to_elegirUbicacion"
+            app:destination="@id/elegirUbicacion" />
     </fragment>
     <fragment
         android:id="@+id/partidosList"
         android:name="com.example.futbolonline.fragments.partidosList"
         android:label="partidos_list_fragment"
         tools:layout="@layout/partidos_list_fragment" />
+    <fragment
+        android:id="@+id/elegirUbicacion"
+        android:name="com.example.futbolonline.fragments.elegirUbicacion"
+        android:label="elegir_ubicacion_fragment"
+        tools:layout="@layout/elegir_ubicacion_fragment" />
 </navigation>

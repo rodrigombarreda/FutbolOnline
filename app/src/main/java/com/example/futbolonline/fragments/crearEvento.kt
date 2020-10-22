@@ -207,6 +207,12 @@ class crearEvento : Fragment() {
                             "Partido creado.",
                             Snackbar.LENGTH_SHORT
                         ).show()
+                        crearEventoViewModel.unirCreadorAPartido(
+                            sharedPref.getString(
+                                "EMAIL_USUARIO",
+                                "default"
+                            )!!, inputNombreEventoCrearEvento.text.toString()
+                        )
                         var accion =
                             crearEventoDirections.actionCrearEventoToPaginaPrincipalContainer()
                         v.findNavController().navigate(accion)

@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
+import com.example.futbolonline.entidades.PartidoUsuario
 import com.example.futbolonline.entidades.Usuario
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -78,6 +79,7 @@ class CrearEventoViewModel : ViewModel() {
     // colecciones
     val NOMBRE_COLECCION_PARTIDOS: String = "partidos"
     val NOMBRE_COLECCION_USUARIOS: String = "usuarios"
+    val NOMBRE_COLECCION_PARTIDO_USUARIO = "partidousuario"
 
     // firestore
     val db = Firebase.firestore
@@ -400,5 +402,19 @@ class CrearEventoViewModel : ViewModel() {
             fechaEsValida = true
         }
         return fechaEsValida
+    }
+
+    suspend fun unirCreadorAPartido(emailUsuarioLogeado: String, nombrePartido: String) {
+        val partidoUsuario = PartidoUsuario(
+            emailUsuarioLogeado + nombrePartido,
+            emailUsuarioLogeado,
+            nombrePartido
+        )
+        try {
+            db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO).document(partidoUsuario.id)
+                .set(partidoUsuario)
+                .await()
+        } catch (ex: Exception) {
+        }
     }
 }

@@ -22,13 +22,15 @@ class PartidosListViewModel : ViewModel() {
     private var _partidosList: MutableLiveData<MutableList<Partido>> = MutableLiveData()
     val partidosList: LiveData<MutableList<Partido>> get() = _partidosList
 
+    var partidosAMostrar: MutableList<Partido> = ArrayList<Partido>()
+
     val NOMBRE_COLECCION_PARTIDOS = "partidos"
     val NOMBRE_COLECCION_USUARIOS = "usuarios"
     val NOMBRE_COLECCION_PARTIDO_USUARIO = "partidousuario"
 
     val db = Firebase.firestore
 
-    suspend fun getTodosLosPartidos(): MutableLiveData<MutableList<Partido>> {
+    suspend fun getTodosLosPartidos(emailUsuarioLogeado: String): MutableLiveData<MutableList<Partido>> {
         val questionRef = db.collection(NOMBRE_COLECCION_PARTIDOS)
         val query = questionRef
 
@@ -37,26 +39,78 @@ class PartidosListViewModel : ViewModel() {
                 .get()
                 .await()
             if (data != null) {
-                _partidosList.value = data.toObjects<Partido>() as MutableList<Partido>
+                var partidos = data.toObjects<Partido>() as MutableList<Partido>
+                for (partido in partidos) {
+                    if (partido.cantidadJugadoresFaltantes > 0 && !usuarioEstaEnPartido(
+                            partido.nombreEvento,
+                            emailUsuarioLogeado
+                        )
+                    ) {
+                        // Agregar partido
+                        partidosAMostrar = ArrayList<Partido>()
+                        partidosAMostrar.add(partido)
+
+                    }
+                }
+                //_partidosList.value = data.toObjects<Partido>() as MutableList<Partido>
+                _partidosList.value = partidosAMostrar
             }
         } catch (e: Exception) {
-
+            Log.d("error", "aca paso algooo")
         }
         return _partidosList
     }
 
-    fun refrescarListaPartidos() {
+    suspend fun usuarioEstaEnPartido(nombrePartido: String, emailUsuarioLogeado: String): Boolean {
+        var usuarioEstaEnPartido = false
+
+        val questionRef = db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO)
+        val query = questionRef
+
+        try {
+            val data = query
+                .get()
+                .await()
+            if (data != null) {
+                var partidosUsuarios =
+                    data.toObjects<PartidoUsuario>() as MutableList<PartidoUsuario>
+                for (partidoUsuario in partidosUsuarios) {
+                    if (partidoUsuario.emailUsuario == emailUsuarioLogeado && partidoUsuario.nombrePartido == nombrePartido) {
+                        usuarioEstaEnPartido = true
+                        break
+                    }
+                }
+            }
+        } catch (e: Exception) {
+        }
+        return usuarioEstaEnPartido
+    }
+
+    fun refrescarListaPartidos(emailUsuarioLogeado: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            _partidosList = getTodosLosPartidos()
+            _partidosList = getTodosLosPartidos(emailUsuarioLogeado)
         }
     }
 
     suspend fun sePuedeUnir(emailUsuarioLogeado: String, partido: Partido): Boolean {
         var sePuedeUnir: Boolean = false
         val usuario: Usuario? = getUsuarioPorMail(emailUsuarioLogeado)
-        // TODO: Validar q se pueda unir
-
-        return true//sePuedeUnir
+        if (usuario != null) {
+            if (usuarioTieneCalificacionRequerida(
+                    usuario.calificacion,
+                    partido.calificacionMinima
+                ) && usuarioTieneEdadRequerida(
+                    usuario.edad,
+                    partido.edadMinima,
+                    partido.edadMaxima
+                ) && usuarioTieneGeneroAdmitido(usuario.genero, partido.generoAdmitido)
+                && partido.cantidadJugadoresFaltantes > 0
+            ) {
+                sePuedeUnir = true
+            }
+        }
+        Log.d("to BN", sePuedeUnir.toString())
+        return sePuedeUnir
     }
 
     suspend fun unirUsuarioAPartido(emailUsuarioLogeado: String, nombrePartido: String): Boolean {
@@ -73,7 +127,22 @@ class PartidosListViewModel : ViewModel() {
         } catch (ex: Exception) {
             seUnio = false
         }
+        val partido: Partido? = getPartidoPorNombre(nombrePartido)
+        actualizarCantidadJugadoresFaltantes(partido)
         return seUnio
+    }
+
+    suspend fun actualizarCantidadJugadoresFaltantes(partido: Partido?) {
+        if (partido != null) {
+            partido.cantidadJugadoresFaltantes -= 1
+            try {
+                db.collection(NOMBRE_COLECCION_PARTIDOS).document(partido.nombreEvento)
+                    .set(partido)
+                    .await()
+            } catch (ex: Exception) {
+
+            }
+        }
     }
 
     suspend fun getUsuarioPorMail(email: String): Usuario? {
@@ -116,5 +185,39 @@ class PartidosListViewModel : ViewModel() {
         } catch (e: Exception) {
         }
         return partido
+    }
+
+    fun usuarioTieneCalificacionRequerida(
+        calificacionUsuario: Int,
+        calificacionMinimaRequerida: Int
+    ): Boolean {
+        var usuarioTieneCalificacionRequerida: Boolean = false
+        if (calificacionUsuario >= calificacionMinimaRequerida) {
+            usuarioTieneCalificacionRequerida = true
+        }
+        Log.d("calificacion BN", usuarioTieneCalificacionRequerida.toString())
+        return usuarioTieneCalificacionRequerida
+    }
+
+    fun usuarioTieneEdadRequerida(
+        edadUsuario: Int,
+        edadMinimaAdmitida: Int,
+        edadMaximaAdmitida: Int
+    ): Boolean {
+        var usuarioTieneEdadRequerida: Boolean = false
+        if (edadUsuario in edadMinimaAdmitida..edadMaximaAdmitida) {
+            usuarioTieneEdadRequerida = true
+        }
+        Log.d("EDAD BN", usuarioTieneEdadRequerida.toString())
+        return usuarioTieneEdadRequerida
+    }
+
+    fun usuarioTieneGeneroAdmitido(generoUsuario: String, generoAdmitido: String): Boolean {
+        var usuarioTieneGeneroAdmitido: Boolean = false
+        if (generoUsuario == generoAdmitido) {
+            usuarioTieneGeneroAdmitido = true
+        }
+        Log.d("GENERO BN", usuarioTieneGeneroAdmitido.toString())
+        return usuarioTieneGeneroAdmitido
     }
 }

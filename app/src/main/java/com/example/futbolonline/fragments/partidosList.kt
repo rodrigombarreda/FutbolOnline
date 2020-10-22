@@ -91,8 +91,17 @@ class partidosList : Fragment() {
 
         listaPartidos.adapter = partidosListAdapter
 
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+            USUARIO_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
         scope.launch {
-            partidosListViewModel.refrescarListaPartidos()
+            partidosListViewModel.refrescarListaPartidos(
+                sharedPref.getString(
+                    "EMAIL_USUARIO",
+                    "default"
+                )!!
+            )
         }
     }
 
@@ -136,6 +145,12 @@ class partidosList : Fragment() {
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
+                } else {
+                    Snackbar.make(
+                        v,
+                        "No cumples los requisitos para unirte",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 Snackbar.make(

@@ -37,8 +37,13 @@
             android:id="@+id/action_crear_evento_to_paginaPrincipalContainer"
             app:destination="@id/paginaPrincipalContainer" />
         <action
-            android:id="@+id/action_crear_evento_to_elegirUbicacion"
-            app:destination="@id/elegirUbicacion" />
+            android:id="@+id/action_crear_evento_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+        <argument
+            android:name="latLngDeMapa"
+            app:argType="float[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/partidosList"
@@ -46,8 +51,12 @@
         android:label="partidos_list_fragment"
         tools:layout="@layout/partidos_list_fragment" />
     <fragment
-        android:id="@+id/elegirUbicacion"
-        android:name="com.example.futbolonline.fragments.elegirUbicacion"
-        android:label="elegir_ubicacion_fragment"
-        tools:layout="@layout/elegir_ubicacion_fragment" />
+        android:id="@+id/mapsFragment"
+        android:name="com.example.futbolonline.fragments.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_crear_evento"
+            app:destination="@id/crear_evento" />
+    </fragment>
 </navigation>

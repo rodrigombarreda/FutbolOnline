@@ -20,7 +20,6 @@ import com.example.futbolonline.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.google.type.Date
-import kotlinx.android.synthetic.main.elegir_ubicacion_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -163,7 +162,7 @@ class crearEvento : Fragment() {
         }
 
         btnElegirUbicacionCrearEvento.setOnClickListener {
-            val accion = crearEventoDirections.actionCrearEventoToElegirUbicacion()
+           val accion = crearEventoDirections.actionCrearEventoToMapsFragment()
             v.findNavController().navigate(accion)
         }
 

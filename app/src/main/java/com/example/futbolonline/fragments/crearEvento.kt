@@ -106,6 +106,11 @@ class crearEvento : Fragment() {
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
+        var latlngDeMapa: LongArray? = crearEventoArgs.fromBundle(requireArguments()).latLngDeMapa
+        if (latlngDeMapa != null) {
+            Log.d("latlang", latlngDeMapa[0].toString() + " " + latlngDeMapa[1].toString())
+        }
+
         btnElegirFechaCrearEvento.setOnClickListener {
             var c: Calendar = Calendar.getInstance()
             var selectorFecha = DatePickerDialog(
@@ -162,7 +167,7 @@ class crearEvento : Fragment() {
         }
 
         btnElegirUbicacionCrearEvento.setOnClickListener {
-           val accion = crearEventoDirections.actionCrearEventoToMapsFragment()
+            val accion = crearEventoDirections.actionCrearEventoToMapsFragment()
             v.findNavController().navigate(accion)
         }
 

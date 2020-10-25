@@ -5,7 +5,9 @@
     android:id="@+id/constraintLayoutLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.login">
+    tools:context=".fragments.login"
+    android:background="@drawable/fondo"
+    >
 
 
     <EditText
@@ -62,7 +64,9 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputPasswordLogin" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputPasswordLogin"
+        android:background="@drawable/custom_botton"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnIniciarSesionLogin"
@@ -79,7 +83,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin"
+        android:background="@drawable/custom_botton"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
@@ -123,7 +128,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistreseLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineCostadoBtnOlvidoSuContraseniaLogin"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
+        android:background="@drawable/custom_botton"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnRegistreseLogin"

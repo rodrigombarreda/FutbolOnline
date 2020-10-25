@@ -22,8 +22,6 @@ class PartidosListViewModel : ViewModel() {
     private var _partidosList: MutableLiveData<MutableList<Partido>> = MutableLiveData()
     val partidosList: LiveData<MutableList<Partido>> get() = _partidosList
 
-    var partidosAMostrar: MutableList<Partido> = ArrayList<Partido>()
-
     val NOMBRE_COLECCION_PARTIDOS = "partidos"
     val NOMBRE_COLECCION_USUARIOS = "usuarios"
     val NOMBRE_COLECCION_PARTIDO_USUARIO = "partidousuario"
@@ -40,23 +38,20 @@ class PartidosListViewModel : ViewModel() {
                 .await()
             if (data != null) {
                 var partidos = data.toObjects<Partido>() as MutableList<Partido>
+                var partidosAMostrar: MutableList<Partido> = ArrayList<Partido>()
                 for (partido in partidos) {
                     if (partido.cantidadJugadoresFaltantes > 0 && !usuarioEstaEnPartido(
                             partido.nombreEvento,
-                            emailUsuarioLogeado
+                            emailUsuarioLogeado // TODO: Verificar que el partido no haya pasado
                         )
                     ) {
-                        // Agregar partido
-                        partidosAMostrar = ArrayList<Partido>()
                         partidosAMostrar.add(partido)
-
                     }
                 }
                 //_partidosList.value = data.toObjects<Partido>() as MutableList<Partido>
                 _partidosList.value = partidosAMostrar
             }
         } catch (e: Exception) {
-            Log.d("error", "aca paso algooo")
         }
         return _partidosList
     }
@@ -109,7 +104,6 @@ class PartidosListViewModel : ViewModel() {
                 sePuedeUnir = true
             }
         }
-        Log.d("to BN", sePuedeUnir.toString())
         return sePuedeUnir
     }
 
@@ -195,7 +189,6 @@ class PartidosListViewModel : ViewModel() {
         if (calificacionUsuario >= calificacionMinimaRequerida) {
             usuarioTieneCalificacionRequerida = true
         }
-        Log.d("calificacion BN", usuarioTieneCalificacionRequerida.toString())
         return usuarioTieneCalificacionRequerida
     }
 
@@ -208,7 +201,6 @@ class PartidosListViewModel : ViewModel() {
         if (edadUsuario in edadMinimaAdmitida..edadMaximaAdmitida) {
             usuarioTieneEdadRequerida = true
         }
-        Log.d("EDAD BN", usuarioTieneEdadRequerida.toString())
         return usuarioTieneEdadRequerida
     }
 
@@ -217,7 +209,6 @@ class PartidosListViewModel : ViewModel() {
         if (generoUsuario == generoAdmitido) {
             usuarioTieneGeneroAdmitido = true
         }
-        Log.d("GENERO BN", usuarioTieneGeneroAdmitido.toString())
         return usuarioTieneGeneroAdmitido
     }
 }

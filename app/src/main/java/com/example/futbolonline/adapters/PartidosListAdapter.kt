@@ -9,7 +9,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
-import kotlin.properties.Delegates
 
 class PartidosListAdapter(
     private var partidosList: MutableList<Partido>,

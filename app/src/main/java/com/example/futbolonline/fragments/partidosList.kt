@@ -43,6 +43,7 @@ class partidosList : Fragment() {
     lateinit var v: View
     lateinit var listaPartidos: RecyclerView
 
+    private lateinit var proximosPartidosViewModel: TabProximosPartidosViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,11 +56,14 @@ class partidosList : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        partidosListViewModel = ViewModelProvider(this).get(PartidosListViewModel::class.java)
+        partidosListViewModel = ViewModelProvider(requireActivity()).get(PartidosListViewModel::class.java)
+        proximosPartidosViewModel =
+            ViewModelProvider(requireActivity()).get(TabProximosPartidosViewModel::class.java)
         // TODO: Use the ViewModel
 
         partidosListViewModel.partidosList.observe(viewLifecycleOwner, Observer { lista ->
             //partidosListAdapter.setData(lista)
+            Log.d("pl", "meactualize")
             partidos = lista
             partidosListAdapter = PartidosListAdapter(partidos,
                 { position -> alClickearCardPartido(position) },
@@ -73,7 +77,6 @@ class partidosList : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
 
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
@@ -138,6 +141,18 @@ class partidosList : Fragment() {
                             "Te uniste al partido$nombreEvento",
                             Snackbar.LENGTH_SHORT
                         ).show()
+                        partidosListViewModel.refrescarListaPartidos(
+                            sharedPref.getString(
+                                "EMAIL_USUARIO",
+                                "default"
+                            )!!
+                        )
+                        proximosPartidosViewModel.refrescarListaProximosPartidos(
+                            sharedPref.getString(
+                                "EMAIL_USUARIO",
+                                "default"
+                            )!!
+                        )
                     } else {
                         Snackbar.make(
                             v,

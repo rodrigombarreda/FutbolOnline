@@ -14,6 +14,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TabProximosPartidosViewModel : ViewModel() {
     private var _partidosList: MutableLiveData<MutableList<Partido>> = MutableLiveData()
@@ -45,8 +47,8 @@ class TabProximosPartidosViewModel : ViewModel() {
                 for (partido in partidos) {
                     if (usuarioEstaEnPartido(
                             partido.nombreEvento,
-                            emailUsuarioLogeado // TODO: Verificar que el partido no haya pasado
-                        )
+                            emailUsuarioLogeado
+                        ) && !pasoFechaDelEvento(partido.fechaYHora)
                     ) {
                         partidosAMostrar.add(partido)
                     }
@@ -85,6 +87,21 @@ class TabProximosPartidosViewModel : ViewModel() {
         return usuarioEstaEnPartido
     }
 
+    fun pasoFechaDelEvento(fechaEvento: String): Boolean {
+        var pasoFechaDelEvento = false
+        try {
+            var fechaActual = Date()
+            var fechaDelEvento = Date(fechaEvento)
+            if (fechaActual > fechaDelEvento) {
+                pasoFechaDelEvento = true
+            }
+        } catch (e: Exception) {
+            Log.d("errorFecha", e.toString())
+        }
+        Log.d("pasoProximos", "$pasoFechaDelEvento $fechaEvento")
+        return pasoFechaDelEvento
+    }
+
     suspend fun getPartidoPorNombre(nombre: String): Partido? {
         var partido: Partido? = null
 
@@ -108,13 +125,10 @@ class TabProximosPartidosViewModel : ViewModel() {
 
     suspend fun sacarUsuarioDePartido(emailUsuarioLogeado: String, nombrePartido: String): Boolean {
         var salio: Boolean = true
-        val partidoUsuario = PartidoUsuario(
-            emailUsuarioLogeado + nombrePartido,
-            emailUsuarioLogeado,
-            nombrePartido
-        )
+        val idPartidoUsuarioAEliminar: String = emailUsuarioLogeado + nombrePartido
         try {
-            db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO).document(partidoUsuario.id).delete()
+            db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO).document(idPartidoUsuarioAEliminar)
+                .delete()
                 .await()
         } catch (ex: Exception) {
             salio = false

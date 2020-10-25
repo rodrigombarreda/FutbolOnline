@@ -15,6 +15,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PartidosListViewModel : ViewModel() {
     // TODO: Implement the ViewModel
@@ -42,8 +44,8 @@ class PartidosListViewModel : ViewModel() {
                 for (partido in partidos) {
                     if (partido.cantidadJugadoresFaltantes > 0 && !usuarioEstaEnPartido(
                             partido.nombreEvento,
-                            emailUsuarioLogeado // TODO: Verificar que el partido no haya pasado
-                        )
+                            emailUsuarioLogeado
+                        ) && !pasoFechaDelEvento(partido.fechaYHora)
                     ) {
                         partidosAMostrar.add(partido)
                     }
@@ -81,6 +83,21 @@ class PartidosListViewModel : ViewModel() {
         return usuarioEstaEnPartido
     }
 
+    fun pasoFechaDelEvento(fechaEvento: String): Boolean {
+        var pasoFechaDelEvento = false
+        try {
+            var fechaActual = Date()
+            var fechaDelEvento = Date(fechaEvento)
+            if (fechaActual > fechaDelEvento) {
+                pasoFechaDelEvento = true
+            }
+        } catch (e: Exception) {
+            Log.d("errorFecha", e.toString())
+        }
+        Log.d("pasoBuscar", "$pasoFechaDelEvento $fechaEvento")
+        return pasoFechaDelEvento
+    }
+
     fun refrescarListaPartidos(emailUsuarioLogeado: String) {
         viewModelScope.launch(Dispatchers.Main) {
             _partidosList = getTodosLosPartidos(emailUsuarioLogeado)
@@ -112,7 +129,8 @@ class PartidosListViewModel : ViewModel() {
         val partidoUsuario = PartidoUsuario(
             emailUsuarioLogeado + nombrePartido,
             emailUsuarioLogeado,
-            nombrePartido
+            nombrePartido,
+            true
         )
         try {
             db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO).document(partidoUsuario.id)

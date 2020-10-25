@@ -408,7 +408,8 @@ class CrearEventoViewModel : ViewModel() {
         val partidoUsuario = PartidoUsuario(
             emailUsuarioLogeado + nombrePartido,
             emailUsuarioLogeado,
-            nombrePartido
+            nombrePartido,
+            true
         )
         try {
             db.collection(NOMBRE_COLECCION_PARTIDO_USUARIO).document(partidoUsuario.id)

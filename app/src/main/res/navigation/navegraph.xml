@@ -41,7 +41,7 @@
             app:destination="@id/mapsFragment" />
         <argument
             android:name="latLngDeMapa"
-            app:argType="long[]"
+            app:argType="string[]"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

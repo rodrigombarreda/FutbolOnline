@@ -24,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Double
 import java.util.*
 
 class crearEvento : Fragment() {
@@ -106,9 +107,13 @@ class crearEvento : Fragment() {
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
-        var latlngDeMapa: LongArray? = crearEventoArgs.fromBundle(requireArguments()).latLngDeMapa
+        var latlngDeMapa: Array<String>? =
+            crearEventoArgs.fromBundle(requireArguments()).latLngDeMapa
         if (latlngDeMapa != null) {
-            Log.d("latlang", latlngDeMapa[0].toString() + " " + latlngDeMapa[1].toString())
+            Log.d(
+                "latlangcrearEvento",
+                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2]
+            )
         }
 
         btnElegirFechaCrearEvento.setOnClickListener {

@@ -141,7 +141,10 @@ class CrearEventoViewModel : ViewModel() {
         edadMaxima: Int,
         calificacionMinima: Int,
         emailUsuarioLogeado: String,
-        cadenaFecha: String
+        cadenaFecha: String,
+        latitud: Double,
+        longitud: Double,
+        ubicacion: String
     ): Boolean {
         var seRegistro: Boolean = true
         var generoAdmitido: String = obtenerGenero(emailUsuarioLogeado)
@@ -153,7 +156,8 @@ class CrearEventoViewModel : ViewModel() {
             edadMinima,
             edadMaxima,
             calificacionMinima,
-            emailUsuarioLogeado, cadenaFecha
+            emailUsuarioLogeado,
+            cadenaFecha, latitud, longitud, ubicacion
         )
 
         try {

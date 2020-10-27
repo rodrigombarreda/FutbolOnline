@@ -58,5 +58,10 @@
         <action
             android:id="@+id/action_mapsFragment_to_crear_evento"
             app:destination="@id/crear_evento" />
+        <argument
+            android:name="latLngAnteriorSeleccionado"
+            app:argType="string[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -32,54 +34,86 @@ import java.util.ArrayList
 class MapsFragment : Fragment() {
 
     lateinit var v: View
+    lateinit var inputUbicacion: EditText
+    lateinit var btnElegirUbicacion: Button
 
     lateinit var map: GoogleMap
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient//LocationServices.getFusedLocationProviderClient(requireContext())
+    lateinit var ubicacionUsuario: LatLng
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient//LocationServices.getFusedLocationProviderClient(requireContext())
     private lateinit var geocoder: Geocoder
 
+    var argumentoArrayLatLng = ArrayList<String>() as MutableList<String>
     var ubicacionPartido: String = ""
 
+    lateinit var latLngAnteriorDeMapa: Array<String>
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        geocoder = Geocoder(requireContext())
+
         map = googleMap
         enableMyLocation(googleMap)
 
         googleMap.setMinZoomPreference(15f)
         googleMap.setMaxZoomPreference(20f)
 
+        latLngAnteriorDeMapa =
+            MapsFragmentArgs.fromBundle(requireArguments()).latLngAnteriorSeleccionado!!
+
+        if (latLngAnteriorDeMapa.size == 3) {
+            argumentoArrayLatLng.add(latLngAnteriorDeMapa[0])
+            argumentoArrayLatLng.add(latLngAnteriorDeMapa[1])
+            argumentoArrayLatLng.add(latLngAnteriorDeMapa[2])
+            ubicacionPartido = argumentoArrayLatLng[2]
+            var latLngAnterior = LatLng(
+                argumentoArrayLatLng[0].toDouble(),
+                argumentoArrayLatLng[1].toDouble()
+            )
+            inputUbicacion.text.clear()
+            inputUbicacion.text.append(ubicacionPartido)
+            googleMap.animateCamera(
+                CameraUpdateFactory.newLatLng(
+                    latLngAnterior
+                )
+            )
+            googleMap.addMarker(MarkerOptions().position(latLngAnterior).title(ubicacionPartido))
+        }
+
         googleMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
             override fun onMapClick(latlng: LatLng) {
+                googleMap.clear()
+                argumentoArrayLatLng.clear()
+
+                googleMap.addMarker(
+                    MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
+                )
+
                 googleMap.animateCamera(CameraUpdateFactory.newLatLng(latlng))
 
                 val location = LatLng(latlng.latitude, latlng.longitude)
-                ubicacionPartido =
-                    geocoder.getFromLocation(
-                        latlng.latitude,
-                        latlng.longitude,
-                        1
-                    )[0].getAddressLine(0)
+                try {
+                    ubicacionPartido =
+                        geocoder.getFromLocation(
+                            latlng.latitude,
+                            latlng.longitude,
+                            1
+                        )[0].getAddressLine(0)
+                    inputUbicacion.text.clear()
+                    inputUbicacion.text.append(ubicacionPartido)
+                } catch (e: Exception) {
+                    ubicacionPartido = ""
+                }
 
                 /* var latLngDeUbicacion = geocoder.getFromLocationName(ubicacionPartido, 1)
                  Log.d("latLngDeUbicacion", latLngDeUbicacion[0].toString())*/
 
-                var argumentoArrayLatLng = ArrayList<String>() as MutableList<String>
                 argumentoArrayLatLng.add(latlng.latitude.toString())
                 argumentoArrayLatLng.add(latlng.longitude.toString())
-                argumentoArrayLatLng.add(ubicacionPartido)
+                argumentoArrayLatLng.add(inputUbicacion.text.toString())
 
-                googleMap.addMarker(MarkerOptions().position(location))
-                irACrearEvento(argumentoArrayLatLng.toTypedArray())
+                googleMap.addMarker(MarkerOptions().position(location).title(ubicacionPartido))
             }
         })
     }
@@ -90,6 +124,8 @@ class MapsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_maps, container, false)
+        inputUbicacion = v.findViewById(R.id.inputUbicacion)
+        btnElegirUbicacion = v.findViewById(R.id.btnElegirUbicacion)
         return v
     }
 
@@ -101,8 +137,22 @@ class MapsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        geocoder = Geocoder(requireContext())
+
+        btnElegirUbicacion.setOnClickListener {
+            Log.d("args", argumentoArrayLatLng.size.toString())
+            if (argumentoArrayLatLng.size == 3) {
+                if (!inputUbicacion.text.toString().isBlank()) {
+                    argumentoArrayLatLng[2] = inputUbicacion.text.toString()
+                }
+                irACrearEvento(argumentoArrayLatLng.toTypedArray())
+            } else {
+                Snackbar.make(
+                    v,
+                    "Debe elegir ubicación",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     fun irACrearEvento(argumentoArrayLatLng: Array<String>) {
@@ -126,11 +176,13 @@ class MapsFragment : Fragment() {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener {
                     if (it != null) {
-                        val ubicacionUsuario = LatLng(it.latitude, it.longitude)
+                        ubicacionUsuario = LatLng(it.latitude, it.longitude)
                         googleMap.addMarker(
                             MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
                         )
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                        if (latLngAnteriorDeMapa.size != 3) {
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                        }
                     }
                 }
         } else {
@@ -173,11 +225,13 @@ class MapsFragment : Fragment() {
                     fusedLocationClient.lastLocation
                         .addOnSuccessListener {
                             if (it != null) {
-                                val ubicacionUsuario = LatLng(it.latitude, it.longitude)
+                                ubicacionUsuario = LatLng(it.latitude, it.longitude)
                                 map.addMarker(
                                     MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
                                 )
-                                map.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                                if (latLngAnteriorDeMapa.size != 3) {
+                                    map.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                                }
                             }
                         }
                 } else {

@@ -53,6 +53,8 @@ class crearEvento : Fragment() {
     var fechaEvento = Date()
     var cadenaFechaEvento: String = ""
 
+    var latLngAnteriorDeMapa = ArrayList<String>() as MutableList<String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -109,11 +111,17 @@ class crearEvento : Fragment() {
 
         var latlngDeMapa: Array<String>? =
             crearEventoArgs.fromBundle(requireArguments()).latLngDeMapa
+
         if (latlngDeMapa != null) {
+            var Lat: kotlin.Double = latlngDeMapa[0].toDouble()
+            Log.d("lat", Lat.toString())
             Log.d(
                 "latlangcrearEvento",
                 latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2]
             )
+            latLngAnteriorDeMapa.add(latlngDeMapa[0])
+            latLngAnteriorDeMapa.add(latlngDeMapa[1])
+            latLngAnteriorDeMapa.add(latlngDeMapa[2])
         }
 
         btnElegirFechaCrearEvento.setOnClickListener {
@@ -172,73 +180,92 @@ class crearEvento : Fragment() {
         }
 
         btnElegirUbicacionCrearEvento.setOnClickListener {
-            val accion = crearEventoDirections.actionCrearEventoToMapsFragment()
+            val accion =
+                crearEventoDirections.actionCrearEventoToMapsFragment(latLngAnteriorDeMapa.toTypedArray())
             v.findNavController().navigate(accion)
         }
 
         btnCrearEvento.setOnClickListener {
-            scope.launch {
-                val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
-                    USUARIO_PREFERENCES,
-                    Context.MODE_PRIVATE
-                )
-
-                var partidoEsValido = crearEventoViewModel.eventoEsValido(
-                    inputNombreEventoCrearEvento,
-                    inputJugadoresTotalesCrearEvento,
-                    inputJugadoresFaltantesCrearEvento,
-                    inputEdadMinimaCrearEvento,
-                    inputEdadMaximaCrearEvento,
-                    inputCalificacionMinimaCrearEvento,
-                    sharedPref.getString("EMAIL_USUARIO", "default")!!,
-                    fechaEvento
-                )
-                if (partidoEsValido) {
-                    Snackbar.make(
-                        v,
-                        "Creando partido...",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    cadenaFechaEvento = fechaEvento.toString()
-                    val seCreoPartido: Boolean = crearEventoViewModel.registrarEvento(
-                        inputNombreEventoCrearEvento.text.toString(),
-                        inputJugadoresTotalesCrearEvento.text.toString().toInt(),
-                        inputJugadoresFaltantesCrearEvento.text.toString().toInt(),
-                        inputEdadMinimaCrearEvento.text.toString().toInt(),
-                        inputEdadMaximaCrearEvento.text.toString().toInt(),
-                        inputCalificacionMinimaCrearEvento.text.toString().toInt(),
-                        sharedPref.getString("EMAIL_USUARIO", "default")!!,
-                        cadenaFechaEvento
+            if (latlngDeMapa != null) {
+                scope.launch {
+                    val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
+                        USUARIO_PREFERENCES,
+                        Context.MODE_PRIVATE
                     )
-                    if (seCreoPartido) {
-                        Snackbar.make(
-                            v,
-                            "Partido creado.",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                        crearEventoViewModel.unirCreadorAPartido(
-                            sharedPref.getString(
-                                "EMAIL_USUARIO",
-                                "default"
-                            )!!, inputNombreEventoCrearEvento.text.toString()
+                    if (crearEventoViewModel.fechaEsValida(fechaEvento)) {
+                        var partidoEsValido = crearEventoViewModel.eventoEsValido(
+                            inputNombreEventoCrearEvento,
+                            inputJugadoresTotalesCrearEvento,
+                            inputJugadoresFaltantesCrearEvento,
+                            inputEdadMinimaCrearEvento,
+                            inputEdadMaximaCrearEvento,
+                            inputCalificacionMinimaCrearEvento,
+                            sharedPref.getString("EMAIL_USUARIO", "default")!!,
+                            fechaEvento
                         )
-                        var accion =
-                            crearEventoDirections.actionCrearEventoToPaginaPrincipalContainer()
-                        v.findNavController().navigate(accion)
+                        if (partidoEsValido) {
+                            Snackbar.make(
+                                v,
+                                "Creando partido...",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            cadenaFechaEvento = fechaEvento.toString()
+                            val seCreoPartido: Boolean = crearEventoViewModel.registrarEvento(
+                                inputNombreEventoCrearEvento.text.toString(),
+                                inputJugadoresTotalesCrearEvento.text.toString().toInt(),
+                                inputJugadoresFaltantesCrearEvento.text.toString().toInt(),
+                                inputEdadMinimaCrearEvento.text.toString().toInt(),
+                                inputEdadMaximaCrearEvento.text.toString().toInt(),
+                                inputCalificacionMinimaCrearEvento.text.toString().toInt(),
+                                sharedPref.getString("EMAIL_USUARIO", "default")!!,
+                                cadenaFechaEvento,
+                                latlngDeMapa[0].toDouble(),
+                                latlngDeMapa[1].toDouble(),
+                                latlngDeMapa[2]
+                            )
+                            if (seCreoPartido) {
+                                Snackbar.make(
+                                    v,
+                                    "Partido creado.",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                                crearEventoViewModel.unirCreadorAPartido(
+                                    sharedPref.getString(
+                                        "EMAIL_USUARIO",
+                                        "default"
+                                    )!!, inputNombreEventoCrearEvento.text.toString()
+                                )
+                                var accion =
+                                    crearEventoDirections.actionCrearEventoToPaginaPrincipalContainer()
+                                v.findNavController().navigate(accion)
+                            } else {
+                                Snackbar.make(
+                                    v,
+                                    "Error de red. Intentelo de nuevo mas tarde.",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            Snackbar.make(
+                                v,
+                                "Datos no validos.",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
                     } else {
                         Snackbar.make(
                             v,
-                            "Error de red. Intentelo de nuevo mas tarde.",
+                            "El partido debe ser en al menos un día.",
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                } else {
-                    Snackbar.make(
-                        v,
-                        "Datos no validos.",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
                 }
+            } else {
+                Snackbar.make(
+                    v,
+                    "Debe elegir ubicacion.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }

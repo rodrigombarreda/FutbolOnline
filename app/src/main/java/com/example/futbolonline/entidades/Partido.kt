@@ -12,28 +12,27 @@ class Partido(
     edadMaxima: Int,
     calificacionMinima: Int,
     emailCreador: String,
-    fechaYHora: String
+    fechaYHora: String,
+    latitud: Double,
+    longitud: Double,
+    ubicacion: String
+
 ) : Parcelable {
 
     var nombreEvento: String
-
     var cantidadJugadoresTotales: Int = 0
-
     var cantidadJugadoresFaltantes: Int = 0
-
     var generoAdmitido: String
-
     var edadMinima: Int = 0
-
     var edadMaxima: Int = 0
-
     var calificacionMinima: Int = 0
-
     var emailCreador: String
-
     var fechaYHora: String
+    var latitud: Double = 0.0
+    var longitud: Double = 0.0
+    var ubicacion: String
 
-    constructor() : this("", 0, 0, "", 0, 0, 0, "", "")
+    constructor() : this("", 0, 0, "", 0, 0, 0, "", "", 0.0, 0.0, "")
 
     init {
         this.nombreEvento = nombreEvento!!
@@ -45,6 +44,9 @@ class Partido(
         this.calificacionMinima = calificacionMinima!!
         this.emailCreador = emailCreador!!
         this.fechaYHora = fechaYHora!!
+        this.latitud = latitud!!
+        this.longitud=longitud!!
+        this.ubicacion=ubicacion!!
     }
 
     constructor(source: Parcel) : this(
@@ -56,6 +58,9 @@ class Partido(
         source.readInt()!!,
         source.readInt()!!,
         source.readString()!!,
+        source.readString()!!,
+        source.readDouble()!!,
+        source.readDouble()!!,
         source.readString()!!
     )
 
@@ -71,12 +76,16 @@ class Partido(
         writeInt(calificacionMinima)
         writeString(emailCreador)
         writeString(fechaYHora)
+        writeDouble(latitud)
+        writeDouble(longitud)
+        writeString(ubicacion)
     }
 
     override fun toString(): String {
         return "Partido(nombreEvento='$nombreEvento', cantidadJugadoresTotales=$cantidadJugadoresTotales ," +
                 " cantidadJugadoreFaltantes=$cantidadJugadoresFaltantes , generoAdmitido='$generoAdmitido', edadMinima=$edadMinima ," +
-                " edadMaxima=$edadMaxima , calificacionMinima=$calificacionMinima , emailCreador='$emailCreador' , fechaYHora='$fechaYHora')"
+                " edadMaxima=$edadMaxima , calificacionMinima=$calificacionMinima , emailCreador='$emailCreador' , fechaYHora='$fechaYHora' ," +
+                " latitud=$latitud , longitud=$longitud , ubicacion=$'$ubicacion')"
     }
 
     companion object {

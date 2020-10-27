@@ -14,6 +14,7 @@
         android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="Ingrese su mail"
+        android:background="@drawable/custom_edittext"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputMailRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ingrese un nombre de usuario"
+        android:background="@drawable/custom_edittext"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputNombreRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ingrese una contraseña"
+        android:background="@drawable/custom_edittext"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputContraseniaRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +57,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/custom_botton"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputContraseniaRegistrarse" />
 
     <EditText
@@ -62,6 +66,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ingrese su edad"
+        android:background="@drawable/custom_edittext"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputEdadRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -148,6 +153,7 @@
         android:text="Inicia Sesion"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/custom_botton"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalRegistrarse"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnRegistrarse" />
 
@@ -156,6 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ya tienes una cuenta ?"
+        android:background="@drawable/custom_textview"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRegistrarse"
         app:layout_constraintStart_toStartOf="parent"

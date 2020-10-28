@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -28,12 +29,21 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.maps.android.SphericalUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.ArrayList
+import kotlin.properties.Delegates
 
 class MapsFragment : Fragment() {
+    val DISTANCIA_MAXIMA_EN_METROS_MAXIMA: Int = 15000
 
     lateinit var v: View
+    lateinit var txtDistanciaElegirUbicacion: TextView
     lateinit var inputUbicacion: EditText
     lateinit var btnElegirUbicacion: Button
 
@@ -49,9 +59,19 @@ class MapsFragment : Fragment() {
 
     lateinit var latLngAnteriorDeMapa: Array<String>
 
+    var distanciaDesdeUbicacionAPartido by Delegates.notNull<Double>()
+
+    val parentJob = Job()
+    val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+    @SuppressLint("SetTextI18n")
     private val callback = OnMapReadyCallback { googleMap ->
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         geocoder = Geocoder(requireContext())
+
+        latLngAnteriorDeMapa =
+            MapsFragmentArgs.fromBundle(requireArguments()).latLngAnteriorSeleccionado!!
 
         map = googleMap
         enableMyLocation(googleMap)
@@ -59,13 +79,11 @@ class MapsFragment : Fragment() {
         googleMap.setMinZoomPreference(15f)
         googleMap.setMaxZoomPreference(20f)
 
-        latLngAnteriorDeMapa =
-            MapsFragmentArgs.fromBundle(requireArguments()).latLngAnteriorSeleccionado!!
-
-        if (latLngAnteriorDeMapa.size == 3) {
+        if (latLngAnteriorDeMapa.size == 4) {
             argumentoArrayLatLng.add(latLngAnteriorDeMapa[0])
             argumentoArrayLatLng.add(latLngAnteriorDeMapa[1])
             argumentoArrayLatLng.add(latLngAnteriorDeMapa[2])
+            argumentoArrayLatLng.add(latLngAnteriorDeMapa[3])
             ubicacionPartido = argumentoArrayLatLng[2]
             var latLngAnterior = LatLng(
                 argumentoArrayLatLng[0].toDouble(),
@@ -73,12 +91,19 @@ class MapsFragment : Fragment() {
             )
             inputUbicacion.text.clear()
             inputUbicacion.text.append(ubicacionPartido)
+
+            distanciaDesdeUbicacionAPartido = latLngAnteriorDeMapa[3].toDouble()
+            txtDistanciaElegirUbicacion.text =
+                "Distancia: " + latLngAnteriorDeMapa[3] + " ms."
             googleMap.animateCamera(
                 CameraUpdateFactory.newLatLng(
                     latLngAnterior
                 )
             )
-            googleMap.addMarker(MarkerOptions().position(latLngAnterior).title(ubicacionPartido))
+            googleMap.addMarker(
+                MarkerOptions().position(latLngAnterior).title(ubicacionPartido)
+            )
+            //googleMap.addPolyline(PolylineOptions().add().add(latLngAnterior))
         }
 
         googleMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
@@ -109,11 +134,26 @@ class MapsFragment : Fragment() {
                 /* var latLngDeUbicacion = geocoder.getFromLocationName(ubicacionPartido, 1)
                  Log.d("latLngDeUbicacion", latLngDeUbicacion[0].toString())*/
 
+                distanciaDesdeUbicacionAPartido =
+                    SphericalUtil.computeDistanceBetween(ubicacionUsuario, latlng)
+                txtDistanciaElegirUbicacion.text =
+                    "Distancia: " + distanciaDesdeUbicacionAPartido.toInt().toString() + " ms."
+
                 argumentoArrayLatLng.add(latlng.latitude.toString())
                 argumentoArrayLatLng.add(latlng.longitude.toString())
                 argumentoArrayLatLng.add(inputUbicacion.text.toString())
+                argumentoArrayLatLng.add(distanciaDesdeUbicacionAPartido.toInt().toString())
 
                 googleMap.addMarker(MarkerOptions().position(location).title(ubicacionPartido))
+                googleMap.addPolyline(PolylineOptions().add(ubicacionUsuario).add(latlng))
+            }
+        })
+
+        googleMap.setOnMyLocationButtonClickListener(object :
+            GoogleMap.OnMyLocationButtonClickListener {
+            override fun onMyLocationButtonClick(): Boolean {
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                return true
             }
         })
     }
@@ -124,6 +164,7 @@ class MapsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_maps, container, false)
+        txtDistanciaElegirUbicacion = v.findViewById(R.id.txtDistanciaElegirUbicacion)
         inputUbicacion = v.findViewById(R.id.inputUbicacion)
         btnElegirUbicacion = v.findViewById(R.id.btnElegirUbicacion)
         return v
@@ -139,12 +180,20 @@ class MapsFragment : Fragment() {
         super.onStart()
 
         btnElegirUbicacion.setOnClickListener {
-            Log.d("args", argumentoArrayLatLng.size.toString())
-            if (argumentoArrayLatLng.size == 3) {
+
+            if (argumentoArrayLatLng.size == 4) {
                 if (!inputUbicacion.text.toString().isBlank()) {
                     argumentoArrayLatLng[2] = inputUbicacion.text.toString()
                 }
-                irACrearEvento(argumentoArrayLatLng.toTypedArray())
+                if (distanciaDesdeUbicacionAPartido.toInt() <= DISTANCIA_MAXIMA_EN_METROS_MAXIMA) {
+                    irACrearEvento(argumentoArrayLatLng.toTypedArray())
+                } else {
+                    Snackbar.make(
+                        v,
+                        "La distancia maxima hasta el partido debe ser hasta $DISTANCIA_MAXIMA_EN_METROS_MAXIMA",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Snackbar.make(
                     v,
@@ -180,8 +229,17 @@ class MapsFragment : Fragment() {
                         googleMap.addMarker(
                             MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
                         )
-                        if (latLngAnteriorDeMapa.size != 3) {
+                        if (latLngAnteriorDeMapa.size != 4) {
                             googleMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                        } else {
+                            googleMap.addPolyline(
+                                PolylineOptions().add(ubicacionUsuario).add(
+                                    LatLng(
+                                        latLngAnteriorDeMapa[0].toDouble(),
+                                        latLngAnteriorDeMapa[1].toDouble()
+                                    )
+                                )
+                            )
                         }
                     }
                 }
@@ -229,8 +287,17 @@ class MapsFragment : Fragment() {
                                 map.addMarker(
                                     MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
                                 )
-                                if (latLngAnteriorDeMapa.size != 3) {
+                                if (latLngAnteriorDeMapa.size != 4) {
                                     map.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+                                } else {
+                                    map.addPolyline(
+                                        PolylineOptions().add(ubicacionUsuario).add(
+                                            LatLng(
+                                                latLngAnteriorDeMapa[0].toDouble(),
+                                                latLngAnteriorDeMapa[1].toDouble()
+                                            )
+                                        )
+                                    )
                                 }
                             }
                         }

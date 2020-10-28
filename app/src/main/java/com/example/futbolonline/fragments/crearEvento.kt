@@ -117,11 +117,12 @@ class crearEvento : Fragment() {
             Log.d("lat", Lat.toString())
             Log.d(
                 "latlangcrearEvento",
-                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2]
+                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " "+ latlngDeMapa[3]
             )
             latLngAnteriorDeMapa.add(latlngDeMapa[0])
             latLngAnteriorDeMapa.add(latlngDeMapa[1])
             latLngAnteriorDeMapa.add(latlngDeMapa[2])
+            latLngAnteriorDeMapa.add(latlngDeMapa[3])
         }
 
         btnElegirFechaCrearEvento.setOnClickListener {

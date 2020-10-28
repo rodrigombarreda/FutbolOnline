@@ -9,16 +9,17 @@
 
     <EditText
         android:id="@+id/inputEdadMaximaCrearEvento"
-        android:layout_width="170dp"
-        android:layout_height="58dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="161dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Edad máxima"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputEdadCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCantJugadoresCrearEvento"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.473" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputNombreEventoCrearEvento"
@@ -36,8 +37,9 @@
 
     <EditText
         android:id="@+id/inputNombreEventoCrearEvento"
-        android:layout_width="377dp"
-        android:layout_height="55dp"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Ingrese el nombre del evento"
         android:inputType="textPersonName"
@@ -46,42 +48,44 @@
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.25" />
 
     <EditText
         android:id="@+id/inputJugadoresTotalesCrearEvento"
-        android:layout_width="168dp"
+        android:layout_width="161dp"
         android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Jugadores totales"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputCantJugadoresCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputNombreEventoCrearEvento"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.473" />
 
     <EditText
         android:id="@+id/inputEdadMinimaCrearEvento"
-        android:layout_width="158dp"
-        android:layout_height="51dp"
+        android:layout_width="161dp"
+        android:layout_height="56dp"
         android:layout_marginStart="4dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Edad mínima"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputEdadCrearEvento"
         app:layout_constraintEnd_toStartOf="@+id/inputEdadMaximaCrearEvento"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCantJugadoresCrearEvento"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.473" />
 
     <EditText
         android:id="@+id/inputCalificacionMinimaCrearEvento"
-        android:layout_width="358dp"
+        android:layout_width="334dp"
         android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Calificacion mínima"
         android:inputType="number"
@@ -90,23 +94,22 @@
         app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputEdadCrearEvento"
-        app:layout_constraintVertical_bias="0.441"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.441" />
 
     <EditText
         android:id="@+id/inputJugadoresFaltantesCrearEvento"
-        android:layout_width="166dp"
-        android:layout_height="58dp"
+        android:layout_width="161dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Jugadores faltantes"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputCantJugadoresCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintHorizontal_bias="0.211"
         app:layout_constraintStart_toEndOf="@+id/inputJugadoresTotalesCrearEvento"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputNombreEventoCrearEvento"
-        app:layout_constraintVertical_bias="0.53"
-        android:background="@drawable/custom_edittext"/>
+        app:layout_constraintVertical_bias="0.529" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputEdadCrearEvento"
@@ -124,15 +127,15 @@
 
     <Button
         android:id="@+id/btnCrearEvento"
-        android:layout_width="150dp"
-        android:layout_height="56dp"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Crear evento"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInfriorCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorElegirUbicacionCrearEvento"
-        android:background="@drawable/custom_botton"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorElegirUbicacionCrearEvento" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorFechaCrearEvento"
@@ -143,14 +146,14 @@
 
     <Button
         android:id="@+id/btnElegirFechaCrearEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Elegir fecha"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalCrearEvento"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento"
-        android:background="@drawable/custom_botton"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVerticalCrearEvento"
@@ -161,36 +164,36 @@
 
     <TextView
         android:id="@+id/txtFechaCrearEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
+        android:background="@drawable/custom_textview"
         android:text="Fecha: "
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalCrearEvento"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento"
-        android:background="@drawable/custom_textview"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputCalificacionMinimaCrearEvento" />
 
     <Button
         android:id="@+id/btnElegirHoraCrearEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Elegir hora"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorHoraCrearEvento"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalCrearEvento"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
-        android:background="@drawable/custom_botton"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento" />
 
     <TextView
         android:id="@+id/txtHoraCrearEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
+        android:background="@drawable/custom_textview"
         android:text="Hora:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorHoraCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalCrearEvento"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento"
-        android:background="@drawable/custom_textview"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorFechaCrearEvento" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorHoraCrearEvento"
@@ -201,14 +204,14 @@
 
     <Button
         android:id="@+id/btnElegirUbicacionCrearEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Elegir ubicacion"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorElegirUbicacionCrearEvento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorHoraCrearEvento"
-        android:background="@drawable/custom_botton"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorHoraCrearEvento" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorElegirUbicacionCrearEvento"

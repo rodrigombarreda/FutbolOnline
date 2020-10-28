@@ -9,12 +9,12 @@
 
     <EditText
         android:id="@+id/inputMailRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
         android:layout_marginTop="4dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Ingrese su mail"
-        android:background="@drawable/custom_edittext"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputMailRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +23,11 @@
 
     <EditText
         android:id="@+id/inputNombreRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Ingrese un nombre de usuario"
-        android:background="@drawable/custom_edittext"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputNombreRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,35 +38,37 @@
 
     <EditText
         android:id="@+id/inputContraseniaRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Ingrese una contraseña"
-        android:background="@drawable/custom_edittext"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputContraseniaRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineRadioGeneroRegistrarse" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineRadioGeneroRegistrarse"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Registrarse"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/custom_botton"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputContraseniaRegistrarse" />
 
     <EditText
         android:id="@+id/inputEdadRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:hint="Ingrese su edad"
-        android:background="@drawable/custom_edittext"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputEdadRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +126,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputEdadRegistrarse"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.878">
 
         <RadioButton
             android:id="@+id/radioBtnMasculinoCrearEvento"
@@ -148,21 +150,21 @@
 
     <Button
         android:id="@+id/btnIrAIniciarSesionDeRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Inicia Sesion"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/custom_botton"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalRegistrarse"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnRegistrarse" />
 
     <TextView
         android:id="@+id/txtYaTienesUnaCuentaRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ya tienes una cuenta ?"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Ya tienes una cuenta ?"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRegistrarse"
         app:layout_constraintStart_toStartOf="parent"

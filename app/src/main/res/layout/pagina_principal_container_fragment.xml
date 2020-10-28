@@ -30,14 +30,14 @@
 
     <Button
         android:id="@+id/btnIrACrearEventoDePaginaPrincipal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Crear evento"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineSuperiorBtnIrACrearEventoDePaginaPrincipal"
-        android:background="@drawable/custom_botton"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineSuperiorBtnIrACrearEventoDePaginaPrincipal" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineSuperiorBtnIrACrearEventoDePaginaPrincipal"

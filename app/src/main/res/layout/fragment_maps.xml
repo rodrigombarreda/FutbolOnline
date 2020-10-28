@@ -18,8 +18,9 @@
 
     <Button
         android:id="@+id/btnElegirUbicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_botton"
         android:text="Elegir ubicacion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +31,9 @@
 
     <EditText
         android:id="@+id/inputUbicacion"
-        android:layout_width="345dp"
-        android:layout_height="44dp"
+        android:layout_width="334dp"
+        android:layout_height="56dp"
+        android:background="@drawable/custom_edittext"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Ingrese ubicacion partido"
@@ -44,8 +46,9 @@
 
     <TextView
         android:id="@+id/txtDistanciaElegirUbicacion"
-        android:layout_width="176dp"
-        android:layout_height="30dp"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
+        android:background="@drawable/custom_textview"
         android:text="Distancia:"
         app:layout_constraintBottom_toTopOf="@+id/inputUbicacion"
         app:layout_constraintEnd_toEndOf="parent"

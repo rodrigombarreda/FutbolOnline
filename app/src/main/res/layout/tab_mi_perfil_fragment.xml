@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/txtEmailTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Email:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEmailTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +27,10 @@
 
     <TextView
         android:id="@+id/txtNombreTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Nombre:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtNombreTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,10 +45,10 @@
 
     <TextView
         android:id="@+id/txtEdadTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edad:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Edad:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEdadTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,10 +63,10 @@
 
     <TextView
         android:id="@+id/txtGeneroTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Genero:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Genero:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtGeneroTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,10 +81,10 @@
 
     <TextView
         android:id="@+id/txtCalificacionTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calificacion:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Calificacion:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCalificacionTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,10 +99,10 @@
 
     <TextView
         android:id="@+id/txtCantidadPartidosJugadosTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Partidos jugados:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Partidos jugados:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosJugadosTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,10 +117,10 @@
 
     <TextView
         android:id="@+id/txtCantidadPartidosCreadosTabMiPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Partidos creados:"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
         android:background="@drawable/custom_textview"
+        android:text="Partidos creados:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosCreadosTabMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -40,7 +40,7 @@ import java.util.ArrayList
 import kotlin.properties.Delegates
 
 class MapsFragment : Fragment() {
-    val DISTANCIA_MAXIMA_EN_METROS_MAXIMA: Int = 15000
+    val DISTANCIA_MAXIMA_EN_METROS: Int = 15000
 
     lateinit var v: View
     lateinit var txtDistanciaElegirUbicacion: TextView
@@ -180,26 +180,29 @@ class MapsFragment : Fragment() {
         super.onStart()
 
         btnElegirUbicacion.setOnClickListener {
-
-            if (argumentoArrayLatLng.size == 4) {
-                if (!inputUbicacion.text.toString().isBlank()) {
-                    argumentoArrayLatLng[2] = inputUbicacion.text.toString()
-                }
-                if (distanciaDesdeUbicacionAPartido.toInt() <= DISTANCIA_MAXIMA_EN_METROS_MAXIMA) {
-                    irACrearEvento(argumentoArrayLatLng.toTypedArray())
+            if (!inputUbicacion.text.isBlank()) {
+                if (argumentoArrayLatLng.size == 4) {
+                    if (!inputUbicacion.text.toString().isBlank()) {
+                        argumentoArrayLatLng[2] = inputUbicacion.text.toString()
+                    }
+                    if (distanciaDesdeUbicacionAPartido.toInt() <= DISTANCIA_MAXIMA_EN_METROS) {
+                        irACrearEvento(argumentoArrayLatLng.toTypedArray())
+                    } else {
+                        Snackbar.make(
+                            v,
+                            "La distancia maxima hasta el partido debe ser hasta $DISTANCIA_MAXIMA_EN_METROS",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
                 } else {
                     Snackbar.make(
                         v,
-                        "La distancia maxima hasta el partido debe ser hasta $DISTANCIA_MAXIMA_EN_METROS_MAXIMA",
+                        "Debe elegir ubicación",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
             } else {
-                Snackbar.make(
-                    v,
-                    "Debe elegir ubicación",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                inputUbicacion.setError("Debe especificar la ubicacion")
             }
         }
     }

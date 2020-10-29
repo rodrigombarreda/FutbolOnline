@@ -128,6 +128,7 @@ class MapsFragment : Fragment() {
                     inputUbicacion.text.clear()
                     inputUbicacion.text.append(ubicacionPartido)
                 } catch (e: Exception) {
+                    inputUbicacion.text.clear()
                     ubicacionPartido = ""
                 }
 

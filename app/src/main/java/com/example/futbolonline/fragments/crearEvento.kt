@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.text.set
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -79,7 +82,6 @@ class crearEvento : Fragment() {
         super.onActivityCreated(savedInstanceState)
         crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
 
-        // TODO: Use the ViewModel
         crearEventoViewModel.errorNombreEvento.observe(
             viewLifecycleOwner,
             Observer { error ->
@@ -100,6 +102,13 @@ class crearEvento : Fragment() {
         crearEventoViewModel.errorCalificacionMinimaEvento.observe(
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
+
+        crearEventoViewModel.valorNombreEvento.observe(viewLifecycleOwner,
+            Observer { valor ->
+                Log.d("cambio", "3")
+                inputNombreEventoCrearEvento.text.clear()
+                inputNombreEventoCrearEvento.text.append(valor)
+            })
     }
 
     //@RequiresApi(Build.VERSION_CODES.N)
@@ -117,7 +126,7 @@ class crearEvento : Fragment() {
             Log.d("lat", Lat.toString())
             Log.d(
                 "latlangcrearEvento",
-                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " "+ latlngDeMapa[3]
+                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " " + latlngDeMapa[3]
             )
             latLngAnteriorDeMapa.add(latlngDeMapa[0])
             latLngAnteriorDeMapa.add(latlngDeMapa[1])
@@ -269,5 +278,24 @@ class crearEvento : Fragment() {
                 ).show()
             }
         }
+
+        /*inputNombreEventoCrearEvento.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                Log.d("cambio", "ce")
+                crearEventoViewModel.actualizarNombrePartido(inputNombreEventoCrearEvento.text.toString())
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })*/
     }
 }

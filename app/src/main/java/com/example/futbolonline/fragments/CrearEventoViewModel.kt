@@ -96,11 +96,11 @@ class CrearEventoViewModel : ViewModel() {
     var errorCalificacionMinimaEvento = MutableLiveData<String>()
 
     var valorNombreEvento = MutableLiveData<String>()
-    var valorJugadoresTotalesEvento = MutableLiveData<Int>()
-    var valorJugadoresFaltantesEvento = MutableLiveData<Int>()
-    var valorEdadMinimaEvento = MutableLiveData<Int>()
-    var valorEdadMaximaEvento = MutableLiveData<Int>()
-    var valorCalificacionMinimaEvento = MutableLiveData<Int>()
+    var valorJugadoresTotalesEvento = MutableLiveData<String>()
+    var valorJugadoresFaltantesEvento = MutableLiveData<String>()
+    var valorEdadMinimaEvento = MutableLiveData<String>()
+    var valorEdadMaximaEvento = MutableLiveData<String>()
+    var valorCalificacionMinimaEvento = MutableLiveData<String>()
 
     suspend fun eventoEsValido(
         inputNombreEvento: EditText,
@@ -430,8 +430,19 @@ class CrearEventoViewModel : ViewModel() {
         }
     }
 
-    fun actualizarNombrePartido(nombrePartido: String){
-        Log.d("cambio","vm")
-        valorNombreEvento.postValue(nombrePartido)
+    fun guardarEstadoInputCompletados(
+        valorInputnombrePartido: String,
+        valorInputJugadoresTotales: String,
+        valorInputJugadoresFaltantes: String,
+        valorInputEdadMinima: String,
+        valorInputEdadMaxima: String,
+        valorInputCalificacionMinima: String
+    ) {
+        valorNombreEvento.value = valorInputnombrePartido
+        valorJugadoresTotalesEvento.postValue(valorInputJugadoresTotales)
+        valorJugadoresFaltantesEvento.postValue(valorInputJugadoresFaltantes)
+        valorEdadMinimaEvento.postValue(valorInputEdadMinima)
+        valorEdadMaximaEvento.postValue(valorInputEdadMaxima)
+        valorCalificacionMinimaEvento.postValue(valorInputCalificacionMinima)
     }
 }

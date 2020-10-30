@@ -102,13 +102,6 @@ class crearEvento : Fragment() {
         crearEventoViewModel.errorCalificacionMinimaEvento.observe(
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
-
-        crearEventoViewModel.valorNombreEvento.observe(viewLifecycleOwner,
-            Observer { valor ->
-                Log.d("cambio", "3")
-                inputNombreEventoCrearEvento.text.clear()
-                inputNombreEventoCrearEvento.text.append(valor)
-            })
     }
 
     //@RequiresApi(Build.VERSION_CODES.N)
@@ -190,6 +183,8 @@ class crearEvento : Fragment() {
         }
 
         btnElegirUbicacionCrearEvento.setOnClickListener {
+            guardarEstadoDeInputCompletados()
+            setEstadoInputDeLiveData()
             val accion =
                 crearEventoDirections.actionCrearEventoToMapsFragment(latLngAnteriorDeMapa.toTypedArray())
             v.findNavController().navigate(accion)
@@ -297,5 +292,30 @@ class crearEvento : Fragment() {
             ) {
             }
         })*/
+    }
+
+    fun guardarEstadoDeInputCompletados() {
+        crearEventoViewModel.guardarEstadoInputCompletados(
+            inputNombreEventoCrearEvento.text.toString(),
+            inputJugadoresTotalesCrearEvento.text.toString(),
+            inputJugadoresFaltantesCrearEvento.text.toString(),
+            inputEdadMinimaCrearEvento.text.toString(),
+            inputEdadMaximaCrearEvento.text.toString(),
+            inputCalificacionMinimaCrearEvento.text.toString()
+        )
+    }
+
+    fun setEstadoInputDeLiveData() {
+        inputNombreEventoCrearEvento.setText(crearEventoViewModel.valorNombreEvento.value)
+        if (crearEventoViewModel.valorNombreEvento.value != null) {
+            Log.d("nombre", crearEventoViewModel.valorNombreEvento.value!!)
+        } else {
+            Log.d("nombre", "no se actualizo")
+        }
+        inputJugadoresTotalesCrearEvento.setText(crearEventoViewModel.valorJugadoresTotalesEvento.value)
+        inputJugadoresFaltantesCrearEvento.setText(crearEventoViewModel.valorJugadoresFaltantesEvento.value)
+        inputEdadMinimaCrearEvento.setText(crearEventoViewModel.valorEdadMinimaEvento.value)
+        inputEdadMaximaCrearEvento.setText(crearEventoViewModel.valorEdadMaximaEvento.value)
+        inputCalificacionMinimaCrearEvento.setText(crearEventoViewModel.valorCalificacionMinimaEvento.value)
     }
 }

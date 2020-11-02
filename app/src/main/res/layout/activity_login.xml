@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    android:theme="@android:style/Theme.Light"
     tools:context=".activities.LoginActivity">
 
     <fragment

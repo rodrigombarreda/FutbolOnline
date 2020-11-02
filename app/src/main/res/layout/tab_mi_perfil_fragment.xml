@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/txtEmailTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Email:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEmailTabMiPerfil"
@@ -27,8 +27,8 @@
 
     <TextView
         android:id="@+id/txtNombreTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Nombre:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtNombreTabMiPerfil"
@@ -45,8 +45,8 @@
 
     <TextView
         android:id="@+id/txtEdadTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Edad:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEdadTabMiPerfil"
@@ -63,8 +63,8 @@
 
     <TextView
         android:id="@+id/txtGeneroTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Genero:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtGeneroTabMiPerfil"
@@ -81,8 +81,8 @@
 
     <TextView
         android:id="@+id/txtCalificacionTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Calificacion:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCalificacionTabMiPerfil"
@@ -99,8 +99,8 @@
 
     <TextView
         android:id="@+id/txtCantidadPartidosJugadosTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Partidos jugados:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosJugadosTabMiPerfil"
@@ -117,8 +117,8 @@
 
     <TextView
         android:id="@+id/txtCantidadPartidosCreadosTabMiPerfil"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
         android:background="@drawable/custom_textview"
         android:text="Partidos creados:"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosCreadosTabMiPerfil"

@@ -439,10 +439,15 @@ class CrearEventoViewModel : ViewModel() {
         valorInputCalificacionMinima: String
     ) {
         valorNombreEvento.value = valorInputnombrePartido
-        valorJugadoresTotalesEvento.postValue(valorInputJugadoresTotales)
-        valorJugadoresFaltantesEvento.postValue(valorInputJugadoresFaltantes)
-        valorEdadMinimaEvento.postValue(valorInputEdadMinima)
-        valorEdadMaximaEvento.postValue(valorInputEdadMaxima)
-        valorCalificacionMinimaEvento.postValue(valorInputCalificacionMinima)
+        if (valorNombreEvento != null) {
+            Log.d("valor", valorNombreEvento.value!!)
+        } else {
+            Log.d("valor", "null")
+        }
+        valorJugadoresTotalesEvento.value = valorInputJugadoresTotales
+        valorJugadoresFaltantesEvento.value = valorInputJugadoresFaltantes
+        valorEdadMinimaEvento.value = valorInputEdadMinima
+        valorEdadMaximaEvento.value = valorInputEdadMaxima
+        valorCalificacionMinimaEvento.value = valorInputCalificacionMinima
     }
 }

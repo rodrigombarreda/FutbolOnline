@@ -102,6 +102,7 @@ class crearEvento : Fragment() {
         crearEventoViewModel.errorCalificacionMinimaEvento.observe(
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
+        setEstadoInputDeLiveData()
     }
 
     //@RequiresApi(Build.VERSION_CODES.N)
@@ -273,25 +274,6 @@ class crearEvento : Fragment() {
                 ).show()
             }
         }
-
-        /*inputNombreEventoCrearEvento.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-                Log.d("cambio", "ce")
-                crearEventoViewModel.actualizarNombrePartido(inputNombreEventoCrearEvento.text.toString())
-            }
-
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-            }
-        })*/
     }
 
     fun guardarEstadoDeInputCompletados() {
@@ -306,12 +288,12 @@ class crearEvento : Fragment() {
     }
 
     fun setEstadoInputDeLiveData() {
-        inputNombreEventoCrearEvento.setText(crearEventoViewModel.valorNombreEvento.value)
         if (crearEventoViewModel.valorNombreEvento.value != null) {
             Log.d("nombre", crearEventoViewModel.valorNombreEvento.value!!)
         } else {
             Log.d("nombre", "no se actualizo")
         }
+        inputNombreEventoCrearEvento.setText(crearEventoViewModel.valorNombreEvento.value)
         inputJugadoresTotalesCrearEvento.setText(crearEventoViewModel.valorJugadoresTotalesEvento.value)
         inputJugadoresFaltantesCrearEvento.setText(crearEventoViewModel.valorJugadoresFaltantesEvento.value)
         inputEdadMinimaCrearEvento.setText(crearEventoViewModel.valorEdadMinimaEvento.value)

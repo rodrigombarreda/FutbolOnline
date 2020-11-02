@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.text.set
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -79,7 +82,6 @@ class crearEvento : Fragment() {
         super.onActivityCreated(savedInstanceState)
         crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
 
-        // TODO: Use the ViewModel
         crearEventoViewModel.errorNombreEvento.observe(
             viewLifecycleOwner,
             Observer { error ->
@@ -117,7 +119,7 @@ class crearEvento : Fragment() {
             Log.d("lat", Lat.toString())
             Log.d(
                 "latlangcrearEvento",
-                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " "+ latlngDeMapa[3]
+                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " " + latlngDeMapa[3]
             )
             latLngAnteriorDeMapa.add(latlngDeMapa[0])
             latLngAnteriorDeMapa.add(latlngDeMapa[1])
@@ -181,6 +183,8 @@ class crearEvento : Fragment() {
         }
 
         btnElegirUbicacionCrearEvento.setOnClickListener {
+            guardarEstadoDeInputCompletados()
+            setEstadoInputDeLiveData()
             val accion =
                 crearEventoDirections.actionCrearEventoToMapsFragment(latLngAnteriorDeMapa.toTypedArray())
             v.findNavController().navigate(accion)
@@ -269,5 +273,49 @@ class crearEvento : Fragment() {
                 ).show()
             }
         }
+
+        /*inputNombreEventoCrearEvento.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                Log.d("cambio", "ce")
+                crearEventoViewModel.actualizarNombrePartido(inputNombreEventoCrearEvento.text.toString())
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })*/
+    }
+
+    fun guardarEstadoDeInputCompletados() {
+        crearEventoViewModel.guardarEstadoInputCompletados(
+            inputNombreEventoCrearEvento.text.toString(),
+            inputJugadoresTotalesCrearEvento.text.toString(),
+            inputJugadoresFaltantesCrearEvento.text.toString(),
+            inputEdadMinimaCrearEvento.text.toString(),
+            inputEdadMaximaCrearEvento.text.toString(),
+            inputCalificacionMinimaCrearEvento.text.toString()
+        )
+    }
+
+    fun setEstadoInputDeLiveData() {
+        inputNombreEventoCrearEvento.setText(crearEventoViewModel.valorNombreEvento.value)
+        if (crearEventoViewModel.valorNombreEvento.value != null) {
+            Log.d("nombre", crearEventoViewModel.valorNombreEvento.value!!)
+        } else {
+            Log.d("nombre", "no se actualizo")
+        }
+        inputJugadoresTotalesCrearEvento.setText(crearEventoViewModel.valorJugadoresTotalesEvento.value)
+        inputJugadoresFaltantesCrearEvento.setText(crearEventoViewModel.valorJugadoresFaltantesEvento.value)
+        inputEdadMinimaCrearEvento.setText(crearEventoViewModel.valorEdadMinimaEvento.value)
+        inputEdadMaximaCrearEvento.setText(crearEventoViewModel.valorEdadMaximaEvento.value)
+        inputCalificacionMinimaCrearEvento.setText(crearEventoViewModel.valorCalificacionMinimaEvento.value)
     }
 }

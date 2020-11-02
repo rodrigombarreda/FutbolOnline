@@ -95,6 +95,13 @@ class CrearEventoViewModel : ViewModel() {
     var errorEdadMaximaEvento = MutableLiveData<String>()
     var errorCalificacionMinimaEvento = MutableLiveData<String>()
 
+    var valorNombreEvento = MutableLiveData<String>()
+    var valorJugadoresTotalesEvento = MutableLiveData<String>()
+    var valorJugadoresFaltantesEvento = MutableLiveData<String>()
+    var valorEdadMinimaEvento = MutableLiveData<String>()
+    var valorEdadMaximaEvento = MutableLiveData<String>()
+    var valorCalificacionMinimaEvento = MutableLiveData<String>()
+
     suspend fun eventoEsValido(
         inputNombreEvento: EditText,
         inputJugadoresTotales: EditText,
@@ -421,5 +428,21 @@ class CrearEventoViewModel : ViewModel() {
                 .await()
         } catch (ex: Exception) {
         }
+    }
+
+    fun guardarEstadoInputCompletados(
+        valorInputnombrePartido: String,
+        valorInputJugadoresTotales: String,
+        valorInputJugadoresFaltantes: String,
+        valorInputEdadMinima: String,
+        valorInputEdadMaxima: String,
+        valorInputCalificacionMinima: String
+    ) {
+        valorNombreEvento.value = valorInputnombrePartido
+        valorJugadoresTotalesEvento.postValue(valorInputJugadoresTotales)
+        valorJugadoresFaltantesEvento.postValue(valorInputJugadoresFaltantes)
+        valorEdadMinimaEvento.postValue(valorInputEdadMinima)
+        valorEdadMaximaEvento.postValue(valorInputEdadMaxima)
+        valorCalificacionMinimaEvento.postValue(valorInputCalificacionMinima)
     }
 }

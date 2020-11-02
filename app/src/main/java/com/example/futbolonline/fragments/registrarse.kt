@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -58,7 +59,6 @@ class registrarse : Fragment() {
         radioBtnFemeninoRegistrarse = v.findViewById(R.id.radioBtnFemeninoCrearEvento)
         inputContraseniaRegistrarse = v.findViewById(R.id.inputContraseniaRegistrarse)
         btnRegistrarse = v.findViewById(R.id.btnRegistrarse)
-        txtYaTienesUnaCuentaRegistrarse = v.findViewById(R.id.txtYaTienesUnaCuentaRegistrarse)
         btnIrAIniciarSesionDeRegistrarse = v.findViewById(R.id.btnIrAIniciarSesionDeRegistrarse)
         return v
     }
@@ -158,5 +158,13 @@ class registrarse : Fragment() {
             v.findNavController().navigate(accion)
         }
     }
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
 }

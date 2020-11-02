@@ -5,8 +5,7 @@
     android:id="@+id/constraintLayoutMap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MapsFragment"
-    android:background="@drawable/fondo">
+    tools:context=".fragments.MapsFragment">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
@@ -33,7 +32,7 @@
         android:id="@+id/inputUbicacion"
         android:layout_width="334dp"
         android:layout_height="56dp"
-        android:background="@drawable/custom_edittext"
+        android:backgroundTint="#29DB41"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Ingrese ubicacion partido"

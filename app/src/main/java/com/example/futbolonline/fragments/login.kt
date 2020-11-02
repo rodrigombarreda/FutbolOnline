@@ -35,7 +35,6 @@ class login : Fragment() {
     lateinit var inputPasswordLogin: EditText
     lateinit var btnIniciarSesionLogin: Button
     lateinit var txtOlvidoSuContraseniaLogin: TextView
-    lateinit var btnOlvidoSuContraseniaLogin: Button
     lateinit var txtNoTieneCuentaLogin: TextView
     lateinit var btnRegistreseLogin: Button
 
@@ -48,8 +47,6 @@ class login : Fragment() {
         inputPasswordLogin = v.findViewById(R.id.inputPasswordLogin)
         btnIniciarSesionLogin = v.findViewById(R.id.btnIniciarSesionLogin)
         txtOlvidoSuContraseniaLogin = v.findViewById(R.id.txtOlvidoSuContraseniaLogin)
-        btnOlvidoSuContraseniaLogin = v.findViewById(R.id.btnOlvidoSuContraseniaLogin)
-        txtNoTieneCuentaLogin = v.findViewById(R.id.txtNoTieneCuentaLogin)
         btnRegistreseLogin = v.findViewById(R.id.btnRegistreseLogin)
         return v
     }

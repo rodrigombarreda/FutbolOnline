@@ -46,9 +46,7 @@ class crearEvento : Fragment() {
     lateinit var inputEdadMinimaCrearEvento: EditText
     lateinit var inputEdadMaximaCrearEvento: EditText
     lateinit var inputCalificacionMinimaCrearEvento: EditText
-    lateinit var btnElegirFechaCrearEvento: Button
     lateinit var txtFechaCrearEvento: TextView
-    lateinit var btnElegirHoraCrearEvento: Button
     lateinit var txtHoraCrearEvento: TextView
     lateinit var btnElegirUbicacionCrearEvento: Button
     lateinit var btnCrearEvento: Button
@@ -69,9 +67,7 @@ class crearEvento : Fragment() {
         inputEdadMinimaCrearEvento = v.findViewById(R.id.inputEdadMinimaCrearEvento)
         inputEdadMaximaCrearEvento = v.findViewById(R.id.inputEdadMaximaCrearEvento)
         inputCalificacionMinimaCrearEvento = v.findViewById(R.id.inputCalificacionMinimaCrearEvento)
-        btnElegirFechaCrearEvento = v.findViewById(R.id.btnElegirFechaCrearEvento)
         txtFechaCrearEvento = v.findViewById(R.id.txtFechaCrearEvento)
-        btnElegirHoraCrearEvento = v.findViewById(R.id.btnElegirHoraCrearEvento)
         txtHoraCrearEvento = v.findViewById(R.id.txtHoraCrearEvento)
         btnElegirUbicacionCrearEvento = v.findViewById(R.id.btnElegirUbicacionCrearEvento)
         btnCrearEvento = v.findViewById(R.id.btnCrearEvento)
@@ -128,7 +124,7 @@ class crearEvento : Fragment() {
             latLngAnteriorDeMapa.add(latlngDeMapa[3])
         }
 
-        btnElegirFechaCrearEvento.setOnClickListener {
+        txtFechaCrearEvento.setOnClickListener {
             var c: Calendar = Calendar.getInstance()
             var selectorFecha = DatePickerDialog(
                 requireContext(),
@@ -161,7 +157,7 @@ class crearEvento : Fragment() {
             selectorFecha.show()
         }
 
-        btnElegirHoraCrearEvento.setOnClickListener {
+        txtHoraCrearEvento.setOnClickListener {
             var selectorHorario = TimePickerDialog(
                 requireContext(),
                 { timePicker: TimePicker, hora: Int, minuto: Int ->

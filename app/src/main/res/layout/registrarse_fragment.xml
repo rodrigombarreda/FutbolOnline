@@ -11,36 +11,37 @@
         android:id="@+id/inputMailRegistrarse"
         android:layout_width="334dp"
         android:layout_height="56dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/custom_edittext"
+        android:backgroundTint="#29DB41"
         android:ems="10"
         android:hint="Ingrese su mail"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputMailRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.488" />
 
     <EditText
         android:id="@+id/inputNombreRegistrarse"
         android:layout_width="334dp"
         android:layout_height="56dp"
-        android:background="@drawable/custom_edittext"
+        android:backgroundTint="#29DB41"
         android:ems="10"
         android:hint="Ingrese un nombre de usuario"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputNombreRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputMailRegistrarse"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/inputContraseniaRegistrarse"
         android:layout_width="334dp"
         android:layout_height="56dp"
-        android:background="@drawable/custom_edittext"
+        android:backgroundTint="#29DB41"
         android:ems="10"
         android:hint="Ingrese una contraseña"
         android:inputType="textPassword"
@@ -53,8 +54,8 @@
 
     <Button
         android:id="@+id/btnRegistrarse"
-        android:layout_width="168dp"
-        android:layout_height="57dp"
+        android:layout_width="328dp"
+        android:layout_height="53dp"
         android:background="@drawable/custom_botton"
         android:text="Registrarse"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistrarse"
@@ -66,7 +67,7 @@
         android:id="@+id/inputEdadRegistrarse"
         android:layout_width="334dp"
         android:layout_height="56dp"
-        android:background="@drawable/custom_edittext"
+        android:backgroundTint="#29DB41"
         android:ems="10"
         android:hint="Ingrese su edad"
         android:inputType="number"
@@ -80,42 +81,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="75dp" />
+        app:layout_constraintGuide_begin="268dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputNombreRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="150dp" />
+        app:layout_constraintGuide_begin="339dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputEdadRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="290dp" />
+        app:layout_constraintGuide_begin="412dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRadioGeneroRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="300dp" />
+        app:layout_constraintGuide_begin="476dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputContraseniaRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="375dp" />
+        app:layout_constraintGuide_begin="546dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="450dp" />
+        app:layout_constraintGuide_begin="628dp" />
 
     <RadioGroup
         android:id="@+id/radioGeneroCrearEvento"
@@ -123,10 +124,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guidelineRadioGeneroRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputEdadRegistrarse"
-        app:layout_constraintVertical_bias="0.878">
+        app:layout_constraintVertical_bias="0.95">
 
         <RadioButton
             android:id="@+id/radioBtnMasculinoCrearEvento"
@@ -150,38 +151,39 @@
 
     <Button
         android:id="@+id/btnIrAIniciarSesionDeRegistrarse"
-        android:layout_width="168dp"
-        android:layout_height="57dp"
+        android:layout_width="328dp"
+        android:layout_height="53dp"
         android:background="@drawable/custom_botton"
-        android:text="Inicia Sesion"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
+        android:text="VOLVER"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalRegistrarse"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnRegistrarse" />
-
-    <TextView
-        android:id="@+id/txtYaTienesUnaCuentaRegistrarse"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
-        android:background="@drawable/custom_textview"
-        android:text="Ya tienes una cuenta ?"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRegistrarse"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnRegistrarse" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVerticalRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnRegistrarse"
+        app:layout_constraintVertical_bias="0.533" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnIniciarSesionRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="525dp" />
+        app:layout_constraintGuide_begin="715dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="573dp"
+        android:layout_height="156dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineSuperiorInputMailLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/pelota" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="169dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

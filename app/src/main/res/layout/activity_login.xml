@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity"
-    >
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    android:theme="@android:style/Theme.Light"
+    tools:context=".activities.LoginActivity">
 
     <fragment
         android:id="@+id/fragment"

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutDetallePartido"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.detallePartido">
+
+    <TextView
+        android:id="@+id/txtNombreEventoDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre evento:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtNombreEventoDetallePartido"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtNombreEventoDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="75dp" />
+
+    <TextView
+        android:id="@+id/txtJugadoresTotalesDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jugadores totales:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtJugadoresDetallePartido"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtNombreEventoDetallePartido"
+        app:layout_constraintVertical_bias="0.589" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtJugadoresDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="150dp" />
+
+    <TextView
+        android:id="@+id/txtJugadoresFaltantesDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jugadores faltantes:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtJugadoresDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtNombreEventoDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtEdadDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="225dp" />
+
+    <TextView
+        android:id="@+id/txtEdadMinimaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edad minima:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEdadDetallePartido"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtJugadoresDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtCalificacionMinimaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="300dp" />
+
+    <TextView
+        android:id="@+id/txtEdadMaximaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edad maxima:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEdadDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtJugadoresDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtGeneroAdmitidoDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="375dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
+
+    <TextView
+        android:id="@+id/txtCalificacionMinimaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calificacion minima: "
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCalificacionMinimaDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtEdadDetallePartido" />
+
+    <TextView
+        android:id="@+id/txtGeneroAdmitidoDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Genero admitido:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtGeneroAdmitidoDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtCalificacionMinimaDetallePartido" />
+
+    <TextView
+        android:id="@+id/txtUbicacionDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubicacion:"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnVerUbicacionEnMapaDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtUbicacionDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtUbicacionDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="450dp" />
+
+    <Button
+        android:id="@+id/btnVerUbicacionEnMapaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver ubicacion"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtFechaYHoraDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnVerUbicacionEnMapaDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorBtnVerUbicacionEnMapaDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="525dp" />
+
+    <TextView
+        android:id="@+id/txtFechaYHoraDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha y hora: "
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtUbicacionDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtGeneroAdmitidoDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtFechaYHoraDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="600dp" />
+
+    <TextView
+        android:id="@+id/txtEmailCreadorDetallePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email creador: "
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtNombreEventoDetallePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVerticalDetallePartido"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

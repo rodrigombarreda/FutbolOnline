@@ -65,7 +65,7 @@ class ProximosPartidosListAdapter(
         }
 
         fun getCardLayout(): CardView {
-            return view.findViewById(R.id.card)
+            return view.findViewById(R.id.cardProximoPartido)
         }
 
         fun getBtnSalirDePartido(): Button {

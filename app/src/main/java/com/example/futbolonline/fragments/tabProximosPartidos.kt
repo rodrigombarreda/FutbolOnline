@@ -108,7 +108,11 @@ class tabProximosPartidos : Fragment() {
     }
 
     fun alClickearCardPartido(position: Int) {
-        // TODO: Implementar funcion
+        val accion =
+            paginaPrincipalContainerDirections.actionPaginaPrincipalContainerToDetallePartido(
+                proximosPartidos[position].nombreEvento
+            )
+        v.findNavController().navigate(accion)
     }
 
     fun onBotonSalir(position: Int) {

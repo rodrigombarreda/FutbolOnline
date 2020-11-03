@@ -66,7 +66,7 @@ class HistorialPartidosListAdapter(
         }
 
         fun getCardLayout(): CardView {
-            return view.findViewById(R.id.card)
+            return view.findViewById(R.id.cardHistorialPartido)
         }
 
         fun getBtnEliminarPartidoDeHistorial(): Button {

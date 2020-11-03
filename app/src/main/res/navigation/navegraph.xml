@@ -12,17 +12,28 @@
         <action
             android:id="@+id/action_paginaPrincipalContainer_to_crear_evento"
             app:destination="@id/crear_evento" />
+        <action
+            android:id="@+id/action_paginaPrincipalContainer_to_detallePartido"
+            app:destination="@id/detallePartido" />
     </fragment>
     <fragment
         android:id="@+id/tabProximosPartidos"
         android:name="com.example.futbolonline.fragments.tabProximosPartidos"
         android:label="tab_proximos_partidos_fragment"
-        tools:layout="@layout/tab_proximos_partidos_fragment" />
+        tools:layout="@layout/tab_proximos_partidos_fragment" >
+        <action
+            android:id="@+id/action_tabProximosPartidos_to_detallePartido"
+            app:destination="@id/detallePartido" />
+    </fragment>
     <fragment
         android:id="@+id/tabHistorialPartidos"
         android:name="com.example.futbolonline.fragments.tabHistorialPartidos"
         android:label="tab_historial_partidos_fragment"
-        tools:layout="@layout/tab_historial_partidos_fragment" />
+        tools:layout="@layout/tab_historial_partidos_fragment" >
+        <action
+            android:id="@+id/action_tabHistorialPartidos_to_detallePartido"
+            app:destination="@id/detallePartido" />
+    </fragment>
     <fragment
         android:id="@+id/tabMiPerfil"
         android:name="com.example.futbolonline.fragments.tabMiPerfil"
@@ -49,7 +60,11 @@
         android:id="@+id/partidosList"
         android:name="com.example.futbolonline.fragments.partidosList"
         android:label="partidos_list_fragment"
-        tools:layout="@layout/partidos_list_fragment" />
+        tools:layout="@layout/partidos_list_fragment" >
+        <action
+            android:id="@+id/action_partidosList_to_detallePartido"
+            app:destination="@id/detallePartido" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.futbolonline.fragments.MapsFragment"
@@ -63,5 +78,14 @@
             app:argType="string[]"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/detallePartido"
+        android:name="com.example.futbolonline.fragments.detallePartido"
+        android:label="detalle_partido_fragment"
+        tools:layout="@layout/detalle_partido_fragment" >
+        <argument
+            android:name="nombreEvento"
+            app:argType="string" />
     </fragment>
 </navigation>

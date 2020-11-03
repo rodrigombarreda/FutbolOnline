@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
@@ -101,7 +102,11 @@ class tabHistorialPartidos : Fragment() {
     }
 
     fun alClickearCardPartido(position: Int) {
-        // TODO: Implementar funcion
+        val accion =
+            paginaPrincipalContainerDirections.actionPaginaPrincipalContainerToDetallePartido(
+                historialPartidos[position].nombreEvento
+            )
+        v.findNavController().navigate(accion)
     }
 
     fun onBotonEliminar(position: Int) {

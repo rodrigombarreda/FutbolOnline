@@ -56,14 +56,14 @@ class partidosList : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        partidosListViewModel = ViewModelProvider(requireActivity()).get(PartidosListViewModel::class.java)
+        partidosListViewModel =
+            ViewModelProvider(requireActivity()).get(PartidosListViewModel::class.java)
         proximosPartidosViewModel =
             ViewModelProvider(requireActivity()).get(TabProximosPartidosViewModel::class.java)
         // TODO: Use the ViewModel
 
         partidosListViewModel.partidosList.observe(viewLifecycleOwner, Observer { lista ->
             //partidosListAdapter.setData(lista)
-            Log.d("pl", "meactualize")
             partidos = lista
             partidosListAdapter = PartidosListAdapter(partidos,
                 { position -> alClickearCardPartido(position) },
@@ -109,7 +109,11 @@ class partidosList : Fragment() {
     }
 
     fun alClickearCardPartido(position: Int) {
-        // TODO: Implementar funcion
+        val accion =
+            paginaPrincipalContainerDirections.actionPaginaPrincipalContainerToDetallePartido(
+                partidos[position].nombreEvento
+            )
+        v.findNavController().navigate(accion)
     }
 
     fun onBotonUnirse(position: Int) {

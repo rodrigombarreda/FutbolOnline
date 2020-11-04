@@ -20,20 +20,12 @@
         android:id="@+id/tabProximosPartidos"
         android:name="com.example.futbolonline.fragments.tabProximosPartidos"
         android:label="tab_proximos_partidos_fragment"
-        tools:layout="@layout/tab_proximos_partidos_fragment" >
-        <action
-            android:id="@+id/action_tabProximosPartidos_to_detallePartido"
-            app:destination="@id/detallePartido" />
-    </fragment>
+        tools:layout="@layout/tab_proximos_partidos_fragment" />
     <fragment
         android:id="@+id/tabHistorialPartidos"
         android:name="com.example.futbolonline.fragments.tabHistorialPartidos"
         android:label="tab_historial_partidos_fragment"
-        tools:layout="@layout/tab_historial_partidos_fragment" >
-        <action
-            android:id="@+id/action_tabHistorialPartidos_to_detallePartido"
-            app:destination="@id/detallePartido" />
-    </fragment>
+        tools:layout="@layout/tab_historial_partidos_fragment" />
     <fragment
         android:id="@+id/tabMiPerfil"
         android:name="com.example.futbolonline.fragments.tabMiPerfil"
@@ -60,11 +52,7 @@
         android:id="@+id/partidosList"
         android:name="com.example.futbolonline.fragments.partidosList"
         android:label="partidos_list_fragment"
-        tools:layout="@layout/partidos_list_fragment" >
-        <action
-            android:id="@+id/action_partidosList_to_detallePartido"
-            app:destination="@id/detallePartido" />
-    </fragment>
+        tools:layout="@layout/partidos_list_fragment" />
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.futbolonline.fragments.MapsFragment"
@@ -86,6 +74,24 @@
         tools:layout="@layout/detalle_partido_fragment" >
         <argument
             android:name="nombreEvento"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detallePartido_to_mapaUbicacionDetallePartido"
+            app:destination="@id/mapaUbicacionDetallePartido" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapaUbicacionDetallePartido"
+        android:name="com.example.futbolonline.fragments.mapaUbicacionDetallePartido"
+        android:label="fragment_mapa_ubicacion_detalle_partido"
+        tools:layout="@layout/fragment_mapa_ubicacion_detalle_partido" >
+        <argument
+            android:name="lat"
+            app:argType="string" />
+        <argument
+            android:name="lng"
+            app:argType="string" />
+        <argument
+            android:name="nombreUbicacion"
             app:argType="string" />
     </fragment>
 </navigation>

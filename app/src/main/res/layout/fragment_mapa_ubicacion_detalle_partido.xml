@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutMapDetallePartido"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.MapsFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapDetallePartido"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.mapaUbicacionDetallePartido"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txtDistanciaAPartido"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
+        android:background="@drawable/custom_textview"
+        android:text="Distancia:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

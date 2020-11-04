@@ -5,11 +5,9 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +16,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -36,7 +33,6 @@ import com.google.maps.android.SphericalUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import java.util.ArrayList
 import kotlin.properties.Delegates
 
@@ -151,13 +147,10 @@ class MapsFragment : Fragment() {
             }
         })
 
-        googleMap.setOnMyLocationButtonClickListener(object :
-            GoogleMap.OnMyLocationButtonClickListener {
-            override fun onMyLocationButtonClick(): Boolean {
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
-                return true
-            }
-        })
+        googleMap.setOnMyLocationButtonClickListener {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
+            true
+        }
     }
 
     override fun onCreateView(

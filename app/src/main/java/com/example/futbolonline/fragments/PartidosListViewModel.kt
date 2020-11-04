@@ -1,6 +1,11 @@
 package com.example.futbolonline.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +13,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.futbolonline.entidades.Partido
 import com.example.futbolonline.entidades.PartidoUsuario
 import com.example.futbolonline.entidades.Usuario
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import com.google.maps.android.SphericalUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -229,4 +240,5 @@ class PartidosListViewModel : ViewModel() {
         }
         return usuarioTieneGeneroAdmitido
     }
+
 }

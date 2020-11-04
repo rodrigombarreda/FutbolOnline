@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
 import com.example.futbolonline.entidades.Usuario
@@ -41,6 +42,8 @@ class detallePartido : Fragment() {
 
     lateinit var nombreEvento: String
 
+    lateinit var partido: Partido
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +73,10 @@ class detallePartido : Fragment() {
         // TODO: Use the ViewModel
 
         detallePartidoViewModel.partido.observe(viewLifecycleOwner,
-            Observer { partido -> setearDatos(partido) })
+            Observer { partido ->
+                setearDatos(partido)
+                this.partido = partido
+            })
     }
 
     override fun onStart() {
@@ -83,6 +89,16 @@ class detallePartido : Fragment() {
 
         scope.launch {
             detallePartidoViewModel.refrescarDetallePartido(nombreEvento) //TODO: PASAR NOMBRE EVENTO
+        }
+
+        btnVerUbicacionEnMapaDetallePartido.setOnClickListener {
+            val accion =
+                detallePartidoDirections.actionDetallePartidoToMapaUbicacionDetallePartido(
+                    partido.latitud.toString(),
+                    partido.longitud.toString(),
+                    partido.ubicacion
+                )
+            v.findNavController().navigate(accion)
         }
     }
 
@@ -127,7 +143,7 @@ class detallePartido : Fragment() {
             txtFechaYHora =
                 "Fecha y hora: $dia/$mes/${fechaYHora.year + 1900} $hora:$minutos"
         } catch (e: Exception) {
-            Log.d("error", "no se pudo obtener hora" + e.message)
+
         }
         return txtFechaYHora
     }

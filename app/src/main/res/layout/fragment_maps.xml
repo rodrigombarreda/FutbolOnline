@@ -49,6 +49,7 @@
         android:layout_height="32dp"
         android:background="@drawable/custom_textview"
         android:text="Distancia:"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/inputUbicacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

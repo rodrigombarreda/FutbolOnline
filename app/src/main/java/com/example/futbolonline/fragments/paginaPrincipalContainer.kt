@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +28,7 @@ class paginaPrincipalContainer : Fragment() {
     lateinit var v: View
     lateinit var viewPagerPaginaPrincipalContainer: ViewPager2
     lateinit var tableLayoutPaginaPrincipalContainer: TabLayout
-    lateinit var btnIrACrearEventoDePaginaPrincipal: Button
+    lateinit var btnIrACrearEventoDePaginaPrincipal: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

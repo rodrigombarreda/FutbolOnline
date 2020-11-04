@@ -12,13 +12,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="105dp">
+        android:layout_height="105dp"
+        android:background="#262E26"
+        >
 
         <TextView
             android:id="@+id/txtTituloEventoItemHistorialPartido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre evento:"
+            android:textColor="#29DB41"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"

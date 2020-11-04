@@ -7,14 +7,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.futbolonline.R
+import com.example.futbolonline.fragments.cambiocontrasenia
 
 
 class MainActivity : AppCompatActivity() {
 
     val USUARIO_PREFERENCES: String = "usuarioPreferences"
-
+    val fragmentManager = supportFragmentManager
+    val fragmentTransaction = fragmentManager.beginTransaction()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +41,10 @@ class MainActivity : AppCompatActivity() {
                 val editor = sharedPref.edit()
                 editor.putString("EMAIL_USUARIO", "")
                 editor.apply()
+            }
+            R.id.cambiarcontra->{
+
+
             }
         }
         return super.onOptionsItemSelected(item)

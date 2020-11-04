@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_paginaPrincipalContainer_to_detallePartido"
             app:destination="@id/detallePartido" />
+        <action
+            android:id="@+id/action_paginaPrincipalContainer_to_cambiocontrasenia"
+            app:destination="@id/cambiocontrasenia" />
     </fragment>
     <fragment
         android:id="@+id/tabProximosPartidos"
@@ -93,5 +96,14 @@
         <argument
             android:name="nombreUbicacion"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/cambiocontrasenia"
+        android:name="com.example.futbolonline.fragments.cambiocontrasenia"
+        android:label="fragment_cambiocontrasenia"
+        tools:layout="@layout/fragment_cambiocontrasenia" >
+        <action
+            android:id="@+id/action_cambiocontrasenia_to_paginaPrincipalContainer"
+            app:destination="@id/paginaPrincipalContainer" />
     </fragment>
 </navigation>

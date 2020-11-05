@@ -99,8 +99,8 @@
 
     <Button
         android:id="@+id/btnRegistreseLogin"
-        android:layout_width="328dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/custom_botton"
         android:text="Regístrese"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnRegistreseLogin"
@@ -115,7 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="689dp" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <ImageView
         android:id="@+id/imageView"

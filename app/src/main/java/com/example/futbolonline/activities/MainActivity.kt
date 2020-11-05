@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
 import com.example.futbolonline.R
-import com.example.futbolonline.fragments.cambiocontrasenia
+import com.example.futbolonline.fragments.cambiocontraseniaDirections
+import com.example.futbolonline.fragments.paginaPrincipalContainerDirections
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,9 +42,10 @@ class MainActivity : AppCompatActivity() {
                 editor.putString("EMAIL_USUARIO", "")
                 editor.apply()
             }
-            R.id.cambiarcontra->{
-
-
+            R.id.cambiarcontra -> {
+                val accion =
+                    paginaPrincipalContainerDirections.actionPaginaPrincipalContainerToCambiocontrasenia()
+                this.findNavController(R.id.fragment).navigate(accion)
             }
         }
         return super.onOptionsItemSelected(item)

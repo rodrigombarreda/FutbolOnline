@@ -16,6 +16,7 @@ import com.example.futbolonline.R
 import com.example.futbolonline.entidades.Partido
 import com.example.futbolonline.entidades.PartidoUsuario
 import com.example.futbolonline.entidades.Usuario
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -101,6 +102,10 @@ class CrearEventoViewModel : ViewModel() {
     var valorEdadMinimaEvento = MutableLiveData<String>()
     var valorEdadMaximaEvento = MutableLiveData<String>()
     var valorCalificacionMinimaEvento = MutableLiveData<String>()
+
+    var valorUbicacionPartido = MutableLiveData<LatLng>()
+    var valorNombreUbicacionPartido = MutableLiveData<String>()
+    var valorDistanciaAPartido = MutableLiveData<Int>()
 
     suspend fun eventoEsValido(
         inputNombreEvento: EditText,
@@ -449,5 +454,19 @@ class CrearEventoViewModel : ViewModel() {
         valorEdadMinimaEvento.value = valorInputEdadMinima
         valorEdadMaximaEvento.value = valorInputEdadMaxima
         valorCalificacionMinimaEvento.value = valorInputCalificacionMinima
+    }
+
+    fun guardarEstadoUbicacion(
+        ubicacionPartido: LatLng,
+        nombreUbicacionPartido: String,
+        distanciaAPartido: Int
+    ) {
+        Log.d("entro","si")
+        valorUbicacionPartido.value = ubicacionPartido
+        valorNombreUbicacionPartido.value = nombreUbicacionPartido
+        valorDistanciaAPartido.value = distanciaAPartido
+        Log.d("valorUbi", valorUbicacionPartido.value.toString())
+        Log.d("valorUbi", valorNombreUbicacionPartido.value.toString())
+        Log.d("valorUbi", valorDistanciaAPartido.value.toString())
     }
 }

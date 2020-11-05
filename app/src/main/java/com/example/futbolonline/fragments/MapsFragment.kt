@@ -8,6 +8,7 @@ import android.location.Geocoder
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -39,6 +41,7 @@ import kotlin.properties.Delegates
 class MapsFragment : Fragment() {
     val DISTANCIA_MAXIMA_EN_METROS: Int = 15000
 
+    lateinit var crearEventoViewModel: CrearEventoViewModel
     lateinit var v: View
     lateinit var txtDistanciaElegirUbicacion: TextView
     lateinit var inputUbicacion: EditText
@@ -46,104 +49,81 @@ class MapsFragment : Fragment() {
 
     lateinit var map: GoogleMap
 
-    lateinit var ubicacionUsuario: LatLng
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient//LocationServices.getFusedLocationProviderClient(requireContext())
     private lateinit var geocoder: Geocoder
 
-    var argumentoArrayLatLng = ArrayList<String>() as MutableList<String>
-    var ubicacionPartido: String = ""
-
-    lateinit var latLngAnteriorDeMapa: Array<String>
-
-    var distanciaDesdeUbicacionAPartido by Delegates.notNull<Double>()
-
-    val parentJob = Job()
-    val scope = CoroutineScope(Dispatchers.Default + parentJob)
+    lateinit var ubicacionUsuario: LatLng
+    lateinit var ubicacionPartido: LatLng
+    var nombreUbicacionPartido: String = ""
+    var distanciaDesdeUbicacionAPartido by Delegates.notNull<Int>()
 
     @SuppressLint("SetTextI18n")
     private val callback = OnMapReadyCallback { googleMap ->
+        googleMap.setMinZoomPreference(15f)
+        googleMap.setMaxZoomPreference(20f)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         geocoder = Geocoder(requireContext())
 
-        latLngAnteriorDeMapa =
-            MapsFragmentArgs.fromBundle(requireArguments()).latLngAnteriorSeleccionado!!
-
         map = googleMap
         enableMyLocation(googleMap)
 
-        googleMap.setMinZoomPreference(15f)
-        googleMap.setMaxZoomPreference(20f)
-
-        if (latLngAnteriorDeMapa.size == 4) {
-            argumentoArrayLatLng.add(latLngAnteriorDeMapa[0])
-            argumentoArrayLatLng.add(latLngAnteriorDeMapa[1])
-            argumentoArrayLatLng.add(latLngAnteriorDeMapa[2])
-            argumentoArrayLatLng.add(latLngAnteriorDeMapa[3])
-            ubicacionPartido = argumentoArrayLatLng[2]
-            var latLngAnterior = LatLng(
-                argumentoArrayLatLng[0].toDouble(),
-                argumentoArrayLatLng[1].toDouble()
-            )
-            inputUbicacion.text.clear()
-            inputUbicacion.text.append(ubicacionPartido)
-
-            distanciaDesdeUbicacionAPartido = latLngAnteriorDeMapa[3].toDouble()
-            txtDistanciaElegirUbicacion.text =
-                "Distancia: " + latLngAnteriorDeMapa[3] + " ms."
-            googleMap.animateCamera(
-                CameraUpdateFactory.newLatLng(
-                    latLngAnterior
-                )
-            )
-            googleMap.addMarker(
-                MarkerOptions().position(latLngAnterior).title(ubicacionPartido)
-            )
-            //googleMap.addPolyline(PolylineOptions().add().add(latLngAnterior))
-        }
-
         googleMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
             override fun onMapClick(latlng: LatLng) {
-                googleMap.clear()
-                argumentoArrayLatLng.clear()
+                ubicacionPartido = LatLng(latlng.latitude, latlng.longitude)
 
-                googleMap.addMarker(
-                    MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
-                )
-
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latlng))
-
-                val location = LatLng(latlng.latitude, latlng.longitude)
                 try {
-                    ubicacionPartido =
+                    nombreUbicacionPartido =
                         geocoder.getFromLocation(
                             latlng.latitude,
                             latlng.longitude,
                             1
                         )[0].getAddressLine(0)
                     inputUbicacion.text.clear()
-                    inputUbicacion.text.append(ubicacionPartido)
+                    inputUbicacion.setText(nombreUbicacionPartido)
                 } catch (e: Exception) {
                     inputUbicacion.text.clear()
-                    ubicacionPartido = ""
+                    nombreUbicacionPartido = ""
                 }
 
                 /* var latLngDeUbicacion = geocoder.getFromLocationName(ubicacionPartido, 1)
                  Log.d("latLngDeUbicacion", latLngDeUbicacion[0].toString())*/
 
                 distanciaDesdeUbicacionAPartido =
-                    SphericalUtil.computeDistanceBetween(ubicacionUsuario, latlng)
+                    SphericalUtil.computeDistanceBetween(ubicacionUsuario, latlng).toInt()
                 txtDistanciaElegirUbicacion.text =
                     "Distancia: " + distanciaDesdeUbicacionAPartido.toInt().toString() + " ms."
 
-                argumentoArrayLatLng.add(latlng.latitude.toString())
-                argumentoArrayLatLng.add(latlng.longitude.toString())
-                argumentoArrayLatLng.add(inputUbicacion.text.toString())
-                argumentoArrayLatLng.add(distanciaDesdeUbicacionAPartido.toInt().toString())
+                crearEventoViewModel.guardarEstadoUbicacion(
+                    ubicacionPartido,
+                    nombreUbicacionPartido,
+                    distanciaDesdeUbicacionAPartido
+                )
 
-                googleMap.addMarker(MarkerOptions().position(location).title(ubicacionPartido))
+                if (crearEventoViewModel.valorUbicacionPartido.value != null) {
+                    Log.d("estado", crearEventoViewModel.valorUbicacionPartido.value!!.toString())
+                } else {
+                    Log.d("estado", "no se guardo")
+                }
+                if (crearEventoViewModel.valorNombreUbicacionPartido.value != null) {
+                    Log.d(
+                        "estado",
+                        crearEventoViewModel.valorNombreUbicacionPartido.value!!.toString()
+                    )
+                } else {
+                    Log.d("estado", "no se guardo")
+                }
+                if (crearEventoViewModel.valorDistanciaAPartido.value != null) {
+                    Log.d("estado", crearEventoViewModel.valorDistanciaAPartido.value!!.toString())
+                } else {
+                    Log.d("estado", "no se guardo")
+                }
+
+                googleMap.addMarker(
+                    MarkerOptions().position(ubicacionPartido).title(nombreUbicacionPartido)
+                )
                 googleMap.addPolyline(PolylineOptions().add(ubicacionUsuario).add(latlng))
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latlng))
             }
         })
 
@@ -165,6 +145,11 @@ class MapsFragment : Fragment() {
         return v
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -175,24 +160,13 @@ class MapsFragment : Fragment() {
         super.onStart()
 
         btnElegirUbicacion.setOnClickListener {
-            if (!inputUbicacion.text.isBlank()) {
-                if (argumentoArrayLatLng.size == 4) {
-                    if (!inputUbicacion.text.toString().isBlank()) {
-                        argumentoArrayLatLng[2] = inputUbicacion.text.toString()
-                    }
-                    if (distanciaDesdeUbicacionAPartido.toInt() <= DISTANCIA_MAXIMA_EN_METROS) {
-                        irACrearEvento(argumentoArrayLatLng.toTypedArray())
-                    } else {
-                        Snackbar.make(
-                            v,
-                            "La distancia maxima hasta el partido debe ser hasta $DISTANCIA_MAXIMA_EN_METROS",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
+            if (!inputUbicacion.text.isBlank() && crearEventoViewModel.valorUbicacionPartido.value != null) {
+                if (distanciaDesdeUbicacionAPartido <= DISTANCIA_MAXIMA_EN_METROS) {
+                    irACrearEvento()
                 } else {
                     Snackbar.make(
                         v,
-                        "Debe elegir ubicación",
+                        "La distancia maxima hasta el partido debe ser hasta $DISTANCIA_MAXIMA_EN_METROS",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
@@ -202,10 +176,8 @@ class MapsFragment : Fragment() {
         }
     }
 
-    fun irACrearEvento(argumentoArrayLatLng: Array<String>) {
-        val accion =
-            MapsFragmentDirections.actionMapsFragmentToCrearEvento(argumentoArrayLatLng)
-        v.findNavController().navigate(accion)
+    fun irACrearEvento() {
+        v.findNavController().popBackStack()
     }
 
     // miUbicacion
@@ -224,22 +196,11 @@ class MapsFragment : Fragment() {
                 .addOnSuccessListener {
                     if (it != null) {
                         ubicacionUsuario = LatLng(it.latitude, it.longitude)
-                        googleMap.addMarker(
-                            MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
-                        )
-                        if (latLngAnteriorDeMapa.size != 4) {
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
-                        } else {
-                            googleMap.addPolyline(
-                                PolylineOptions().add(ubicacionUsuario).add(
-                                    LatLng(
-                                        latLngAnteriorDeMapa[0].toDouble(),
-                                        latLngAnteriorDeMapa[1].toDouble()
-                                    )
-                                )
-                            )
-                        }
                     }
+                    googleMap.addMarker(
+                        MarkerOptions().position(ubicacionUsuario).title("Tu ubicación")
+                    )
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
                 }
         } else {
             // Permission to access the location is missing. Show rationale and request permission
@@ -266,13 +227,6 @@ class MapsFragment : Fragment() {
                             ACCESS_FINE_LOCATION
                         ) != PackageManager.PERMISSION_GRANTED
                     ) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
                         return
                     }
                     map.isMyLocationEnabled = true
@@ -282,22 +236,11 @@ class MapsFragment : Fragment() {
                         .addOnSuccessListener {
                             if (it != null) {
                                 ubicacionUsuario = LatLng(it.latitude, it.longitude)
-                                map.addMarker(
-                                    MarkerOptions().position(ubicacionUsuario).title("Tu ubicacion")
-                                )
-                                if (latLngAnteriorDeMapa.size != 4) {
-                                    map.moveCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
-                                } else {
-                                    map.addPolyline(
-                                        PolylineOptions().add(ubicacionUsuario).add(
-                                            LatLng(
-                                                latLngAnteriorDeMapa[0].toDouble(),
-                                                latLngAnteriorDeMapa[1].toDouble()
-                                            )
-                                        )
-                                    )
-                                }
                             }
+                            map.addMarker(
+                                MarkerOptions().position(ubicacionUsuario).title("Tu ubicación")
+                            )
+                            map.animateCamera(CameraUpdateFactory.newLatLng(ubicacionUsuario))
                         }
                 } else {
                     Snackbar.make(
@@ -308,11 +251,7 @@ class MapsFragment : Fragment() {
                 }
                 return
             }
-
-            // Add other 'when' lines to check for other
-            // permissions this app might request.
             else -> {
-                // Ignore all other requests.
             }
         }
     }

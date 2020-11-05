@@ -45,11 +45,6 @@
         <action
             android:id="@+id/action_crear_evento_to_mapsFragment"
             app:destination="@id/mapsFragment" />
-        <argument
-            android:name="latLngDeMapa"
-            app:argType="string[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/partidosList"
@@ -64,11 +59,6 @@
         <action
             android:id="@+id/action_mapsFragment_to_crear_evento"
             app:destination="@id/crear_evento" />
-        <argument
-            android:name="latLngAnteriorSeleccionado"
-            app:argType="string[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/detallePartido"

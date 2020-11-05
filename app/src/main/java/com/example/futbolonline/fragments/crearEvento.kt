@@ -54,8 +54,6 @@ class crearEvento : Fragment() {
     var fechaEvento = Date()
     var cadenaFechaEvento: String = ""
 
-    var latLngAnteriorDeMapa = ArrayList<String>() as MutableList<String>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -98,7 +96,7 @@ class crearEvento : Fragment() {
         crearEventoViewModel.errorCalificacionMinimaEvento.observe(
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
-        setEstadoInputDeLiveData()
+        //setEstadoInputDeLiveData()
     }
 
     //@RequiresApi(Build.VERSION_CODES.N)
@@ -107,22 +105,6 @@ class crearEvento : Fragment() {
 
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
-
-        var latlngDeMapa: Array<String>? =
-            crearEventoArgs.fromBundle(requireArguments()).latLngDeMapa
-
-        if (latlngDeMapa != null) {
-            var Lat: kotlin.Double = latlngDeMapa[0].toDouble()
-            Log.d("lat", Lat.toString())
-            Log.d(
-                "latlangcrearEvento",
-                latlngDeMapa[0] + " " + latlngDeMapa[1] + " Ubicacion: " + latlngDeMapa[2] + " " + latlngDeMapa[3]
-            )
-            latLngAnteriorDeMapa.add(latlngDeMapa[0])
-            latLngAnteriorDeMapa.add(latlngDeMapa[1])
-            latLngAnteriorDeMapa.add(latlngDeMapa[2])
-            latLngAnteriorDeMapa.add(latlngDeMapa[3])
-        }
 
         txtFechaCrearEvento.setOnClickListener {
             var c: Calendar = Calendar.getInstance()
@@ -183,12 +165,31 @@ class crearEvento : Fragment() {
             guardarEstadoDeInputCompletados()
             setEstadoInputDeLiveData()
             val accion =
-                crearEventoDirections.actionCrearEventoToMapsFragment(latLngAnteriorDeMapa.toTypedArray())
+                crearEventoDirections.actionCrearEventoToMapsFragment()
             v.findNavController().navigate(accion)
         }
 
         btnCrearEvento.setOnClickListener {
-            if (latlngDeMapa != null) {
+            if (crearEventoViewModel.valorUbicacionPartido.value != null) {
+                Log.d("estadoReal", crearEventoViewModel.valorUbicacionPartido.value.toString())
+            } else {
+                Log.d("error", "no se guardo")
+            }
+            if (crearEventoViewModel.valorNombreUbicacionPartido.value != null) {
+                Log.d(
+                    "estadoReal",
+                    crearEventoViewModel.valorNombreUbicacionPartido.value.toString()
+                )
+            } else {
+                Log.d("error", "no se guardo")
+            }
+            if (crearEventoViewModel.valorDistanciaAPartido.value != null) {
+                Log.d("estadoReal", crearEventoViewModel.valorDistanciaAPartido.value.toString())
+            } else {
+                Log.d("error", "no se guardo")
+            }
+
+            if (crearEventoViewModel.valorUbicacionPartido.value != null) {
                 scope.launch {
                     val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
                         USUARIO_PREFERENCES,
@@ -221,9 +222,9 @@ class crearEvento : Fragment() {
                                 inputCalificacionMinimaCrearEvento.text.toString().toInt(),
                                 sharedPref.getString("EMAIL_USUARIO", "default")!!,
                                 cadenaFechaEvento,
-                                latlngDeMapa[0].toDouble(),
-                                latlngDeMapa[1].toDouble(),
-                                latlngDeMapa[2]
+                                crearEventoViewModel.valorUbicacionPartido.value!!.latitude,
+                                crearEventoViewModel.valorUbicacionPartido.value!!.longitude,
+                                crearEventoViewModel.valorNombreUbicacionPartido.value!!
                             )
                             if (seCreoPartido) {
                                 Snackbar.make(

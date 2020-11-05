@@ -16,10 +16,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.text.set
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
+import com.example.futbolonline.entidades.Partido
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.google.type.Date
@@ -58,17 +60,21 @@ class crearEvento : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //if (v == null) {
         v = inflater.inflate(R.layout.crear_evento_fragment, container, false)
         inputNombreEventoCrearEvento = v.findViewById(R.id.inputNombreEventoCrearEvento)
         inputJugadoresTotalesCrearEvento = v.findViewById(R.id.inputJugadoresTotalesCrearEvento)
-        inputJugadoresFaltantesCrearEvento = v.findViewById(R.id.inputJugadoresFaltantesCrearEvento)
+        inputJugadoresFaltantesCrearEvento =
+            v.findViewById(R.id.inputJugadoresFaltantesCrearEvento)
         inputEdadMinimaCrearEvento = v.findViewById(R.id.inputEdadMinimaCrearEvento)
         inputEdadMaximaCrearEvento = v.findViewById(R.id.inputEdadMaximaCrearEvento)
-        inputCalificacionMinimaCrearEvento = v.findViewById(R.id.inputCalificacionMinimaCrearEvento)
+        inputCalificacionMinimaCrearEvento =
+            v.findViewById(R.id.inputCalificacionMinimaCrearEvento)
         txtFechaCrearEvento = v.findViewById(R.id.txtFechaCrearEvento)
         txtHoraCrearEvento = v.findViewById(R.id.txtHoraCrearEvento)
         btnElegirUbicacionCrearEvento = v.findViewById(R.id.btnElegirUbicacionCrearEvento)
         btnCrearEvento = v.findViewById(R.id.btnCrearEvento)
+        // }
         return v
     }
 

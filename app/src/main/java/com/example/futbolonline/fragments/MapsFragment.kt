@@ -177,6 +177,7 @@ class MapsFragment : Fragment() {
     }
 
     fun irACrearEvento() {
+        //v.findNavController().navigate(MapsFragmentDirections.actionMapsFragmentToCrearEvento())
         v.findNavController().popBackStack()
     }
 

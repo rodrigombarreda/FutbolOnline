@@ -8,7 +8,7 @@
     tools:context=".fragments.cambiocontrasenia">
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passActual"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:backgroundTint="#29DB41"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.828" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/passNewUno"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:backgroundTint="#29DB41"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.659" />
 
     <EditText
-        android:id="@+id/editTextTextPassword3"
+        android:id="@+id/passNewDos"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:backgroundTint="#29DB41"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.575" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonConfirmar"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:background="@drawable/custom_botton"
@@ -66,7 +66,7 @@
         app:layout_constraintVertical_bias="0.612" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonVolver"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:background="@drawable/custom_botton"

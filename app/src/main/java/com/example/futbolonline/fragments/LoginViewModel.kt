@@ -18,24 +18,25 @@ class LoginViewModel : ViewModel() {
     suspend fun mailYContraseniaCorrectas(email: String, contrasenia: String): Boolean {
 
         var mailYContraseniaCorrectas: Boolean = false
+        if (!email.isBlank() && !contrasenia.isBlank()) {
+            val questionRef = db.collection("usuarios").document(email)
+            val query = questionRef
 
-        val questionRef = db.collection("usuarios").document(email)
-        val query = questionRef
-
-        try {
-            val data = query
-                .get()
-                .await()
-            if (data != null) {
-                val usuario = data.toObject<Usuario>()
-                if (usuario != null) {
-                    if (usuario.contrasenia == contrasenia) {
-                        mailYContraseniaCorrectas = true
+            try {
+                val data = query
+                    .get()
+                    .await()
+                if (data != null) {
+                    val usuario = data.toObject<Usuario>()
+                    if (usuario != null) {
+                        if (usuario.contrasenia == contrasenia) {
+                            mailYContraseniaCorrectas = true
+                        }
                     }
                 }
-            }
-        } catch (e: Exception) {
+            } catch (e: Exception) {
 
+            }
         }
         return mailYContraseniaCorrectas
     }

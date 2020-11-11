@@ -177,25 +177,6 @@ class crearEvento : Fragment() {
 
         btnCrearEvento.setOnClickListener {
             if (crearEventoViewModel.valorUbicacionPartido.value != null) {
-                Log.d("estadoReal", crearEventoViewModel.valorUbicacionPartido.value.toString())
-            } else {
-                Log.d("error", "no se guardo")
-            }
-            if (crearEventoViewModel.valorNombreUbicacionPartido.value != null) {
-                Log.d(
-                    "estadoReal",
-                    crearEventoViewModel.valorNombreUbicacionPartido.value.toString()
-                )
-            } else {
-                Log.d("error", "no se guardo")
-            }
-            if (crearEventoViewModel.valorDistanciaAPartido.value != null) {
-                Log.d("estadoReal", crearEventoViewModel.valorDistanciaAPartido.value.toString())
-            } else {
-                Log.d("error", "no se guardo")
-            }
-
-            if (crearEventoViewModel.valorUbicacionPartido.value != null) {
                 scope.launch {
                     val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
                         USUARIO_PREFERENCES,

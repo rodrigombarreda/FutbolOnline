@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="75dp" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <TextView
         android:id="@+id/txtJugadoresTotalesDetallePartido"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="150dp" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <TextView
         android:id="@+id/txtJugadoresFaltantesDetallePartido"
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="225dp" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <TextView
         android:id="@+id/txtEdadMinimaDetallePartido"
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="300dp" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
         android:id="@+id/txtEdadMaximaDetallePartido"
@@ -102,14 +102,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="375dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVerticalDetallePartido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
         android:id="@+id/txtCalificacionMinimaDetallePartido"
@@ -152,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="450dp" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <Button
         android:id="@+id/btnVerUbicacionEnMapaDetallePartido"
@@ -171,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="525dp" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <TextView
         android:id="@+id/txtFechaYHoraDetallePartido"
@@ -191,7 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="600dp" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <TextView
         android:id="@+id/txtEmailCreadorDetallePartido"

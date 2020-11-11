@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="75dp" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <TextView
         android:id="@+id/txtNombreTabMiPerfil"
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="150dp" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <TextView
         android:id="@+id/txtEdadTabMiPerfil"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="225dp" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <TextView
         android:id="@+id/txtGeneroTabMiPerfil"
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="300dp" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
         android:id="@+id/txtCalificacionTabMiPerfil"
@@ -101,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="375dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/txtCantidadPartidosJugadosTabMiPerfil"
@@ -120,7 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="450dp" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <TextView
         android:id="@+id/txtCantidadPartidosCreadosTabMiPerfil"
@@ -139,6 +139,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="525dp" />
+        app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

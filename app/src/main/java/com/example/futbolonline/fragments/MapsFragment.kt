@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -70,6 +71,9 @@ class MapsFragment : Fragment() {
 
         googleMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
             override fun onMapClick(latlng: LatLng) {
+                googleMap.clear()
+                enableMyLocation(googleMap)
+
                 ubicacionPartido = LatLng(latlng.latitude, latlng.longitude)
 
                 try {
@@ -79,6 +83,19 @@ class MapsFragment : Fragment() {
                             latlng.longitude,
                             1
                         )[0].getAddressLine(0)
+
+                    //TODO: LUEGO BORRAR LA SIGUIENTE LINEA:
+                    val ubi = geocoder.getFromLocation(
+                        latlng.latitude,
+                        latlng.longitude,
+                        1
+                    )[0]
+                    Log.d(
+                        "nomUbi",
+                        ubi.thoroughfare + " " + ubi.featureName + " " + ubi.subLocality + " " + ubi.adminArea + " " + ubi.countryName
+                    )
+                    // TODO: Hasta aca
+
                     inputUbicacion.text.clear()
                     inputUbicacion.setText(nombreUbicacionPartido)
                 } catch (e: Exception) {
@@ -99,25 +116,6 @@ class MapsFragment : Fragment() {
                     nombreUbicacionPartido,
                     distanciaDesdeUbicacionAPartido
                 )
-
-                if (crearEventoViewModel.valorUbicacionPartido.value != null) {
-                    Log.d("estado", crearEventoViewModel.valorUbicacionPartido.value!!.toString())
-                } else {
-                    Log.d("estado", "no se guardo")
-                }
-                if (crearEventoViewModel.valorNombreUbicacionPartido.value != null) {
-                    Log.d(
-                        "estado",
-                        crearEventoViewModel.valorNombreUbicacionPartido.value!!.toString()
-                    )
-                } else {
-                    Log.d("estado", "no se guardo")
-                }
-                if (crearEventoViewModel.valorDistanciaAPartido.value != null) {
-                    Log.d("estado", crearEventoViewModel.valorDistanciaAPartido.value!!.toString())
-                } else {
-                    Log.d("estado", "no se guardo")
-                }
 
                 googleMap.addMarker(
                     MarkerOptions().position(ubicacionPartido).title(nombreUbicacionPartido)

@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.futbolonline.R
+import com.example.futbolonline.adapters.HistorialPartidosListAdapter
 import com.example.futbolonline.adapters.ProximosPartidosListAdapter
 import com.example.futbolonline.entidades.Partido
 import com.google.android.material.snackbar.Snackbar
@@ -34,7 +35,7 @@ class tabHistorialPartidos : Fragment() {
     var historialPartidos: MutableList<Partido> = ArrayList<Partido>()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var proximosPartidosListAdapter: ProximosPartidosListAdapter
+    private lateinit var historialPartidosListAdapter: HistorialPartidosListAdapter
 
     private lateinit var historialPartidosViewModel: TabHistorialPartidosViewModel
     lateinit var v: View
@@ -61,12 +62,12 @@ class tabHistorialPartidos : Fragment() {
                 //partidosListAdapter.setData(lista)
                 Log.d("pp", "meactualize")
                 historialPartidos = lista
-                proximosPartidosListAdapter = ProximosPartidosListAdapter(historialPartidos,
+                historialPartidosListAdapter = HistorialPartidosListAdapter(historialPartidos,
                     { position -> alClickearCardPartido(position) },
                     { position -> onBotonEliminar(position) }
                 )
 
-                listaHistorialPartidos.adapter = proximosPartidosListAdapter
+                listaHistorialPartidos.adapter = historialPartidosListAdapter
             })
     }
 
@@ -80,12 +81,12 @@ class tabHistorialPartidos : Fragment() {
         linearLayoutManager = LinearLayoutManager(context)
         listaHistorialPartidos.layoutManager = linearLayoutManager
 
-        proximosPartidosListAdapter = ProximosPartidosListAdapter(historialPartidos,
+        historialPartidosListAdapter = HistorialPartidosListAdapter(historialPartidos,
             { position -> alClickearCardPartido(position) },
             { position -> onBotonEliminar(position) }
         )
 
-        listaHistorialPartidos.adapter = proximosPartidosListAdapter
+        listaHistorialPartidos.adapter = historialPartidosListAdapter
 
         val sharedPref: SharedPreferences = requireContext().getSharedPreferences(
             USUARIO_PREFERENCES,

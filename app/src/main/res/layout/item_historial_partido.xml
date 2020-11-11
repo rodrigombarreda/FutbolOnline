@@ -26,7 +26,8 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:textAlignment="center" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -60,7 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha:"
-            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:textColor="#29DB41"
             app:layout_constraintBottom_toTopOf="@+id/guideline8"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +80,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ubicacion:"
-            android:textColor="#FFFFFF"
+
+            android:textAlignment="center"
+            android:textColor="#29DB41"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline"

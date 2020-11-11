@@ -93,6 +93,7 @@
         android:layout_marginStart="132dp"
 
         android:text="Olvidó su contraseña ?"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorBtnOlvidoSuContraseniaLogin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorBtnIniciarSesionLogin" />

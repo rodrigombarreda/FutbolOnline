@@ -25,6 +25,7 @@ import com.example.futbolonline.entidades.Partido
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.google.type.Date
+import kotlinx.android.synthetic.main.fragment_cambiocontrasenia.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -80,7 +81,8 @@ class crearEvento : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
+        crearEventoViewModel =
+            ViewModelProvider(requireActivity()).get(CrearEventoViewModel::class.java)
 
         crearEventoViewModel.errorNombreEvento.observe(
             viewLifecycleOwner,
@@ -102,7 +104,7 @@ class crearEvento : Fragment() {
         crearEventoViewModel.errorCalificacionMinimaEvento.observe(
             viewLifecycleOwner,
             Observer { error -> inputCalificacionMinimaCrearEvento.setError(error) })
-        //setEstadoInputDeLiveData()
+        setEstadoInputDeLiveData()
     }
 
     //@RequiresApi(Build.VERSION_CODES.N)
@@ -267,21 +269,30 @@ class crearEvento : Fragment() {
             inputJugadoresFaltantesCrearEvento.text.toString(),
             inputEdadMinimaCrearEvento.text.toString(),
             inputEdadMaximaCrearEvento.text.toString(),
-            inputCalificacionMinimaCrearEvento.text.toString()
+            inputCalificacionMinimaCrearEvento.text.toString(),
+            txtFechaCrearEvento.text.toString(),
+            txtHoraCrearEvento.text.toString(),
+            fechaEvento.toString()
         )
     }
 
     fun setEstadoInputDeLiveData() {
-        if (crearEventoViewModel.valorNombreEvento.value != null) {
-            Log.d("nombre", crearEventoViewModel.valorNombreEvento.value!!)
-        } else {
-            Log.d("nombre", "no se actualizo")
-        }
         inputNombreEventoCrearEvento.setText(crearEventoViewModel.valorNombreEvento.value)
         inputJugadoresTotalesCrearEvento.setText(crearEventoViewModel.valorJugadoresTotalesEvento.value)
         inputJugadoresFaltantesCrearEvento.setText(crearEventoViewModel.valorJugadoresFaltantesEvento.value)
         inputEdadMinimaCrearEvento.setText(crearEventoViewModel.valorEdadMinimaEvento.value)
         inputEdadMaximaCrearEvento.setText(crearEventoViewModel.valorEdadMaximaEvento.value)
         inputCalificacionMinimaCrearEvento.setText(crearEventoViewModel.valorCalificacionMinimaEvento.value)
+        if (!crearEventoViewModel.valorFechaAMostrar.value.isNullOrBlank()) {
+            txtFechaCrearEvento.text = crearEventoViewModel.valorFechaAMostrar.value
+        }
+        if (!crearEventoViewModel.valorHoraAMostrar.value.isNullOrBlank()) {
+            txtHoraCrearEvento.text = crearEventoViewModel.valorHoraAMostrar.value
+        }
+        try {
+            fechaEvento = Date(crearEventoViewModel.valorFecha.value)
+        } catch (e: Exception) {
+
+        }
     }
 }

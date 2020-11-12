@@ -123,7 +123,7 @@ class PartidosListViewModel : ViewModel() {
                     usuario.calificacion,
                     partido.calificacionMinima
                 ) && usuarioTieneEdadRequerida(
-                    usuario.edad,
+                    usuario.fechaNacimiento,
                     partido.edadMinima,
                     partido.edadMaxima
                 ) && usuarioTieneGeneroAdmitido(usuario.genero, partido.generoAdmitido)
@@ -222,12 +222,16 @@ class PartidosListViewModel : ViewModel() {
     }
 
     fun usuarioTieneEdadRequerida(
-        edadUsuario: Int,
+        fechaNacimiento: String,
         edadMinimaAdmitida: Int,
         edadMaximaAdmitida: Int
     ): Boolean {
         var usuarioTieneEdadRequerida: Boolean = false
-        if (edadUsuario in edadMinimaAdmitida..edadMaximaAdmitida) {
+        val fechaActual = Date()
+        val dateNacimiento = Date(fechaNacimiento)
+        val edad = fechaActual.year - dateNacimiento.year
+        Log.d("edad", edad.toString())
+        if (edad in edadMinimaAdmitida..edadMaximaAdmitida) {
             usuarioTieneEdadRequerida = true
         }
         return usuarioTieneEdadRequerida

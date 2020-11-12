@@ -103,6 +103,10 @@ class CrearEventoViewModel : ViewModel() {
     var valorEdadMaximaEvento = MutableLiveData<String>()
     var valorCalificacionMinimaEvento = MutableLiveData<String>()
 
+    var valorFecha = MutableLiveData<String>()
+    var valorFechaAMostrar = MutableLiveData<String>()
+    var valorHoraAMostrar = MutableLiveData<String>()
+
     var valorUbicacionPartido = MutableLiveData<LatLng>()
     var valorNombreUbicacionPartido = MutableLiveData<String>()
     var valorDistanciaAPartido = MutableLiveData<Int>()
@@ -212,7 +216,7 @@ class CrearEventoViewModel : ViewModel() {
     ): Boolean {
         var nombreEventoTieneCaracteresEnRango: Boolean = false
         var nombreEvento = inputNombreEvento.text.toString()
-        if (nombreEvento.length >= nroMinimoCaracteresNombreEvento && nombreEvento.length <= nroMaximoCaracteresNombreEvento) {
+        if (nombreEvento.length in nroMinimoCaracteresNombreEvento..nroMaximoCaracteresNombreEvento) {
             nombreEventoTieneCaracteresEnRango = true
         } else {
             errorNombreEvento.postValue(
@@ -352,7 +356,9 @@ class CrearEventoViewModel : ViewModel() {
         var edadUsuario: Int = 0
         val usuarioLogeado: Usuario? = getUsuarioPorMail(emailUsuarioLogeado)
         if (usuarioLogeado != null) {
-            edadUsuario = usuarioLogeado.edad
+            val fechaActual = Date()
+            val fechaNacimiento = Date(usuarioLogeado.fechaNacimiento)
+            edadUsuario = fechaActual.year - fechaNacimiento.year
         }
         return edadUsuario
     }
@@ -441,7 +447,10 @@ class CrearEventoViewModel : ViewModel() {
         valorInputJugadoresFaltantes: String,
         valorInputEdadMinima: String,
         valorInputEdadMaxima: String,
-        valorInputCalificacionMinima: String
+        valorInputCalificacionMinima: String,
+        valorInputFecha: String,
+        valorInputHora: String,
+        fechaEvento: String
     ) {
         valorNombreEvento.value = valorInputnombrePartido
         if (valorNombreEvento != null) {
@@ -454,6 +463,9 @@ class CrearEventoViewModel : ViewModel() {
         valorEdadMinimaEvento.value = valorInputEdadMinima
         valorEdadMaximaEvento.value = valorInputEdadMaxima
         valorCalificacionMinimaEvento.value = valorInputCalificacionMinima
+        valorFechaAMostrar.value = valorInputFecha
+        valorHoraAMostrar.value = valorInputHora
+        valorFecha.value = fechaEvento
     }
 
     fun guardarEstadoUbicacion(
@@ -461,7 +473,7 @@ class CrearEventoViewModel : ViewModel() {
         nombreUbicacionPartido: String,
         distanciaAPartido: Int
     ) {
-        Log.d("entro","si")
+        Log.d("entro", "si")
         valorUbicacionPartido.value = ubicacionPartido
         valorNombreUbicacionPartido.value = nombreUbicacionPartido
         valorDistanciaAPartido.value = distanciaAPartido

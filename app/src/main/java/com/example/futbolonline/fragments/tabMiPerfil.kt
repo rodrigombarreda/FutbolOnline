@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class tabMiPerfil : Fragment() {
 
@@ -61,6 +62,16 @@ class tabMiPerfil : Fragment() {
 
         miPefilViewModel.usuario.observe(viewLifecycleOwner,
             Observer { usuario -> setearDatos(usuario) })
+
+        miPefilViewModel.cantidadPartidosJugados.observe((viewLifecycleOwner),
+            Observer { cantidad ->
+                txtCantidadPartidosJugadosTabMiPerfil.text = "Jugados: " + cantidad.toString()
+            })
+
+        miPefilViewModel.cantidadPartidosCreados.observe((viewLifecycleOwner),
+            Observer { cantidad ->
+                txtCantidadPartidosCreadosTabMiPerfil.text = "Creados: " + cantidad.toString()
+            })
     }
 
     override fun onStart() {
@@ -94,7 +105,7 @@ class tabMiPerfil : Fragment() {
         if (us != null) {
             txtEmailTabMiPerfil.text = "Email: " + us.email
             txtNombreTabMiPerfil.text = "Nombre: " + us.nombre
-            txtEdadTabMiPerfil.text = "Edad: " + us.edad.toString()
+            txtEdadTabMiPerfil.text = "Edad: " + (Date().year - Date(us.fechaNacimiento).year)
             txtGeneroTabMiPerfil.text = "Genero: " + us.genero
             txtCalificacionTabMiPerfil.text = "Calificacion: " + us.calificacion
         }

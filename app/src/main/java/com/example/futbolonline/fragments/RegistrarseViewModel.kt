@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.util.*
 
 class RegistrarseViewModel : ViewModel() {
     // valores
@@ -57,6 +58,8 @@ class RegistrarseViewModel : ViewModel() {
     var errorGeneroUsuario = MutableLiveData<String>()
     var errorContraseniaUsuario = MutableLiveData<String>()
 
+    var fechaDate = MutableLiveData<String>()
+
     suspend fun registroEsValido(
         inputEmail: EditText,
         inputNombre: EditText,
@@ -82,14 +85,21 @@ class RegistrarseViewModel : ViewModel() {
     suspend fun registrarUsuario(
         email: String,
         nombre: String,
-        edad: Int,
+        fechaNacimiento: String,
         contrasenia: String,
         radioBtnFemeninoIsChecked: Boolean
     ): Boolean {
         var seRegistro: Boolean = true
         var genero: String = obtenerGenero(radioBtnFemeninoIsChecked)
         var usuarioNuevo: Usuario =
-            Usuario(email, nombre, genero, edad, contrasenia, CALIFICACION_INICIAL_USUARIO)
+            Usuario(
+                email,
+                nombre,
+                genero,
+                fechaDate.value.toString(),
+                contrasenia,
+                CALIFICACION_INICIAL_USUARIO
+            )
         try {
             db.collection(NOMBRE_COLECCION_USUARIOS).document(usuarioNuevo.email).set(usuarioNuevo)
                 .await()
@@ -132,11 +142,14 @@ class RegistrarseViewModel : ViewModel() {
         return nombreEsValido
     }
 
-    fun edadEsValida(inputEdad: EditText): Boolean {
+    fun edadEsValida(inputFechaNacimiento: EditText): Boolean {
         var edadEsValida = false
-        if (inputEdad.text.toString() != "") {
-            if (inputEdad.text.toString()
-                    .toInt() in EDAD_MINIMA_USUARIO..EDAD_MAXIMA_USUARIO
+        val fechaActual = Date()
+        if (inputFechaNacimiento.text.toString() != "") {
+            val fechaNacimiento = Date(fechaDate.value)
+            val edad = fechaActual.year  - fechaNacimiento.year
+            Log.d("edad", edad.toString())
+            if (edad in EDAD_MINIMA_USUARIO..EDAD_MAXIMA_USUARIO
             ) {
                 edadEsValida = true
             } else {

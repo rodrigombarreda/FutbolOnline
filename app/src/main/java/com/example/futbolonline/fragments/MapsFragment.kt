@@ -145,7 +145,7 @@ class MapsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        crearEventoViewModel = ViewModelProvider(this).get(CrearEventoViewModel::class.java)
+        crearEventoViewModel = ViewModelProvider(requireActivity()).get(CrearEventoViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

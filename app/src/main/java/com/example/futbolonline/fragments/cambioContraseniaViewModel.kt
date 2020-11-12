@@ -52,7 +52,7 @@ class cambioContraseniaViewModel: ViewModel(){
                         if(data!=null){
                             val usuarioBd = data.toObject<Usuario>()
                             if(usuarioBd!=null){
-                                val usuario:Usuario=Usuario(mail,usuarioBd.nombre,usuarioBd.genero,usuarioBd.edad,contraseniaNuevaUno,usuarioBd.calificacion)
+                                val usuario:Usuario=Usuario(mail,usuarioBd.nombre,usuarioBd.genero,usuarioBd.fechaNacimiento,contraseniaNuevaUno,usuarioBd.calificacion)
                                 db.collection("usuarios").document(mail).set(usuario)
                                 contraseniaCambiada=true
                             }

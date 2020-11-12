@@ -7,7 +7,7 @@ class Usuario(
     email: String,
     nombre: String,
     genero: String,
-    edad: Int,
+    fechaNacimiento: String,
     contrasenia: String,
     calificacion: Int
 ) : Parcelable {
@@ -18,19 +18,19 @@ class Usuario(
 
     var genero: String
 
-    var edad: Int = 0
+    var fechaNacimiento: String
 
     var contrasenia: String
 
     var calificacion: Int = 0
 
-    constructor() : this("", "", "", 0, "", 0)
+    constructor() : this("", "", "", "", "", 0)
 
     init {
         this.email = email!!
         this.nombre = nombre!!
         this.genero = genero!!
-        this.edad = edad!!
+        this.fechaNacimiento = fechaNacimiento!!
         this.contrasenia = contrasenia!!
         this.calificacion = calificacion!!
     }
@@ -39,7 +39,7 @@ class Usuario(
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
-        source.readInt()!!,
+        source.readString()!!,
         source.readString()!!,
         source.readInt()!!
     )
@@ -50,13 +50,13 @@ class Usuario(
         writeString(email)
         writeString(nombre)
         writeString(genero)
-        writeInt(edad)
+        writeString(fechaNacimiento)
         writeString(contrasenia)
         writeInt(calificacion)
     }
 
     override fun toString(): String {
-        return "Usuario(mail='$email', nombre='$nombre', genero='$genero', edad=$edad , contrasenia='$contrasenia', calificacion=$calificacion)"
+        return "Usuario(mail='$email', nombre='$nombre', genero='$genero', fechaNacimiento='$fechaNacimiento' , contrasenia='$contrasenia', calificacion=$calificacion)"
     }
 
     companion object {

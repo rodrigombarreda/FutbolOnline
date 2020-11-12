@@ -1,5 +1,6 @@
 package com.example.futbolonline.fragments
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -18,10 +19,12 @@ import com.example.futbolonline.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.registrarse_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class registrarse : Fragment() {
 
@@ -46,6 +49,8 @@ class registrarse : Fragment() {
 
     val db = Firebase.firestore
 
+    val fechaNacimiento = Date()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +58,7 @@ class registrarse : Fragment() {
         v = inflater.inflate(R.layout.registrarse_fragment, container, false)
         inputMailRegistrarse = v.findViewById(R.id.inputMailRegistrarse)
         inputNombreRegistrarse = v.findViewById(R.id.inputNombreRegistrarse)
-        inputEdadRegistrarse = v.findViewById(R.id.inputEdadRegistrarse)
+        inputEdadRegistrarse = v.findViewById(R.id.inputFechaNacimientoRegistrarse)
         radioGeneroRegistrarse = v.findViewById(R.id.radioGeneroCrearEvento)
         radioBtnMasculinoRegistrarse = v.findViewById(R.id.radioBtnMasculinoCrearEvento)
         radioBtnFemeninoRegistrarse = v.findViewById(R.id.radioBtnFemeninoCrearEvento)
@@ -91,6 +96,28 @@ class registrarse : Fragment() {
         val parentJob = Job()
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
+        inputFechaNacimientoRegistrarse.setOnClickListener {
+            var c: Calendar = Calendar.getInstance()
+            var selectorFecha = DatePickerDialog(
+                requireContext(),
+                { datePicker: DatePicker, anio: Int, mes: Int, dia: Int ->
+                    var mesAdaptado = mes + 1
+                    var fecha: String = "$dia/$mesAdaptado/$anio"
+                    inputFechaNacimientoRegistrarse.setText(fecha)
+
+                    fechaNacimiento.year = anio - 1900
+                    fechaNacimiento.month = mes
+                    fechaNacimiento.date = dia
+                    registrarseViewModel.fechaDate.value = fechaNacimiento.toString()
+                },
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+            )
+            selectorFecha.updateDate(2000, 1, 1)
+            selectorFecha.show()
+        }
+
         btnRegistrarse.setOnClickListener {
             scope.launch {
                 var registroEsValido = registrarseViewModel.registroEsValido(
@@ -110,7 +137,7 @@ class registrarse : Fragment() {
                     var seRegistro: Boolean = registrarseViewModel.registrarUsuario(
                         inputMailRegistrarse.text.toString(),
                         inputNombreRegistrarse.text.toString(),
-                        inputEdadRegistrarse.text.toString().toInt(),
+                        inputEdadRegistrarse.text.toString(),
                         inputContraseniaRegistrarse.text.toString(),
                         radioBtnFemeninoRegistrarse.isChecked
                     )
@@ -158,6 +185,7 @@ class registrarse : Fragment() {
             v.findNavController().navigate(accion)
         }
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()

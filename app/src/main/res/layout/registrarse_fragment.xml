@@ -64,12 +64,12 @@
         app:layout_constraintTop_toTopOf="@+id/guidelineInferiorInputContraseniaRegistrarse" />
 
     <EditText
-        android:id="@+id/inputEdadRegistrarse"
+        android:id="@+id/inputFechaNacimientoRegistrarse"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:backgroundTint="#29DB41"
         android:ems="10"
-        android:hint="Ingrese su edad"
+        android:hint="Fecha nacimiento"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorInputEdadRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,42 +81,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputNombreRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputEdadRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRadioGeneroRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.65" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorInputContraseniaRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineInferiorBtnRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <RadioGroup
         android:id="@+id/radioGeneroCrearEvento"
@@ -165,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -183,6 +183,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

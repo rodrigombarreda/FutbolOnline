@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_detallePartido_to_mapaUbicacionDetallePartido"
             app:destination="@id/mapaUbicacionDetallePartido" />
+        <action
+            android:id="@+id/action_detallePartido_to_listaUsuariosPartido"
+            app:destination="@id/listaUsuariosPartido" />
     </fragment>
     <fragment
         android:id="@+id/mapaUbicacionDetallePartido"
@@ -95,5 +98,26 @@
         <action
             android:id="@+id/action_cambiocontrasenia_to_paginaPrincipalContainer"
             app:destination="@id/paginaPrincipalContainer" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaUsuariosPartido"
+        android:name="com.example.futbolonline.fragments.listaUsuariosPartido"
+        android:label="lista_usuarios_partido_fragment"
+        tools:layout="@layout/lista_usuarios_partido_fragment" >
+        <argument
+            android:name="nombreEvento"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_listaUsuariosPartido_to_detalleUsuarioDePartido"
+            app:destination="@id/detalleUsuarioDePartido" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleUsuarioDePartido"
+        android:name="com.example.futbolonline.fragments.detalleUsuarioDePartido"
+        android:label="detalle_usuario_de_partido_fragment"
+        tools:layout="@layout/detalle_usuario_de_partido_fragment" >
+        <argument
+            android:name="emailUsuario"
+            app:argType="string" />
     </fragment>
 </navigation>

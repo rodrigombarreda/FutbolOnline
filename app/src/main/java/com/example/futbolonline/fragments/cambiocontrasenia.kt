@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.futbolonline.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -91,7 +92,9 @@ class cambiocontrasenia : Fragment() {
                             "contraseña cambiada correctamente",
                             Snackbar.LENGTH_SHORT
                         ).show()
-
+                        val accion =
+                            cambiocontraseniaDirections.actionCambiocontraseniaToPaginaPrincipalContainer()
+                        v.findNavController().navigate(accion)
 
                     }
 

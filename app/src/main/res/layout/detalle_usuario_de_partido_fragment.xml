@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutDetalleUsuarioDePartido"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.detalleUsuarioDePartido">
+
+    <TextView
+        android:id="@+id/txtEmailDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Email:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEmailDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_goneMarginLeft="70dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtEmailDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:id="@+id/txtNombreDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Nombre:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtNombeDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtEmailTabMiPerfil" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtNombeDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <TextView
+        android:id="@+id/txtEdadDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Edad:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtEdadDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtNombreTabMiPerfil" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtEdadDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <TextView
+        android:id="@+id/txtGeneroDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Genero:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtGeneroDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtEdadDetalleUsuarioDePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtGeneroDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <TextView
+        android:id="@+id/txtCalificacionDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Calificacion:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCalificacionDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtGeneroDetalleUsuarioDePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtCalificacionDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/txtCantidadPartidosJugadosDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Partidos jugados:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosJugadosDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtCalificacionDetalleUsuarioDePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtCantidadPartidosJugadosDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/txtCantidadPartidosCreadosDetalleUsuarioDePartido"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:background="@drawable/custom_textview"
+        android:paddingLeft="10dp"
+        android:text="Partidos creados:"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosCreadosDetalleUsuarioDePartido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtCantidadPartidosJugadosDetalleUsuarioDePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInferiorTxtCantidadPartidosCreadosDetalleUsuarioDePartido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@
         android:background="#262E26">
 
         <TextView
-            android:id="@+id/txtTituloEventoItemProximoPartido"
+            android:id="@+id/txtNombreEventoItemProximoPartido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre evento:"

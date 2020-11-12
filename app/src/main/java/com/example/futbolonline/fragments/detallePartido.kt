@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +40,7 @@ class detallePartido : Fragment() {
     lateinit var txtFechaYHoraDetallePartido: TextView
     lateinit var txtUbicacionDetallePartido: TextView
     lateinit var btnVerUbicacionEnMapaDetallePartido: TextView
+    lateinit var btnVerListaJugadoresDePartido: Button
 
     lateinit var nombreEvento: String
 
@@ -64,6 +66,7 @@ class detallePartido : Fragment() {
         txtUbicacionDetallePartido = v.findViewById(R.id.txtUbicacionDetallePartido)
         btnVerUbicacionEnMapaDetallePartido =
             v.findViewById(R.id.btnVerUbicacionEnMapaDetallePartido)
+        btnVerListaJugadoresDePartido = v.findViewById(R.id.btnVerListaJugadoresDePartido)
         return v
     }
 
@@ -98,6 +101,11 @@ class detallePartido : Fragment() {
                     partido.longitud.toString(),
                     partido.ubicacion
                 )
+            v.findNavController().navigate(accion)
+        }
+
+        btnVerListaJugadoresDePartido.setOnClickListener {
+            val accion = detallePartidoDirections.actionDetallePartidoToListaUsuariosPartido(nombreEvento)
             v.findNavController().navigate(accion)
         }
     }

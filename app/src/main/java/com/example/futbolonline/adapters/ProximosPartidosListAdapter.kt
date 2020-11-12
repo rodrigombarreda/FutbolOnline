@@ -69,7 +69,7 @@ class ProximosPartidosListAdapter(
         }
 
         fun setName(name: String) {
-            val txt: TextView = view.findViewById(R.id.txtTituloEventoItemProximoPartido)
+            val txt: TextView = view.findViewById(R.id.txtNombreEventoItemProximoPartido)
             txt.text = name
         }
 

@@ -215,4 +215,22 @@
         app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="@+id/guidelineVerticalDetallePartido"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnVerListaJugadoresDePartido"
+        android:layout_width="196dp"
+        android:layout_height="48dp"
+        android:background="@drawable/custom_botton"
+        android:text="Ver lista de jugadores"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineInferiorTxtFechaYHoraDetallePartido" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 </androidx.constraintlayout.widget.ConstraintLayout>

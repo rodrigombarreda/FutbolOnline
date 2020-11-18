@@ -96,9 +96,21 @@ class cambiocontrasenia : Fragment() {
                             cambiocontraseniaDirections.actionCambiocontraseniaToPaginaPrincipalContainer()
                         v.findNavController().navigate(accion)
 
+                    }else{
+                        Snackbar.make(
+                            v,
+                            "La contraseña no coincide",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
 
 
+                }else{
+                    Snackbar.make(
+                        v,
+                        "Las contraseñas es incorrecta",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

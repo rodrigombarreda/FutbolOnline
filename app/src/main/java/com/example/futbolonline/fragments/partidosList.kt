@@ -155,7 +155,7 @@ class partidosList : Fragment() {
             if (partido != null) {
                 latLngPartido = LatLng(partido.latitud, partido.longitud)
                 enableMyLocation()
-                if (distanciaDesdeUbicacionAPartido <= 15000) {
+
                     var sePuedeUnir = partidosListViewModel.sePuedeUnir(emailUsuario, partido)
                     if (sePuedeUnir) {
                         Snackbar.make(
@@ -197,13 +197,7 @@ class partidosList : Fragment() {
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                } else {
-                    Snackbar.make(
-                        v,
-                        "Estas muy lejos del partido",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
+
             } else {
                 Snackbar.make(
                     v,
